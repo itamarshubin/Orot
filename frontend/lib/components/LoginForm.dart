@@ -20,7 +20,7 @@ class _LoginFormState extends State<LoginForm> {
             child: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.fromLTRB(30, 30, 0, 30),
+                  padding: const EdgeInsets.fromLTRB(30, 10, 0, 30),
                   alignment: Alignment.centerRight,
                   child: Text(
                     'כניסה למערכת',

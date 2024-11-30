@@ -16,6 +16,24 @@ def getProfile(name):
 
         return jsonify(a)
     
+@app.route('/profiles', methods = ['GET'])
+def getAllProfile():
+    if(request.method == 'GET'): 
+        a = [
+            {
+                'fullname': 'aaa',
+                'address': "aaa",
+                'phoneNumber': "aaa",
+            },
+            {
+                'fullname': 'bbb',
+                'address': "bbb",
+                'phoneNumber': "bbb",
+            },
+        ]
+
+        return jsonify(a)
+    
 @app.route('/profiles/<name>/families', methods = ['GET'])
 def getFamilyProfile(name):
     if(request.method == 'GET'): 

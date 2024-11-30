@@ -15,15 +15,15 @@ class RegisterPage extends StatelessWidget {
       ),
       body: Container(
         color: const Color.fromARGB(132, 209, 147, 167),
-        padding: const EdgeInsets.only(top: 50),
+        padding: const EdgeInsets.only(top: 20),
         child: Container(
           decoration: const BoxDecoration(
               borderRadius:
-                  BorderRadiusDirectional.vertical(top: Radius.circular(80)),
+                  BorderRadiusDirectional.vertical(top: Radius.circular(30)),
               color: Colors.white),
           child: Container(
             padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
-            child: const LoginForm(),
+            child: Column(children: [LoginForm(),Image.asset('assets/img/cloud1.png'),Image.asset('assets/img/cloud2.png'), Image.asset('assets/img/aww.png')]),
           ),
         ),
       ),
