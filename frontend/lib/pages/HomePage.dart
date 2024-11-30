@@ -1,7 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:orot/DatesWrapper.dart';
+import 'package:orot/api/api.dart';
+import 'package:orot/components/DatesWrapper.dart';
+import 'package:orot/types/profiles.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -10,36 +10,7 @@ class Homepage extends StatefulWidget {
   State<Homepage> createState() => _Homepage();
 }
 
-class Profile {
-  String fullname;
-  String address;
-  String phoneNumber;
-
-  Profile.fromJson(Map<String, dynamic> json)
-      : fullname = json['fullname'],
-        address = json['address'],
-        phoneNumber = json['phoneNumber'];
-
-}
-
-class FamilyProfile extends Profile {
-  String contact;
-
-  FamilyProfile.fromJson(Map<String, dynamic> json)
-    : contact = json['contact'],
-      super.fromJson(json);
-}
-
 class _Homepage extends State<Homepage> {
-  Future<Profile> fetchProfile() async {
-    final res = await http.get(Uri.parse("http://10.0.2.2:5000/"));
-    print("aaa");
-    if (res.statusCode == 200) {
-      return Profile.fromJson(jsonDecode(res.body));
-    } else {
-      throw Exception('Failed to fetch joke');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +32,7 @@ class _Homepage extends State<Homepage> {
             width: 200,
             height: 145,
           )),
-          FutureBuilder<Profile>(future: fetchProfile(), builder: (context, snapshot) {
+          FutureBuilder<Profile>(future: fetchProfile("itamar"), builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ProfileData(snapshot.data!);
             } else if (snapshot.hasError) {
@@ -70,9 +41,21 @@ class _Homepage extends State<Homepage> {
             else {
               return Placeholder();
             }
-          }) ,//TODO: replace with getProfile
-          const Padding(padding: EdgeInsets.only(top: 20), child: DatesWrapper()),
-          const FamilyData('אנונימי', 'חנה רובינא 2, חיפה', 'דן עזר'),
+          }) ,
+          Padding(padding: const EdgeInsets.only(top: 20), child: Dateswrapper()),
+          FutureBuilder<FamilyProfile>(future: fetchFamilyProfile("שובין"), builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator()); // Loading indicator
+            } 
+            if (snapshot.hasData) {
+              return FamilyData(snapshot.data!);
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+            else {
+              return Placeholder();
+            }
+          }) ,
         ],
       ), 
     ));
@@ -80,10 +63,9 @@ class _Homepage extends State<Homepage> {
 }
 
 class FamilyData extends StatelessWidget {
-  const FamilyData(this.lastName, this.address, this.contactName, {super.key});
-  final String lastName;
-  final String address;
-  final String contactName; //TODO: replace with getFamily
+  const FamilyData(this.profile, {super.key});
+  final FamilyProfile profile;
+
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +78,7 @@ class FamilyData extends StatelessWidget {
             color: Color.fromARGB(255, 4, 45, 107),
             fontSize: 22
           ))),
-          FamilyDetails(lastName, address, contactName),
+          FamilyDetails(profile.fullname, profile.address, profile.contact),
         ]  
       );
   }
@@ -115,6 +97,7 @@ class FamilyDetails extends StatelessWidget {
       height: 200,
       margin: const EdgeInsets.fromLTRB(20,12,20,20),
       decoration: const BoxDecoration(
+        
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: Color.fromRGBO(212, 218, 222, 1)
       ),
