@@ -1,0 +1,204 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/services/auth_service.dart';
+
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        toolbarHeight: 100,
+        title: Image.asset('assets/img/logo.png', fit: BoxFit.cover),
+        backgroundColor: const Color.fromARGB(132, 209, 147, 167),
+      ),
+      body: Container(
+        color: const Color.fromARGB(132, 209, 147, 167),
+        padding: const EdgeInsets.only(top: 50),
+        child: Container(
+          decoration: const BoxDecoration(
+              borderRadius:
+                  BorderRadiusDirectional.vertical(top: Radius.circular(80)),
+              color: Color(0xffF3EDED)),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
+            child: const LoginForm(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+        child: Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: Column(
+              children: [
+                _title(),
+                const SizedBox(
+                  height: 20,
+                ),
+                _emailAddress(),
+                const SizedBox(
+                  height: 30,
+                ),
+                _password(),
+                const SizedBox(
+                  height: 50,
+                ),
+                _signIn(context)
+              ],
+            )));
+  }
+
+  Widget _title() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(30, 30, 0, 30),
+      alignment: Alignment.centerRight,
+      child: Text(
+        'כניסה למערכת',
+        style: GoogleFonts.openSans(
+            textStyle: const TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 32,
+          color: Color.fromRGBO(32, 82, 1145, 1),
+        )),
+      ),
+    );
+  }
+
+  Widget _emailAddress() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+            alignment: Alignment.centerRight,
+            child: Text(
+              'שם משתמש',
+              style: GoogleFonts.openSans(
+                  textStyle: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 20)),
+            )),
+        const SizedBox(
+          height: 10,
+        ),
+        TextField(
+          controller: _emailController,
+          decoration: InputDecoration(
+              filled: true,
+              hintText: 'example@gmail.com',
+              hintStyle: const TextStyle(
+                  color: Color(0xff6A6A6A),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14),
+              fillColor: const Color(0xffF7F7F9),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(24))),
+        )
+      ],
+    );
+  }
+
+  Widget _password() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          alignment: Alignment.centerRight,
+          child: Text(
+            'סיסמה',
+            style: GoogleFonts.openSans(
+                textStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20)),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        TextField(
+          obscureText: true,
+          controller: _passwordController,
+          decoration: InputDecoration(
+              filled: true,
+              fillColor: const Color(0xffF7F7F9),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(24))),
+        )
+      ],
+    );
+  }
+
+  Widget _signIn(BuildContext context) {
+    return Container(
+      width: 500,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFF205273),
+            Color(0xFF3C9BD9),
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black26,
+            offset: Offset(1, 6),
+            blurRadius: 14,
+            spreadRadius: 0,
+          ),
+        ],
+      ),
+      child: ElevatedButton(
+        onPressed: () async {
+          await AuthService().signin(
+              email: _emailController.text,
+              password: _passwordController.text,
+              context: context);
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        child: Text(
+          'כניסה למערכת',
+          style: GoogleFonts.openSans(
+              textStyle: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+            color: Colors.white,
+          )),
+        ),
+      ),
+    );
+  }
+}
