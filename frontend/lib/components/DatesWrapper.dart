@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:orot/api/api.dart';
 
-class DatesWrapper extends StatelessWidget {
-  const DatesWrapper({super.key});
+class Dateswrapper extends StatefulWidget {
+  const Dateswrapper(this.data, {super.key});
+  final List<dynamic> data;
 
   @override
-  Widget build(BuildContext context) {
-
-    return const Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Blob('ביקור עתידי', '25.2'),
-          Blob('ביקור עתידי', '19.1'),
-          Blob('ביקורים', '14'),
-        ]
-      );
-  }
+  State<Dateswrapper> createState() => _DateswrapperState();
 }
+
+class _DateswrapperState extends State<Dateswrapper> {
+  @override
+  Widget build(BuildContext context) {
+          return Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: widget.data.map((arr) {
+                return Blob(arr[0].toString(), arr[1].toString());
+          }).toList());
+      }
+}
+
 class Blob extends StatelessWidget {
   const Blob(this.lowerText, this.upperText, {super.key});
   final String lowerText;
@@ -27,7 +31,6 @@ class Blob extends StatelessWidget {
     return Container(
             width: 100,
             height: 100,
-            child: Test(lowerText, upperText),
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               color: Colors.white,
@@ -39,6 +42,7 @@ class Blob extends StatelessWidget {
                 )
               ]
             ),
+            child: Test(lowerText, upperText),
         );
   }
 }
