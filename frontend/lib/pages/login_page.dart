@@ -20,10 +20,10 @@ class RegisterPage extends StatelessWidget {
         child: Container(
           decoration: const BoxDecoration(
               borderRadius:
-                  BorderRadiusDirectional.vertical(top: Radius.circular(80)),
+                  BorderRadiusDirectional.vertical(top: Radius.circular(30)),
               color: Color(0xffF3EDED)),
           child: Container(
-            padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
             child: const LoginForm(),
           ),
         ),
@@ -75,7 +75,7 @@ class _LoginFormState extends State<LoginForm> {
         'כניסה למערכת',
         style: GoogleFonts.openSans(
             textStyle: const TextStyle(
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w500,
           fontSize: 32,
           color: Color.fromRGBO(32, 82, 1145, 1),
         )),
