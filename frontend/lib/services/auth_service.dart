@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:orot/pages/login.dart';
 import 'package:orot/pages/HomePage.dart';
+import 'package:orot/pages/login_page.dart';
 
 class AuthService {
   Future<void> signup(
@@ -71,6 +71,6 @@ class AuthService {
     await FirebaseAuth.instance.signOut();
     await Future.delayed(const Duration(seconds: 1));
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (BuildContext context) => Login()));
+        context, MaterialPageRoute(builder: (BuildContext context) => const RegisterPage()));
   }
 }
