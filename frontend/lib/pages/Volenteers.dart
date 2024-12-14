@@ -31,9 +31,9 @@ class _VolenteersPageState extends State<VolenteersPage> {
             child: Container(
                 height: 60,
                 margin: const EdgeInsets.only(bottom: 50),
-                child: Text("title", style: TextStyle(fontSize: 40)))),
+                child: const Text("title", style: TextStyle(fontSize: 40)))),
         Container(
-            margin: EdgeInsets.only(left: 100),
+            margin: const EdgeInsets.only(left: 100),
             width: 250,
             child: TextField(
                 controller: controller,
@@ -47,7 +47,7 @@ class _VolenteersPageState extends State<VolenteersPage> {
           ),
         Expanded(
             child: ListView.builder(
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 itemCount: 20,
                 itemBuilder: (context, index) {
                   return const VolenteerCube();
@@ -63,7 +63,7 @@ class VolenteerCube extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       alignment: Alignment.center,
       color: Colors.white,
       height: 50,
