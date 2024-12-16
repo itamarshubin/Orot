@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orot/pages/HomePage.dart';
+import 'package:orot/pages/home/home_page.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -70,7 +71,7 @@ class _LoginFormState extends State<LoginForm> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const Homepage()));
+                                    builder: (context) => const HomePage()));
                           }
                         },
                         child: const Text('כניסה למערכת',

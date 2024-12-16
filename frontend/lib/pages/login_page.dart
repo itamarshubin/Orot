@@ -62,7 +62,8 @@ class _LoginFormState extends State<LoginForm> {
                 const SizedBox(
                   height: 50,
                 ),
-                _signIn(context)
+                _signIn(context),
+                _signoutButton()
               ],
             )));
   }
@@ -200,5 +201,14 @@ class _LoginFormState extends State<LoginForm> {
         ),
       ),
     );
+  }
+
+  //TODO: delete
+  Widget _signoutButton() {
+    return ElevatedButton(
+        onPressed: () {
+          AuthService().quickSignout();
+        },
+        child: Text('signOUt'));
   }
 }
