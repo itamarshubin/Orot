@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/components/main_button.dart';
 import 'package:orot/services/auth_service.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -154,53 +155,14 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget _signIn(BuildContext context) {
-    return Container(
-      width: 500,
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            Color(0xFF205273),
-            Color(0xFF3C9BD9),
-          ],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black26,
-            offset: Offset(1, 6),
-            blurRadius: 14,
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-      child: ElevatedButton(
-        onPressed: () async {
+    return MainButton(
+        text: 'כניסה למערכת',
+        onPress: () async {
           await AuthService().signin(
               email: _emailController.text,
               password: _passwordController.text,
               context: context);
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        child: Text(
-          'כניסה למערכת',
-          style: GoogleFonts.openSans(
-              textStyle: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-            color: Colors.white,
-          )),
-        ),
-      ),
-    );
+        });
   }
 
   //TODO: delete

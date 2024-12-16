@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:orot/pages/HomePage.dart';
 import 'package:orot/pages/home/home_page.dart';
 
 class LoginForm extends StatefulWidget {
@@ -67,7 +66,9 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                     child: OutlinedButton(
                         onPressed: () {
-                          if (nameController.text == "itamar" && passwordController.text == "123") { //TODO: replace with real check
+                          if (nameController.text == "itamar" &&
+                              passwordController.text == "123") {
+                            //TODO: replace with real check
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -78,6 +79,6 @@ class _LoginFormState extends State<LoginForm> {
                             style:
                                 TextStyle(color: Colors.white, fontSize: 20))))
               ],
-          )));
+            )));
   }
 }
