@@ -42,6 +42,7 @@ dependencies:
   google_fonts: ^6.2.1
   cloud_firestore: ^5.5.1
   flutter_svg: ^2.0.16
+  intl: ^0.20.1
   
   
 dev_dependencies:
@@ -85,6 +86,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: VarelaRound
+      fonts:
+        - asset: assets/fonts/VarelaRound.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

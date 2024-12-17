@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orot/pages/home/close_visit.dart';
+import 'package:orot/components/main_button.dart';
+import 'package:orot/pages/home/visit.dart';
 import 'package:orot/services/firestore_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,13 +15,27 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
-      // appBar: AppBar(),
-      body: Stack(
-        children: [Title(), CloseVisit()],
+      body: Column(
+        children: [
+          const Stack(
+            children: [Title(), Visit()],
+          ),
+          _addVisitButton()
+        ],
       ),
     );
+  }
+
+  Widget _addVisitButton() {
+    return Container(
+        margin: const EdgeInsets.fromLTRB(40, 15, 40, 0),
+        child: MainButton(
+            text: 'קביעת מפגש',
+            onPress: () {
+              print('test');
+            }));
   }
 }
 
@@ -59,7 +74,6 @@ class _TitleState extends State<Title> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       width: double.infinity,
       height: 200,

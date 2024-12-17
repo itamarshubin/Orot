@@ -44,7 +44,7 @@ class MainButton extends StatelessWidget {
           '$text',
           style: GoogleFonts.openSans(
               textStyle: const TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
             fontSize: 24,
             color: Colors.white,
           )),
