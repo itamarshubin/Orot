@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+enum VisitButtonOption { edit, view }
+
 class Visit extends StatefulWidget {
-  const Visit({super.key});
+  final String address;
+  final VisitButtonOption visitButtonOption;
+  const Visit(
+      {super.key,
+      this.address = 'איפושהו בעולם',
+      this.visitButtonOption = VisitButtonOption.edit});
 
   @override
   State<Visit> createState() => _VisitState();
@@ -14,7 +21,7 @@ class _VisitState extends State<Visit> {
     return Container(
       width: double.infinity,
       height: 85,
-      margin: const EdgeInsets.fromLTRB(40, 140, 40, 0),
+      margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
       decoration: const BoxDecoration(
           borderRadius: BorderRadiusDirectional.all(Radius.circular(30)),
           color: Color(0xFFFFFFFF)),
@@ -24,7 +31,7 @@ class _VisitState extends State<Visit> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _updateVisitButton('שינוי פרטים', () {}),
+              _getButton(widget.visitButtonOption),
               _visitLocation(),
             ],
           )
@@ -68,7 +75,7 @@ class _VisitState extends State<Visit> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
-            'חנה רובינא 2, חיפה',
+            widget.address,
             style: GoogleFonts.openSans(
                 textStyle: const TextStyle(
                     color: Color(0xff205273),
@@ -87,10 +94,20 @@ class _VisitState extends State<Visit> {
     );
   }
 
+//TODO: implement the button functunality
+  Widget _getButton(VisitButtonOption option) {
+    switch (option) {
+      case VisitButtonOption.edit:
+        return _updateVisitButton('שינוי פרטים', () {});
+      case VisitButtonOption.view:
+        return _updateVisitButton('צפייה בסיכום', () {});
+    }
+  }
+
   Widget _updateVisitButton(String text, void Function() onPressed) {
     return Container(
       margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       height: 36,
       width: 88,
       decoration: BoxDecoration(
@@ -142,10 +159,10 @@ class CustomGradientButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
   const CustomGradientButton({
-    Key? key,
+    super.key,
     required this.text,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

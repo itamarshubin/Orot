@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
+import 'package:orot/pages/home/upcoming_visits.dart';
 import 'package:orot/pages/home/visit.dart';
+import 'package:orot/pages/home/visits_history.dart';
 import 'package:orot/services/firestore_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,6 +14,26 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+//TODO: change to FUTURE<Visit> and find a way to handle this
+Visit getNearestVisit() {
+  return const Visit(
+    visitButtonOption: VisitButtonOption.edit,
+  );
+}
+
+Widget _nearestVisitTitle() {
+  return Container(
+    alignment: Alignment.topRight,
+    child: Text(
+      'הביקור הקרוב',
+      style: GoogleFonts.assistant(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: const Color(0xFFF27E7E)),
+    ),
+  );
+}
+
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
@@ -19,10 +41,27 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          const Stack(
-            children: [Title(), Visit()],
+          Stack(
+            children: [
+              const Title(),
+              Container(
+                margin: const EdgeInsets.fromLTRB(40, 100, 40, 0),
+                child: Column(
+                  children: [_nearestVisitTitle(), getNearestVisit()],
+                ),
+              )
+            ],
           ),
-          _addVisitButton()
+          Container(
+            padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+            child: Column(
+              children: [
+                _addVisitButton(),
+                const UpcomingVisits(),
+                const VisitsHistory()
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -30,7 +69,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _addVisitButton() {
     return Container(
-        margin: const EdgeInsets.fromLTRB(40, 15, 40, 0),
+        margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
         child: MainButton(
             text: 'קביעת מפגש',
             onPress: () {
