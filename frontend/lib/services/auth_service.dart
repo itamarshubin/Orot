@@ -46,7 +46,7 @@ class AuthService {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (BuildContext context) => const RegisterPage()));
+            builder: (BuildContext context) => const LoginPage()));
   }
 
   Future<void> quickSignout() async {

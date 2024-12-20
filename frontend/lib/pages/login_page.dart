@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/services/auth_service.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {

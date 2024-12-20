@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Open Sans'),
-      home: user == null ? const RegisterPage() : const HomePage(),
+      home: user == null ? const LoginPage() : const HomePage(),
     );
   }
 }
