@@ -8,7 +8,6 @@ class MainButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       width: 500,
       decoration: BoxDecoration(
