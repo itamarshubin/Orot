@@ -59,32 +59,35 @@ class _NewVisitPageState extends State<NewVisitPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF3EDED),
-      body: Padding(
+      body: Container(
+        height: double.maxFinite,
         padding: const EdgeInsets.fromLTRB(60, 80, 60, 0),
         child: Align(
           alignment: Alignment.topRight,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _title(),
-              const SizedBox(
-                height: 20,
-              ),
-              Field('תאריך', _selectDate, context,
-                  DateFormat('dd/MM/yyyy').format(_selectedDate)),
-              const SizedBox(
-                height: 20,
-              ),
-              Field(
-                  'שעה', _selectTime, context, formatTimeOfDay(_selectedTime)),
-              const SizedBox(
-                height: 20,
-              ),
-              MainButton(text: 'שליחה', onPress: () {})
+              _from(),
+              _sendButton(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _from() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _title(),
+        const SizedBox(height: 20),
+        _addDate(),
+        const SizedBox(height: 20),
+        _addTime(),
+        const SizedBox(height: 20),
+        _addToCalender(),
+      ],
     );
   }
 
@@ -96,6 +99,61 @@ class _NewVisitPageState extends State<NewVisitPage> {
               fontFamily: 'VarelaRound',
               fontWeight: FontWeight.w400,
               fontSize: 32)),
+    );
+  }
+
+  Widget _addDate() {
+    return Container(
+      alignment: Alignment.topRight,
+      child: Field(
+        'תאריך',
+        _selectDate,
+        context,
+        DateFormat('dd/MM/yyyy').format(_selectedDate),
+      ),
+    );
+  }
+
+  Widget _addTime() {
+    return Container(
+      alignment: Alignment.topRight,
+      child: Field(
+        'שעה',
+        _selectTime,
+        context,
+        formatTimeOfDay(_selectedTime),
+      ),
+    );
+  }
+
+  Widget _addToCalender() {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: GestureDetector(
+        onTap: () {
+          // TODO: Implement Google Calendar integration
+        },
+        child: const Text(
+          "הוספה ל-Google Calendar",
+          style: TextStyle(
+            color: Colors.blue,
+            fontSize: 16,
+            decoration: TextDecoration.underline,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _sendButton() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: MainButton(
+        text: 'שליחה',
+        onPress: () {
+          // TODO: Implement send button functionality
+        },
+      ),
     );
   }
 }
