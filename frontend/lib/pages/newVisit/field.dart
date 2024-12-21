@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class Field extends StatefulWidget {
   const Field(this._fieldTitle, this._onTap, this.context, this._content,

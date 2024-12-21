@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateTimePickerWidget extends StatefulWidget {
+  const DateTimePickerWidget({super.key});
+
   @override
   _DateTimePickerWidgetState createState() => _DateTimePickerWidgetState();
 }
@@ -70,7 +72,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Date and Time Picker'),
+        title: const Text('Date and Time Picker'),
       ),
       body: Center(
         child: Column(
@@ -79,32 +81,32 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
             // Date Selection
             ElevatedButton(
               onPressed: () => _selectDate(context),
-              child: Text('Select Date'),
+              child: const Text('Select Date'),
             ),
             Text(
               'Selected Date: ${DateFormat('yyyy-MM-dd').format(_selectedDate)}',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Time Selection
             ElevatedButton(
               onPressed: () => _selectTime(context),
-              child: Text('Select Time'),
+              child: const Text('Select Time'),
             ),
             Text(
               'Selected Time: ${_selectedTime.format(context)}',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Print Button
             ElevatedButton(
               onPressed: _printDateTime,
-              child: Text('Print Date and Time'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
               ),
+              child: Text('Print Date and Time'),
             ),
           ],
         ),
@@ -115,6 +117,8 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
 
 // Example of how to use in main.dart
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

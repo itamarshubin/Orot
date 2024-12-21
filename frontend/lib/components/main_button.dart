@@ -40,7 +40,7 @@ class MainButton extends StatelessWidget {
           ),
         ),
         child: Text(
-          '$text',
+          text,
           style: GoogleFonts.openSans(
               textStyle: const TextStyle(
             fontWeight: FontWeight.w500,

@@ -171,6 +171,6 @@ class _LoginFormState extends State<LoginForm> {
         onPressed: () {
           AuthService().quickSignout();
         },
-        child: Text('signOUt'));
+        child: const Text('signOUt'));
   }
 }
