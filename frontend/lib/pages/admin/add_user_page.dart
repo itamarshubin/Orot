@@ -3,84 +3,51 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/services/auth_service.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class AddUserPage extends StatelessWidget {
+  AddUserPage({super.key});
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        toolbarHeight: 100,
-        title: Image.asset('assets/img/logo.png', fit: BoxFit.cover),
-        backgroundColor: const Color.fromARGB(132, 209, 147, 167),
-      ),
-      body: Container(
-        color: const Color.fromARGB(132, 209, 147, 167),
-        padding: const EdgeInsets.only(top: 50),
-        child: Container(
-          decoration: const BoxDecoration(
-              borderRadius:
-                  BorderRadiusDirectional.vertical(top: Radius.circular(30)),
-              color: Color(0xffF3EDED)),
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-            child: const LoginForm(),
+        body: Container(
+      padding: EdgeInsets.fromLTRB(20, 100, 20, 0),
+      child: Column(
+        children: [
+          _title(),
+          SizedBox(
+            height: 30,
           ),
-        ),
+          _emailAddress(),
+          SizedBox(
+            height: 30,
+          ),
+          _password(),
+          SizedBox(
+            height: 30,
+          ),
+          _name(),
+          SizedBox(
+            height: 30,
+          ),
+          _createUser(),
+        ],
       ),
-    );
-  }
-}
-
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
-
-  @override
-  State<LoginForm> createState() => _LoginFormState();
-}
-
-class _LoginFormState extends State<LoginForm> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-        child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: Column(
-              children: [
-                _title(),
-                const SizedBox(
-                  height: 20,
-                ),
-                _emailAddress(),
-                const SizedBox(
-                  height: 30,
-                ),
-                _password(),
-                const SizedBox(
-                  height: 50,
-                ),
-                _signIn(context),
-                _signoutButton()
-              ],
-            )));
+    ));
   }
 
   Widget _title() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(30, 30, 0, 30),
-      alignment: Alignment.centerRight,
+      alignment: Alignment.center,
       child: Text(
-        'כניסה למערכת',
+        'הוספת משתמש',
         style: GoogleFonts.openSans(
             textStyle: const TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 32,
-          color: Color.fromRGBO(32, 82, 1145, 1),
-        )),
+                color: Colors.black,
+                fontWeight: FontWeight.w400,
+                fontSize: 40)),
       ),
     );
   }
@@ -154,23 +121,47 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget _signIn(BuildContext context) {
-    return MainButton(
-        text: 'כניסה למערכת',
-        onPress: () async {
-          await AuthService().signin(
-              email: _emailController.text,
-              password: _passwordController.text,
-              context: context);
-        });
+  Widget _name() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          alignment: Alignment.centerRight,
+          child: Text(
+            'שם מלא',
+            style: GoogleFonts.openSans(
+                textStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20)),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        TextField(
+          controller: _nameController,
+          decoration: InputDecoration(
+              filled: true,
+              fillColor: const Color(0xffF7F7F9),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(24))),
+        )
+      ],
+    );
   }
 
-  //TODO: delete
-  Widget _signoutButton() {
-    return ElevatedButton(
-        onPressed: () {
-          AuthService().quickSignout();
-        },
-        child: const Text('signOUt'));
+  Widget _createUser() {
+    return MainButton(
+        text: 'יצירת משתמש',
+        onPress: () async {
+          await AuthService().createUser(
+            email: _emailController.text,
+            password: _passwordController.text,
+            displayName: _nameController.text,
+          );
+        });
   }
 }
