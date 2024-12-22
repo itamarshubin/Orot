@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/pages/newVisit/field.dart';
+import 'package:orot/services/google_calender/calender_service.dart';
+import 'package:orot/services/google_calender/schemas/event.dart';
+import 'package:orot/services/google_calender/schemas/event_time.dart';
 
 class NewVisitPage extends StatefulWidget {
   const NewVisitPage({super.key});
@@ -136,6 +139,12 @@ class _NewVisitPageState extends State<NewVisitPage> {
         onTap: () {
           // TODO: Implement Google Calendar integration
           // User globals.user to work with google calender.
+          addCalenderEvent(
+              event: Event(
+                  start: EventTime(dateTime: getUpdatedDateTime()),
+                  end: EventTime(
+                      dateTime: getUpdatedDateTime()), // ask for end datetime
+                  attendees: []));
         },
         child: const Text(
           "Google Calendar-הוספה ל",
@@ -158,6 +167,13 @@ class _NewVisitPageState extends State<NewVisitPage> {
           // TODO: Implement send button functionality
         },
       ),
+    );
+  }
+
+  DateTime getUpdatedDateTime() {
+    return _selectedDate.copyWith(
+      hour: _selectedTime.hour,
+      minute: _selectedTime.minute,
     );
   }
 }

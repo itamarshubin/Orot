@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:orot/services/calender_api/schemas/event_attended.dart';
-import 'package:orot/services/calender_api/schemas/event_time.dart';
+import 'package:orot/services/google_calender/schemas/event_attended.dart';
+import 'package:orot/services/google_calender/schemas/event_time.dart';
 
 part 'event.g.dart';
 

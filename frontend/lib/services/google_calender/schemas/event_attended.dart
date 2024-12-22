@@ -4,13 +4,10 @@ part 'event_attended.g.dart';
 
 @JsonSerializable()
 class EventAttended {
-  String displayName;
   String email;
+  String? displayName;
 
-  EventAttended({
-    required this.displayName,
-    required this.email,
-  });
+  EventAttended(this.email, this.displayName);
 
   factory EventAttended.fromJson(Map<String, dynamic> json) =>
       _$EventAttendedFromJson(json);
