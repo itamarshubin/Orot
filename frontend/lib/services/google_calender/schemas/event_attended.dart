@@ -7,7 +7,7 @@ class EventAttended {
   String email;
   String? displayName;
 
-  EventAttended(this.email, this.displayName);
+  EventAttended(this.email, {this.displayName});
 
   factory EventAttended.fromJson(Map<String, dynamic> json) =>
       _$EventAttendedFromJson(json);

@@ -8,8 +8,8 @@ import 'package:orot/services/google_calender/schemas/event_attended.dart';
 
 const String googleCalenderAPI = "https://www.googleapis.com/calender/v3";
 
-Future addCalenderEvent({
-  required Event event,
+Future addCalenderEvent(
+  Event event, {
   String calenderId = "primary",
   bool addCurrentUser = true,
 }) async {
@@ -20,8 +20,8 @@ Future addCalenderEvent({
 
   String? currentUserEmail = currentUser.email;
   if (addCurrentUser == true && currentUserEmail != null) {
-    event.attendees
-        .add(EventAttended(currentUserEmail, currentUser.displayName));
+    event.attendees?.add(EventAttended(
+        currentUserEmail)); // note that the list empty bad things happens.
   }
 
   final String? userToken = await _getAuthToken();

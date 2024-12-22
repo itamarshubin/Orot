@@ -4,12 +4,12 @@ part 'event_time.g.dart';
 
 @JsonSerializable()
 class EventTime {
-  String? date; // formated like this yyyy-mm-dd
   DateTime dateTime;
+  String? date; // formated like this yyyy-mm-dd
   String? timeZone;
 
-  EventTime({
-    required this.dateTime,
+  EventTime(
+    this.dateTime, {
     this.date,
     this.timeZone,
   });

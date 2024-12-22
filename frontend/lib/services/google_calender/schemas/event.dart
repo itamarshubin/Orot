@@ -11,15 +11,15 @@ class Event {
   String summary; // name of event
   String? description; // Could be built with HTML to display it nicely.
   String location; // location in string we will write the family's address
-  List<EventAttended> attendees; // list of visitors and family.
+  List<EventAttended>? attendees; // list of visitors and family.
   String transparency; // can be changed to "transparent" as well
   String visibility;
 
-  Event({
+  Event(
+    this.start,
+    this.end, {
+    this.attendees,
     this.summary = "מפגש אורות",
-    required this.start,
-    required this.end,
-    required this.attendees,
     this.description,
     this.location = "בבית המשפחה",
     this.transparency = "opaque",

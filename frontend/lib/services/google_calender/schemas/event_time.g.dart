@@ -7,13 +7,13 @@ part of 'event_time.dart';
 // **************************************************************************
 
 EventTime _$EventTimeFromJson(Map<String, dynamic> json) => EventTime(
-      dateTime: DateTime.parse(json['dateTime'] as String),
+      DateTime.parse(json['dateTime'] as String),
       date: json['date'] as String?,
       timeZone: json['timeZone'] as String?,
     );
 
 Map<String, dynamic> _$EventTimeToJson(EventTime instance) => <String, dynamic>{
-      'date': instance.date,
       'dateTime': instance.dateTime.toIso8601String(),
+      'date': instance.date,
       'timeZone': instance.timeZone,
     };

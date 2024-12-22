@@ -139,12 +139,10 @@ class _NewVisitPageState extends State<NewVisitPage> {
         onTap: () {
           // TODO: Implement Google Calendar integration
           // User globals.user to work with google calender.
-          addCalenderEvent(
-              event: Event(
-                  start: EventTime(dateTime: getUpdatedDateTime()),
-                  end: EventTime(
-                      dateTime: getUpdatedDateTime()), // ask for end datetime
-                  attendees: []));
+          addCalenderEvent(Event(
+            EventTime(getUpdatedDateTime()),
+            EventTime(getUpdatedDateTime()),
+          ));
         },
         child: const Text(
           "Google Calendar-הוספה ל",

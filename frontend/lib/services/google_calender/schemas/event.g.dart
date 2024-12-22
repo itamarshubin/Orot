@@ -7,12 +7,12 @@ part of 'event.dart';
 // **************************************************************************
 
 Event _$EventFromJson(Map<String, dynamic> json) => Event(
-      summary: json['summary'] as String? ?? "מפגש אורות",
-      start: EventTime.fromJson(json['start'] as Map<String, dynamic>),
-      end: EventTime.fromJson(json['end'] as Map<String, dynamic>),
-      attendees: (json['attendees'] as List<dynamic>)
-          .map((e) => EventAttended.fromJson(e as Map<String, dynamic>))
+      EventTime.fromJson(json['start'] as Map<String, dynamic>),
+      EventTime.fromJson(json['end'] as Map<String, dynamic>),
+      attendees: (json['attendees'] as List<dynamic>?)
+          ?.map((e) => EventAttended.fromJson(e as Map<String, dynamic>))
           .toList(),
+      summary: json['summary'] as String? ?? "מפגש אורות",
       description: json['description'] as String?,
       location: json['location'] as String? ?? "בבית המשפחה",
       transparency: json['transparency'] as String? ?? "opaque",

@@ -9,7 +9,7 @@ part of 'event_attended.dart';
 EventAttended _$EventAttendedFromJson(Map<String, dynamic> json) =>
     EventAttended(
       json['email'] as String,
-      json['displayName'] as String?,
+      displayName: json['displayName'] as String?,
     );
 
 Map<String, dynamic> _$EventAttendedToJson(EventAttended instance) =>
