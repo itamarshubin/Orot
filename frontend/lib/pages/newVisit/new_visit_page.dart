@@ -103,14 +103,12 @@ class _NewVisitPageState extends State<NewVisitPage> {
   }
 
   Widget _addDate() {
-    return Container(
-      alignment: Alignment.topRight,
-      child: Field(
-        'תאריך',
-        _selectDate,
-        context,
-        DateFormat('dd/MM/yyyy').format(_selectedDate),
-      ),
+    return Field(
+      "תאריך",
+      _selectDate,
+      context,
+      DateFormat('dd/MM/yyyy').format(_selectedDate),
+      "assets/icons/pick_date_icon.svg",
     );
   }
 
@@ -122,6 +120,7 @@ class _NewVisitPageState extends State<NewVisitPage> {
         _selectTime,
         context,
         formatTimeOfDay(_selectedTime),
+        "assets/icons/pick_time_icon.svg",
       ),
     );
   }
