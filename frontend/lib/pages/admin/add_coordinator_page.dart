@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
+import 'package:orot/services/admin_service.dart';
 import 'package:orot/services/auth_service.dart';
 
 class AddCoordinatorPage extends StatefulWidget {
@@ -12,9 +13,7 @@ class AddCoordinatorPage extends StatefulWidget {
 
 class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
   final _emailController = TextEditingController();
-
   final _passwordController = TextEditingController();
-
   final _nameController = TextEditingController();
 
   String _district = 'מחוז צפון';
@@ -214,11 +213,10 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
     return MainButton(
         text: 'יצירת רכזת',
         onPress: () async {
-          await AuthService().createUser(
-            email: _emailController.text,
-            password: _passwordController.text,
-            displayName: _nameController.text,
-          );
+          await AdminService().createCoordinator(
+              email: _emailController.text,
+              password: _passwordController.text,
+              name: _nameController.text);
         });
   }
 }

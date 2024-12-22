@@ -9,7 +9,6 @@ import 'package:orot/services/firestore_service.dart';
 class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  
 
   Future<void> createCoordinator(
       {required String email,
@@ -41,6 +40,10 @@ class AuthService {
         fontSize: 14.0,
       );
     }
+  }
+
+  User? getCurrentUser() {
+    return _auth.currentUser;
   }
 
   Future<void> createUser(
@@ -121,7 +124,7 @@ class AuthService {
         message = 'Wrong password provided for that user.';
       }
       Fluttertoast.showToast(
-        msg: message,
+        msg: e.message ?? message,
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.SNACKBAR,
         backgroundColor: Colors.black54,
