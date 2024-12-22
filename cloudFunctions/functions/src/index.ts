@@ -17,14 +17,21 @@ import { CallableRequest, onCall } from "firebase-functions/v2/https";
 
 initializeApp();
 
-interface UserData {
+interface CoordinatorData {
   name: string;
   email: string;
   password: string;
+  districtId: string;
 }
 
 interface District {
   name: string;
+}
+
+interface FamilyData {
+  name: string;
+  contact: string;
+  address: string;
 }
 
 const isAdmin = async (data: CallableRequest) => {
@@ -35,7 +42,7 @@ const isAdmin = async (data: CallableRequest) => {
   return adminDoc.exists;
 };
 
-const isCoordinator = async (data: CallableRequest<UserData>) => {
+const isCoordinator = async (data: CallableRequest) => {
   const coordinatorDoc = await getFirestore()
     .collection("coordinators")
     .doc(data?.auth?.uid || "")
@@ -43,31 +50,65 @@ const isCoordinator = async (data: CallableRequest<UserData>) => {
   return coordinatorDoc.exists;
 };
 
-export const createUser = onCall<UserData>(async (data, context) => {
-  if ((await isAdmin(data)) || (await isCoordinator(data))) {
-    console.log("good");
-  } else {
-    console.log("bad");
-  }
-});
+export const createCoordinator = onCall<CoordinatorData>(
+  async (data, context) => {
+    if (await isAdmin(data)) {
+      const newCoordinator = await auth().createUser({
+        email: data.data.email,
+        password: data.data.password,
+        displayName: data.data.name,
+      });
 
-export const createCoordinator = onCall<UserData>(async (data, context) => {
-  if (await isAdmin(data)) {
-    const newCoordinator = await auth().createUser({
-      email: data.data.email,
-      password: data.data.password,
-      displayName: data.data.name,
-    });
-
-    await getFirestore()
-      .collection("coordinators")
-      .doc(newCoordinator.uid)
-      .set({ displayName: data.data.name });
+      const district = await getFirestore()
+        .collection("districts")
+        .doc(data.data.districtId)
+        .get();
+      await getFirestore()
+        .collection("coordinators")
+        .doc(newCoordinator.uid)
+        .set({ displayName: data.data.name, district: district.ref });
+    }
   }
-});
+);
 
 export const createDistrict = onCall<District>(async (data, context) => {
   if (await isAdmin(data)) {
     await getFirestore().collection("districts").add({ name: data.data.name });
+  }
+});
+
+export const getDistricts = onCall(async (data, context) => {
+  if (await isAdmin(data)) {
+    const districts = await getFirestore().collection("districts").get();
+    console.log(
+      "districts.docs.map((doc) => doc.data());",
+      districts.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    );
+    return districts.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+  }
+  throw new Error("Unauthorized");
+});
+
+export const createVolunteer = onCall(async (data, context) => {
+  if ((await isAdmin(data)) || (await isCoordinator(data))) {
+    const newVolunteer = await auth().createUser({
+      email: data.data.email,
+      password: data.data.password,
+      displayName: data.data.name,
+    });
+    await getFirestore()
+      .collection("volunteers")
+      .doc(newVolunteer.uid)
+      .set({ displayName: data.data.name });
+  }
+});
+
+export const createFamily = onCall<FamilyData>(async (data, context) => {
+  if ((await isAdmin(data)) || (await isCoordinator(data))) {
+    await getFirestore().collection("families").doc().set({
+      name: data.data.name,
+      address: data.data.address,
+      contact: data.data.contact,
+    });
   }
 });
