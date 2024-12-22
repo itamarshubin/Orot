@@ -37,10 +37,12 @@ class AddUserPage extends StatelessWidget {
       child: Text(
         'הוספת משתמש',
         style: GoogleFonts.openSans(
-            textStyle: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w400,
-                fontSize: 40)),
+          textStyle: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+            fontSize: 40,
+          ),
+        ),
       ),
     );
   }
