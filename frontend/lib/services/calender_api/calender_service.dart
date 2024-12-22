@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:orot/services/auth_service.dart';
+import 'package:orot/services/calender_api/schemas/event.dart';
 
 const String googleCalenderAPI = "https://www.googleapis.com/calender/v3";
 
 Future addCalenderEvent(
-    {required dynamic event, String calenderId = "primary"}) async {
+    {required Event event, String calenderId = "primary"}) async {
   final String? userToken = await _getAuthToken();
-
   return await http.post(
     Uri.parse("$googleCalenderAPI/calenders/$calenderId/events"),
     headers: {
