@@ -46,6 +46,7 @@ dependencies:
   intl: ^0.20.1
   cloud_functions: ^5.2.0
   json_annotation: ^4.9.0
+  google_sign_in: ^6.2.2
 
 dev_dependencies:
   flutter_test:

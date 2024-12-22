@@ -17,15 +17,13 @@ Future addCalenderEvent(
   if (currentUser == null) throw "User is not logged in";
   // TODO: consider  calling signin from auth_service
   final userIdToken = await currentUser.getIdToken();
+  print(userIdToken);
 
   String? currentUserEmail = currentUser.email;
   if (addCurrentUser == true && currentUserEmail != null) {
     event.attendees?.add(EventAttended(
         currentUserEmail)); // note that the list empty bad things happens.
   }
-
-  final String? userToken = await _getAuthToken();
-  print(userToken);
   return await http.post(
     Uri.parse("$googleCalenderAPI/calenders/$calenderId/events"),
     headers: {
@@ -36,7 +34,7 @@ Future addCalenderEvent(
   );
 }
 
-Future updateCalenderEvent() async {
+Future updateCalenderEvent(Event updatedEvent) async {
   // TODO: for future actions like update attendees.
 }
 
