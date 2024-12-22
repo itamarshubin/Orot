@@ -103,10 +103,11 @@ class AuthService {
     }
   }
 
-  Future<void> signin(
-      {required String email,
-      required String password,
-      required BuildContext context}) async {
+  Future<void> signin({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
