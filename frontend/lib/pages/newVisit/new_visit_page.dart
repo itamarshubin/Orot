@@ -135,6 +135,7 @@ class _NewVisitPageState extends State<NewVisitPage> {
       child: GestureDetector(
         onTap: () {
           // TODO: Implement Google Calendar integration
+          // User globals.user to work with google calender.
         },
         child: const Text(
           "Google Calendar-הוספה ל",

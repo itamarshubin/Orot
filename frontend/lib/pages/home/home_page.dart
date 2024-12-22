@@ -7,7 +7,6 @@ import 'package:orot/pages/home/upcoming_visits.dart';
 import 'package:orot/pages/home/visit.dart';
 import 'package:orot/pages/home/visits_history.dart';
 import 'package:orot/services/auth_service.dart';
-import 'package:orot/services/firestore_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -98,6 +97,7 @@ class _TitleState extends State<Title> {
 
   Future<void> _setDisplayName() async {
     try {
+      // TODO: can use globals
       final User? currentUser = AuthService().getCurrentUser();
       setState(() {
         _displayName = currentUser?.displayName ?? "אורח";
