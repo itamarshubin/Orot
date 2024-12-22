@@ -5,6 +5,7 @@ import 'package:orot/services/auth_service.dart';
 
 class AddUserPage extends StatelessWidget {
   AddUserPage({super.key});
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
@@ -57,10 +58,12 @@ class AddUserPage extends StatelessWidget {
             child: Text(
               'מייל',
               style: GoogleFonts.openSans(
-                  textStyle: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20)),
+                textStyle: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20,
+                ),
+              ),
             )),
         const SizedBox(
           height: 10,
