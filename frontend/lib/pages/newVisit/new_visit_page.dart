@@ -136,14 +136,10 @@ class _NewVisitPageState extends State<NewVisitPage> {
     return Align(
       alignment: Alignment.centerRight,
       child: GestureDetector(
-        onTap: () {
-          // TODO: Implement Google Calendar integration
-          // User globals.user to work with google calender.
-          addCalenderEvent(Event(
-            EventTime(getUpdatedDateTime()),
-            EventTime(getUpdatedDateTime()),
-          ));
-        },
+        onTap: () => addCalenderEvent(Event(
+          start: EventTime(getUpdatedDateTime()),
+          end: EventTime(getUpdatedDateTime()),
+        )),
         child: const Text(
           "Google Calendar-הוספה ל",
           style: TextStyle(

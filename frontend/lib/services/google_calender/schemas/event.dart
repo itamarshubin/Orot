@@ -15,9 +15,9 @@ class Event {
   String transparency; // can be changed to "transparent" as well
   String visibility;
 
-  Event(
-    this.start,
-    this.end, {
+  Event({
+    required this.start,
+    required this.end,
     this.attendees,
     this.summary = "מפגש אורות",
     this.description,
