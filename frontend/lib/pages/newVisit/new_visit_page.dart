@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/pages/newVisit/field.dart';
+import 'package:orot/services/google_auth.dart';
 import 'package:orot/services/google_calender/calender_service.dart';
 import 'package:orot/services/google_calender/schemas/event.dart';
 import 'package:orot/services/google_calender/schemas/event_time.dart';
@@ -136,10 +137,13 @@ class _NewVisitPageState extends State<NewVisitPage> {
     return Align(
       alignment: Alignment.centerRight,
       child: GestureDetector(
-        onTap: () => addCalenderEvent(Event(
-          start: EventTime(getUpdatedDateTime()),
-          end: EventTime(getUpdatedDateTime()),
-        )),
+        onTap: () async => addCalenderEvent(
+          Event(
+            start: EventTime(getUpdatedDateTime()),
+            end: EventTime(getUpdatedDateTime()),
+          ),
+          accessToken: await signInWithGoogle(),
+        ),
         child: const Text(
           "Google Calendar-הוספה ל",
           style: TextStyle(
