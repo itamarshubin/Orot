@@ -133,7 +133,7 @@ class _NewVisitPageState extends State<NewVisitPage> {
           // TODO: Implement Google Calendar integration
         },
         child: const Text(
-          "הוספה ל-Google Calendar",
+          "Google Calendar-הוספה ל",
           style: TextStyle(
             color: Colors.blue,
             fontSize: 16,
