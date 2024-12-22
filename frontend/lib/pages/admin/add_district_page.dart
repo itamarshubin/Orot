@@ -26,7 +26,6 @@ class AddDistrictPage extends StatelessWidget {
             height: 30,
           ),
           _createDistrict(),
-          _updateDisplayName()
         ],
       ),
     ));
