@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
+import 'package:orot/services/admin_service.dart';
 import 'package:orot/services/auth_service.dart';
 
 class AddDistrictPage extends StatelessWidget {
@@ -80,9 +81,7 @@ class AddDistrictPage extends StatelessWidget {
     return MainButton(
         text: 'יצירת מחוז',
         onPress: () async {
-          await AuthService().createDistrict(
-            name: _nameController.text,
-          );
+          await AdminService().createDistrict(name: _nameController.text);
         });
   }
 }
