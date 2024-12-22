@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:orot/firebase_options.dart';
-import 'package:orot/global_variables.dart' as globals;
 import 'package:orot/pages/login_page.dart';
 import 'package:orot/pages/newVisit/new_visit_page.dart';
 
@@ -12,7 +11,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  globals.user = FirebaseAuth.instance.currentUser;
 
   //TODO: Remove this lines when deploying to production
   try {
@@ -36,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Open Sans'),
-      home: globals.user == null ? const LoginPage() : const NewVisitPage(),
+      home: user == null ? const LoginPage() : const NewVisitPage(),
     );
   }
 }

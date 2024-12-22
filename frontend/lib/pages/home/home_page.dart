@@ -97,7 +97,6 @@ class _TitleState extends State<Title> {
 
   Future<void> _setDisplayName() async {
     try {
-      // TODO: can use globals
       final User? currentUser = AuthService().getCurrentUser();
       setState(() {
         _displayName = currentUser?.displayName ?? "אורח";
