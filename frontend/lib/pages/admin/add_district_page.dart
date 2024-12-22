@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/services/admin_service.dart';
-import 'package:orot/services/auth_service.dart';
 
 class AddDistrictPage extends StatelessWidget {
   AddDistrictPage({super.key});
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
@@ -14,17 +14,13 @@ class AddDistrictPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      padding: EdgeInsets.fromLTRB(20, 100, 20, 0),
+      padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
       child: Column(
         children: [
           _title(),
-          SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           _name(),
-          SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           _createDistrict(),
         ],
       ),

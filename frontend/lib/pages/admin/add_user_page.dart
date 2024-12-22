@@ -5,6 +5,7 @@ import 'package:orot/services/auth_service.dart';
 
 class AddUserPage extends StatelessWidget {
   AddUserPage({super.key});
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
@@ -13,25 +14,18 @@ class AddUserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      padding: EdgeInsets.fromLTRB(20, 100, 20, 0),
+      padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
       child: Column(
+        //spacing: , consider using this instead of SizeBox
         children: [
           _title(),
-          SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           _emailAddress(),
-          SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           _password(),
-          SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           _name(),
-          SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           _createUser(),
         ],
       ),
@@ -44,10 +38,12 @@ class AddUserPage extends StatelessWidget {
       child: Text(
         'הוספת משתמש',
         style: GoogleFonts.openSans(
-            textStyle: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w400,
-                fontSize: 40)),
+          textStyle: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+            fontSize: 40,
+          ),
+        ),
       ),
     );
   }
@@ -62,10 +58,12 @@ class AddUserPage extends StatelessWidget {
             child: Text(
               'מייל',
               style: GoogleFonts.openSans(
-                  textStyle: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20)),
+                textStyle: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20,
+                ),
+              ),
             )),
         const SizedBox(
           height: 10,

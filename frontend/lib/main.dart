@@ -4,9 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:orot/firebase_options.dart';
-import 'package:orot/pages/admin/admin_page.dart';
-import 'package:orot/pages/coordinator/volunteersList/volunteers_page.dart';
-import 'package:orot/pages/home/home_page.dart';
 import 'package:orot/pages/login_page.dart';
 import 'package:orot/pages/newVisit/new_visit_page.dart';
 
@@ -14,6 +11,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   //TODO: Remove this lines when deploying to production
   try {
     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
@@ -29,14 +27,14 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  User? user = FirebaseAuth.instance.currentUser;
+  final User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Open Sans'),
-      home: user == null ? const LoginPage() : const HomePage(),
+      home: user == null ? const LoginPage() : const NewVisitPage(),
     );
   }
 }

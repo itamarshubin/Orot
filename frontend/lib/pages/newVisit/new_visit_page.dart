@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/pages/newVisit/field.dart';
+import 'package:orot/services/google_auth.dart';
+import 'package:orot/services/google_calender/calender_service.dart';
+import 'package:orot/services/google_calender/schemas/event.dart';
+import 'package:orot/services/google_calender/schemas/event_time.dart';
 
 class NewVisitPage extends StatefulWidget {
   const NewVisitPage({super.key});
@@ -25,7 +29,10 @@ class _NewVisitPageState extends State<NewVisitPage> {
       context: context,
       initialDate: _selectedDate,
       firstDate: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day),
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
       lastDate: DateTime(2101),
     );
 
@@ -59,32 +66,35 @@ class _NewVisitPageState extends State<NewVisitPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF3EDED),
-      body: Padding(
+      body: Container(
+        height: double.maxFinite,
         padding: const EdgeInsets.fromLTRB(60, 80, 60, 0),
         child: Align(
           alignment: Alignment.topRight,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _title(),
-              const SizedBox(
-                height: 20,
-              ),
-              Field('תאריך', _selectDate, context,
-                  DateFormat('dd/MM/yyyy').format(_selectedDate)),
-              const SizedBox(
-                height: 20,
-              ),
-              Field(
-                  'שעה', _selectTime, context, formatTimeOfDay(_selectedTime)),
-              const SizedBox(
-                height: 20,
-              ),
-              MainButton(text: 'שליחה', onPress: () {})
+              _from(),
+              _sendButton(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _from() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _title(),
+        const SizedBox(height: 20),
+        _addDate(),
+        const SizedBox(height: 20),
+        _addTime(),
+        const SizedBox(height: 20),
+        _addToCalender(),
+      ],
     );
   }
 
@@ -93,9 +103,75 @@ class _NewVisitPageState extends State<NewVisitPage> {
       alignment: Alignment.topRight,
       child: const Text("קביעת מפגש",
           style: TextStyle(
-              fontFamily: 'VarelaRound',
-              fontWeight: FontWeight.w400,
-              fontSize: 32)),
+            fontFamily: 'VarelaRound',
+            fontWeight: FontWeight.w400,
+            fontSize: 32,
+          )),
+    );
+  }
+
+  Widget _addDate() {
+    return Field(
+      "תאריך",
+      _selectDate,
+      context,
+      DateFormat('dd/MM/yyyy').format(_selectedDate),
+      "assets/icons/pick_date_icon.svg",
+    );
+  }
+
+  Widget _addTime() {
+    return Container(
+      alignment: Alignment.topRight,
+      child: Field(
+        'שעה',
+        _selectTime,
+        context,
+        formatTimeOfDay(_selectedTime),
+        "assets/icons/pick_time_icon.svg",
+      ),
+    );
+  }
+
+  Widget _addToCalender() {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: GestureDetector(
+        onTap: () async => addCalenderEvent(
+          Event(
+            start: EventTime(getUpdatedDateTime()),
+            end: EventTime(getUpdatedDateTime()),
+          ),
+          accessToken: await signInWithGoogle(),
+        ),
+        child: const Text(
+          "Google Calendar-הוספה ל",
+          style: TextStyle(
+            color: Colors.blue,
+            fontSize: 16,
+            decoration: TextDecoration.underline,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _sendButton() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: MainButton(
+        text: 'שליחה',
+        onPress: () {
+          // TODO: Implement send button functionality
+        },
+      ),
+    );
+  }
+
+  DateTime getUpdatedDateTime() {
+    return _selectedDate.copyWith(
+      hour: _selectedTime.hour,
+      minute: _selectedTime.minute,
     );
   }
 }
