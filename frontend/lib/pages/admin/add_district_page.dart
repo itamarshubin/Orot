@@ -14,17 +14,13 @@ class AddDistrictPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      padding: EdgeInsets.fromLTRB(20, 100, 20, 0),
+      padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
       child: Column(
         children: [
           _title(),
-          SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           _name(),
-          SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           _createDistrict(),
         ],
       ),

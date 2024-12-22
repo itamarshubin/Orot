@@ -12,7 +12,7 @@ class AdminPage extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(0, 200, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, 200, 0, 0),
             alignment: Alignment.center,
             child: ElevatedButton(
                 onPressed: () {
@@ -21,10 +21,10 @@ class AdminPage extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (BuildContext context) => AddUserPage()));
                 },
-                child: Text('הוספת משתמש')),
+                child: const Text('הוספת משתמש')),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(0, 200, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, 200, 0, 0),
             alignment: Alignment.center,
             child: ElevatedButton(
                 onPressed: () {
@@ -32,12 +32,12 @@ class AdminPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              AddCoordinatorPage()));
+                              const AddCoordinatorPage()));
                 },
-                child: Text('הוספת רכזת')),
+                child: const Text('הוספת רכזת')),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(0, 200, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, 200, 0, 0),
             alignment: Alignment.center,
             child: ElevatedButton(
                 onPressed: () {
@@ -47,7 +47,7 @@ class AdminPage extends StatelessWidget {
                           builder: (BuildContext context) =>
                               AddDistrictPage()));
                 },
-                child: Text('הוספת מחוז')),
+                child: const Text('הוספת מחוז')),
           ),
         ],
       ),

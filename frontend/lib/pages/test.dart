@@ -106,7 +106,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
               ),
-              child: Text('Print Date and Time'),
+              child: const Text('Print Date and Time'),
             ),
           ],
         ),
@@ -121,7 +121,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: DateTimePickerWidget(),
     );
   }
