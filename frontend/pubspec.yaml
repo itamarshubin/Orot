@@ -44,6 +44,7 @@ dependencies:
   cloud_firestore: ^5.5.1
   flutter_svg: ^2.0.16
   intl: ^0.20.1
+  cloud_functions: ^5.2.0
 
 
 dev_dependencies:
