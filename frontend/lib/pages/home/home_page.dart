@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +6,7 @@ import 'package:orot/components/main_button.dart';
 import 'package:orot/pages/home/upcoming_visits.dart';
 import 'package:orot/pages/home/visit.dart';
 import 'package:orot/pages/home/visits_history.dart';
+import 'package:orot/services/auth_service.dart';
 import 'package:orot/services/firestore_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -96,16 +98,10 @@ class _TitleState extends State<Title> {
 
   Future<void> _setDisplayName() async {
     try {
-      final String? displayName = await FirestoreService().getDisplayName();
-      if (displayName != null) {
-        setState(() {
-          _displayName = displayName;
-        });
-      } else {
-        setState(() {
-          _displayName = 'אורח';
-        });
-      }
+      final User? currentUser = AuthService().getCurrentUser();
+      setState(() {
+        _displayName = currentUser?.displayName ?? "אורח";
+      });
     } catch (e) {
       _displayName = 'שגיאה, $e';
     }
