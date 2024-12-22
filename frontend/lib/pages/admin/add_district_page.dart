@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/services/admin_service.dart';
-import 'package:orot/services/auth_service.dart';
 
 class AddDistrictPage extends StatelessWidget {
   AddDistrictPage({super.key});
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
