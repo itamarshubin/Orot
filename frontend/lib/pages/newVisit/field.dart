@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class Field extends StatefulWidget {
   const Field(this._fieldTitle, this._onTap, this.context, this._content,
@@ -41,20 +42,33 @@ class _FieldState extends State<Field> {
             },
             // borderRadius: BorderRadius.circular(18),
             child: Container(
-              alignment: Alignment.centerRight,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadiusDirectional.all(Radius.circular(30)),
-                color: Color(0xFFFFFFFF),
-              ),
-              child: Text(
-                widget._content,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: const BoxDecoration(
+                  borderRadius:
+                      BorderRadiusDirectional.all(Radius.circular(30)),
+                  color: Color(0xFFFFFFFF),
                 ),
-              ),
-            ),
+                child: Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.end, // Align to the end for RTL layout
+                  children: [
+                    // Add some spacing
+                    Text(
+                      widget._content,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    SvgPicture.asset(
+                      widget._iconPath,
+                      width: 25,
+                      height: 25,
+                    ) // Replace with your desired icon
+                  ],
+                )),
           ),
         ),
       ],

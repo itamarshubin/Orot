@@ -96,9 +96,10 @@ class _NewVisitPageState extends State<NewVisitPage> {
       alignment: Alignment.topRight,
       child: const Text("קביעת מפגש",
           style: TextStyle(
-              fontFamily: 'VarelaRound',
-              fontWeight: FontWeight.w400,
-              fontSize: 32)),
+            fontFamily: 'VarelaRound',
+            fontWeight: FontWeight.w400,
+            fontSize: 32,
+          )),
     );
   }
 
