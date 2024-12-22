@@ -4,7 +4,7 @@ import 'package:orot/components/main_button.dart';
 import 'package:orot/services/admin_service.dart';
 
 class AddCoordinatorPage extends StatefulWidget {
-  AddCoordinatorPage({super.key});
+  const AddCoordinatorPage({super.key});
 
   @override
   State<AddCoordinatorPage> createState() => _AddCoordinatorPageState();
