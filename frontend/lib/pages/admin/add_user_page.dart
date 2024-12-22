@@ -15,6 +15,7 @@ class AddUserPage extends StatelessWidget {
         body: Container(
       padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
       child: Column(
+        //spacing: , consider using this instead of SizeBox
         children: [
           _title(),
           const SizedBox(height: 30),
