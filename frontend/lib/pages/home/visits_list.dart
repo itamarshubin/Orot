@@ -29,7 +29,7 @@ class _VisitsListState extends State<VisitsList> {
               )),
         ),
         SizedBox(
-          height: 250,
+          height: 215,
           child: ListView.builder(
             addSemanticIndexes: true,
             controller: controller,
