@@ -128,10 +128,10 @@ class CustomGradientButton extends StatelessWidget {
       height: 35,
       width: 90,
       decoration: BoxDecoration(
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Colors.black.withAlpha(80),
-            offset: const Offset(0, 4),
+            color: Colors.grey,
+            offset: Offset(0, 3),
             blurRadius: 4,
             spreadRadius: 1,
           ),
