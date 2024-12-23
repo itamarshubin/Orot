@@ -76,6 +76,7 @@ flutter:
     - assets/img/hand.png
     - assets/img/logo.png
     - assets/img/loading.png
+    - assets/img/heart_hug.png
     - assets/icons/pick_date_icon.svg
     - assets/icons/pick_time_icon.svg
     - assets/icons/location_icon.svg
