@@ -124,7 +124,7 @@ class CustomGradientButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 10),
-      padding: const EdgeInsets.all(0),
+      padding: EdgeInsets.zero,
       height: 35,
       width: 90,
       decoration: BoxDecoration(
@@ -152,19 +152,15 @@ class CustomGradientButton extends StatelessWidget {
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           padding: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(17),
-          ),
         ),
         child: Center(
-          child: Text(
-            text,
-            style: GoogleFonts.heebo(
-                textStyle: const TextStyle(
-                    color: Color(0xff205273),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15)),
-          ),
+          child: Text(text,
+              style: GoogleFonts.heebo(
+                  textStyle: const TextStyle(
+                color: Color(0xff205273),
+                fontWeight: FontWeight.w500,
+                fontSize: 15,
+              ))),
         ),
       ),
     );
