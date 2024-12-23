@@ -10,72 +10,8 @@ class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> createCoordinator(
-      {required String email,
-      required String password,
-      required displayName}) async {
-    try {
-      UserCredential newUser = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      await FirestoreService().createCoordinatorDocument(
-          user: newUser.user!, displayName: displayName);
-      Fluttertoast.showToast(
-        msg: "coordinator created",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
-      );
-    } on FirebaseException catch (e) {
-      Fluttertoast.showToast(
-        msg: e.message ?? e.code,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
-      );
-    }
-  }
-
   User? getCurrentUser() {
     return _auth.currentUser;
-  }
-
-  Future<void> createUser(
-      {required String email,
-      required String password,
-      required displayName}) async {
-    try {
-      UserCredential newUser = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      await FirestoreService()
-          .createUserDocument(user: newUser.user!, displayName: displayName);
-      Fluttertoast.showToast(
-        msg: "user created",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
-      );
-    } on FirebaseException catch (e) {
-      Fluttertoast.showToast(
-        msg: e.message ?? e.code,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
-      );
-    }
   }
 
   Future<void> createDistrict({required String name}) async {
@@ -146,9 +82,5 @@ class AuthService {
 
   Future<void> quickSignout() async {
     await FirebaseAuth.instance.signOut();
-  }
-
-  void printUser() {
-    print(FirebaseAuth.instance.currentUser);
   }
 }

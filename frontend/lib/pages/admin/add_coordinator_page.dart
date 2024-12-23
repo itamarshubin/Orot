@@ -226,7 +226,6 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
   Future<void> _initDistricts() async {
     try {
       final List<District> districts = await AdminService().getDistricts();
-      print('got districts: $districts');
       setState(() {
         _districts = districts;
         _selectedDistrictId = districts.first.id;

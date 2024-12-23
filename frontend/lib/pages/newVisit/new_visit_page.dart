@@ -1,12 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:orot/components/AppFooter.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/pages/newVisit/field.dart';
+import 'package:orot/services/auth_service.dart';
 import 'package:orot/services/google_auth.dart';
 import 'package:orot/services/google_calender/calender_service.dart';
 import 'package:orot/services/google_calender/schemas/event.dart';
 import 'package:orot/services/google_calender/schemas/event_time.dart';
+import 'package:orot/services/volunteer_service.dart';
 
 class NewVisitPage extends StatefulWidget {
   const NewVisitPage({super.key});
@@ -18,6 +21,7 @@ class NewVisitPage extends StatefulWidget {
 class _NewVisitPageState extends State<NewVisitPage> {
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
+  User? _user = AuthService().getCurrentUser();
 
   String formatTimeOfDay(TimeOfDay timeOfDay) {
     final hours = timeOfDay.hour.toString().padLeft(2, '0');
@@ -160,7 +164,7 @@ class _NewVisitPageState extends State<NewVisitPage> {
         child: MainButton(
           text: 'שליחה',
           onPress: () {
-            // TODO: Implement send button functionality
+            VolunteerService().createVisit(dateTime: getUpdatedDateTime());
           },
         ));
   }

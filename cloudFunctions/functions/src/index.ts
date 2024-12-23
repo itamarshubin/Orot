@@ -80,10 +80,6 @@ export const createDistrict = onCall<District>(async (data, context) => {
 export const getDistricts = onCall(async (data, context) => {
   if (await isAdmin(data)) {
     const districts = await getFirestore().collection("districts").get();
-    console.log(
-      "districts.docs.map((doc) => doc.data());",
-      districts.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    );
     return districts.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
   }
   throw new Error("Unauthorized");
@@ -94,7 +90,7 @@ export const createVolunteer = onCall(async (data, context) => {
     const newVolunteer = await auth().createUser({
       email: data.data.email,
       password: data.data.password,
-      displayName: data.data.name,
+      displayName: data.data.displayName,
     });
     await getFirestore()
       .collection("volunteers")
@@ -111,4 +107,24 @@ export const createFamily = onCall<FamilyData>(async (data, context) => {
       contact: data.data.contact,
     });
   }
+});
+
+export const createVisit = onCall(async (data, context) => {
+  if (!data.auth) return;
+
+  const volunteerDocument = await getFirestore()
+    .collection("volunteers")
+    .doc(data.auth.uid)
+    .get();
+  const familyRef = volunteerDocument.data()?.family;
+
+  const newVisit = await getFirestore()
+    .collection("visits")
+    .doc()
+    .set({
+      family: familyRef,
+      visitDate: new Date(data.data.dateTime),
+      attendees: [volunteerDocument.ref],
+    });
+  return newVisit;
 });

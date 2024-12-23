@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/services/auth_service.dart';
+import 'package:orot/services/coordinator_service.dart';
 
-class AddUserPage extends StatelessWidget {
-  AddUserPage({super.key});
+class AddVolunteerPage extends StatelessWidget {
+  AddVolunteerPage({super.key});
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -26,7 +27,7 @@ class AddUserPage extends StatelessWidget {
           const SizedBox(height: 30),
           _name(),
           const SizedBox(height: 30),
-          _createUser(),
+          _createVolunteer(),
         ],
       ),
     ));
@@ -151,11 +152,11 @@ class AddUserPage extends StatelessWidget {
     );
   }
 
-  Widget _createUser() {
+  Widget _createVolunteer() {
     return MainButton(
         text: 'יצירת משתמש',
         onPress: () async {
-          await AuthService().createUser(
+          await CoordinatorService().createVolunteer(
             email: _emailController.text,
             password: _passwordController.text,
             displayName: _nameController.text,

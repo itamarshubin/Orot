@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Open Sans'),
-      home: user == null ? const LoginPage() : const AdminPage(),
+      home: user == null ? const LoginPage() : const HomePage(),
     );
   }
 }

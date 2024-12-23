@@ -6,13 +6,6 @@ import 'package:orot/pages/admin/add_coordinator_page.dart';
 class AdminService {
   final FirebaseFunctions _functions = FirebaseFunctions.instance;
 
-  Future<void> createUser() async {
-    final callable = _functions.httpsCallable('createUser');
-    final results = await callable.call();
-
-    print(results.data);
-  }
-
   Future<void> createCoordinator(
       {required String email,
       required String password,
@@ -78,7 +71,6 @@ class AdminService {
       final callable = _functions.httpsCallable('getDistricts');
       final results = await callable.call();
 
-      print('results.data: ${results.data}');
       return (results.data as List)
           .map((item) =>
               District(name: item['name'] as String, id: item['id'] as String))
