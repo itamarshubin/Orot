@@ -7,13 +7,15 @@ enum VisitButtonOption { edit, view }
 class VisitCard extends StatefulWidget {
   final String address;
   final String dateAndTime;
-  final VisitButtonOption visitButtonOption;
+  final bool? hasVisited;
+  final VisitButtonOption? visitButtonOption;
 
   const VisitCard({
     super.key,
     this.address = 'איפושהו בעולם',
     this.dateAndTime = '16:00 | 19.1',
-    this.visitButtonOption = VisitButtonOption.edit,
+    this.visitButtonOption,
+    this.hasVisited,
   });
 
   @override
@@ -33,9 +35,10 @@ class _VisitCardState extends State<VisitCard> {
           spacing: 10,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               spacing: 5,
-              children: [
+              children: <Widget>[
+                _hasVisitedIcon(),
                 TextWithIcon(
                   widget.dateAndTime,
                   'assets/icons/pick_date_icon.svg',
@@ -45,8 +48,8 @@ class _VisitCardState extends State<VisitCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               spacing: 5,
-              children: [
-                _getButton(VisitButtonOption.edit),
+              children: <Widget>[
+                _getButton(),
                 TextWithIcon(
                   widget.address,
                   'assets/icons/location_icon.svg',
@@ -59,13 +62,33 @@ class _VisitCardState extends State<VisitCard> {
     );
   }
 
-//TODO: implement the button functunality
-  Widget _getButton(VisitButtonOption option) {
-    switch (option) {
+  Widget _hasVisitedIcon() {
+    if (widget.hasVisited == null) {
+      return const SizedBox.shrink();
+    }
+    return SvgPicture.asset(
+        height: 20,
+        widget.hasVisited == true
+            ? 'assets/icons/green_circle_icon.svg'
+            : 'assets/icons/grey_circle_icon.svg');
+  }
+
+  Widget _getButton() {
+    switch (widget.visitButtonOption) {
       case VisitButtonOption.edit:
-        return CustomGradientButton(text: 'שינוי פרטים', onPressed: () {});
+        return CustomGradientButton(
+            text: 'שינוי פרטים',
+            onPressed: () {
+              //TODO: implement the button functunality
+            });
       case VisitButtonOption.view:
-        return CustomGradientButton(text: 'צפייה בסיכום', onPressed: () {});
+        return CustomGradientButton(
+            text: 'צפייה בסיכום',
+            onPressed: () {
+              //TODO: implement the button functunality
+            });
+      case null:
+        return const SizedBox.shrink();
     }
   }
 }

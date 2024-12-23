@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -67,6 +69,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _addVisitButton() {
+    //TODO: implement real functionality
     return MainButton(
       text: 'קביעת מפגש',
       onPress: () => Fluttertoast.showToast(msg: 'test'),
@@ -78,17 +81,28 @@ Widget _visits() {
   return Column(
     spacing: 10,
     children: [
-      VisitsList("פגישות עתידיות", getVisitsList()),
-      VisitsList("היסטורית פגישות", getVisitsList()),
+      VisitsList("פגישות עתידיות", getFuture()),
+      VisitsList("היסטורית פגישות", getHistory()),
     ],
   );
 }
 
-List<VisitCard> getVisitsList() {
+List<VisitCard> getHistory() {
   return [
     for (int i = 0; i < 10; i++)
       VisitCard(
         visitButtonOption: VisitButtonOption.view,
+        hasVisited: Random().nextDouble() > .3,
+        address: "חנה רובינא $i, חיפה",
+      )
+  ];
+}
+
+List<VisitCard> getFuture() {
+  return [
+    for (int i = 0; i < 10; i++)
+      VisitCard(
+        visitButtonOption: VisitButtonOption.edit,
         address: "חנה רובינא $i, חיפה",
       )
   ];
