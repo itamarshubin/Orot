@@ -6,7 +6,6 @@ import 'package:orot/components/main_button.dart';
 import 'package:orot/pages/home/upcoming_visits.dart';
 import 'package:orot/pages/home/visit.dart';
 import 'package:orot/pages/home/visits_history.dart';
-import 'package:orot/pages/newVisit/new_visit_page.dart';
 import 'package:orot/services/auth_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -75,10 +74,7 @@ class _HomePageState extends State<HomePage> {
         child: MainButton(
             text: 'קביעת מפגש',
             onPress: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => const NewVisitPage()));
+              print('test');
             }));
   }
 }

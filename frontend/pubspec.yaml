@@ -78,6 +78,9 @@ flutter:
     - assets/img/loading.png
     - assets/icons/pick_date_icon.svg
     - assets/icons/pick_time_icon.svg
+    - assets/icons/location_icon.svg
+    - assets/icons/green_circle_icon.svg
+    - assets/icons/grey_circle_icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

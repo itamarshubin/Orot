@@ -1,156 +1,117 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 enum VisitButtonOption { edit, view }
 
-class Visit extends StatefulWidget {
+class VisitCard extends StatefulWidget {
   final String address;
-  final VisitButtonOption visitButtonOption;
-  const Visit(
-      {super.key,
-      this.address = 'איפושהו בעולם',
-      this.visitButtonOption = VisitButtonOption.edit});
+  final String dateAndTime;
+  final bool? hasVisited;
+  final VisitButtonOption? visitButtonOption;
+
+  const VisitCard({
+    super.key,
+    this.address = 'איפושהו בעולם',
+    this.dateAndTime = '16:00 | 19.1',
+    this.visitButtonOption,
+    this.hasVisited,
+  });
 
   @override
-  State<Visit> createState() => _VisitState();
+  State<VisitCard> createState() => _VisitCardState();
 }
 
-class _VisitState extends State<Visit> {
+class _VisitCardState extends State<VisitCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 85,
-      margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadiusDirectional.all(Radius.circular(30)),
-          color: Color(0xFFFFFFFF)),
-      child: Column(
-        children: [
-          _visitDate(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _getButton(widget.visitButtonOption),
-              _visitLocation(),
-            ],
-          )
-        ],
+    return Card(
+      color: Colors.white,
+      child: Container(
+        width: double.infinity,
+        height: 100,
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          spacing: 10,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              spacing: 5,
+              children: <Widget>[
+                _hasVisitedIcon(),
+                TextWithIcon(
+                  widget.dateAndTime,
+                  'assets/icons/pick_date_icon.svg',
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              spacing: 5,
+              children: <Widget>[
+                _getButton(),
+                TextWithIcon(
+                  widget.address,
+                  'assets/icons/location_icon.svg',
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _visitDate() {
-    return Container(
-      alignment: Alignment.centerRight,
-      margin: const EdgeInsets.fromLTRB(0, 10, 20, 0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            '16:00 | 19.1',
-            style: GoogleFonts.openSans(
-                textStyle: const TextStyle(
-                    color: Color(0xff205273),
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20)),
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          const Icon(
-            Icons.calendar_month_outlined,
-            color: Color(0xff205273),
-          )
-        ],
-      ),
-    );
+  Widget _hasVisitedIcon() {
+    if (widget.hasVisited == null) {
+      return const SizedBox.shrink();
+    }
+    return SvgPicture.asset(
+        height: 20,
+        widget.hasVisited == true
+            ? 'assets/icons/green_circle_icon.svg'
+            : 'assets/icons/grey_circle_icon.svg');
   }
 
-  Widget _visitLocation() {
-    return Container(
-      alignment: Alignment.centerRight,
-      margin: const EdgeInsets.fromLTRB(0, 10, 20, 0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            widget.address,
-            style: GoogleFonts.openSans(
-                textStyle: const TextStyle(
-                    color: Color(0xff205273),
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20)),
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          const Icon(
-            Icons.location_on_outlined,
-            color: Color(0xff205273),
-          )
-        ],
-      ),
-    );
-  }
-
-//TODO: implement the button functunality
-  Widget _getButton(VisitButtonOption option) {
-    switch (option) {
+  Widget _getButton() {
+    switch (widget.visitButtonOption) {
       case VisitButtonOption.edit:
-        return _updateVisitButton('שינוי פרטים', () {});
+        return CustomGradientButton(
+            text: 'שינוי פרטים',
+            onPressed: () {
+              //TODO: implement the button functunality
+            });
       case VisitButtonOption.view:
-        return _updateVisitButton('צפייה בסיכום', () {});
+        return CustomGradientButton(
+            text: 'צפייה בסיכום',
+            onPressed: () {
+              //TODO: implement the button functunality
+            });
+      case null:
+        return const SizedBox.shrink();
     }
   }
+}
 
-  Widget _updateVisitButton(String text, void Function() onPressed) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-      height: 36,
-      width: 88,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            offset: const Offset(0, 4),
-            blurRadius: 4,
-            spreadRadius: 0,
-          ),
-        ],
-        borderRadius: BorderRadius.circular(17),
-        gradient: LinearGradient(
-          colors: [
-            const Color(0xFFD9D9D9),
-            const Color(0xFFF27E7E).withOpacity(0.26),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          padding: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(17),
-          ),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: GoogleFonts.heebo(
-                textStyle: const TextStyle(
-                    color: Color(0xff205273),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15)),
-          ),
-        ),
-      ),
-    );
+class TextWithIcon extends StatelessWidget {
+  final String text;
+  final String iconPath;
+
+  const TextWithIcon(this.text, this.iconPath, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(spacing: 5, children: <Widget>[
+      Text(text,
+          textDirection: TextDirection.rtl,
+          style: GoogleFonts.openSans(
+              textStyle: const TextStyle(
+            color: Color(0xff205273),
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+          ))),
+      SvgPicture.asset(iconPath, width: 25, height: 25),
+    ]);
   }
 }
 
@@ -167,26 +128,28 @@ class CustomGradientButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 36,
-      margin: const EdgeInsets.only(top: 166, left: 56),
+      // margin: const EdgeInsets.only(left: 10),
+      padding: EdgeInsets.zero,
+      height: 35,
+      width: 90,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(17),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0, 3),
+            blurRadius: 4,
+            spreadRadius: 1,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(15),
         gradient: LinearGradient(
           colors: [
             const Color(0xFFD9D9D9),
-            const Color(0xFFF27E7E).withOpacity(0.26),
+            const Color(0xFFFAA5A5).withAlpha(250),
           ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            offset: const Offset(0, 4),
-            blurRadius: 4,
-            spreadRadius: 0,
-          ),
-        ],
       ),
       child: ElevatedButton(
         onPressed: onPressed,
@@ -194,18 +157,15 @@ class CustomGradientButton extends StatelessWidget {
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           padding: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(17),
-          ),
         ),
         child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          child: Text(text,
+              style: GoogleFonts.heebo(
+                  textStyle: const TextStyle(
+                color: Color(0xff205273),
+                fontWeight: FontWeight.w500,
+                fontSize: 15,
+              ))),
         ),
       ),
     );
