@@ -89,9 +89,10 @@ class _VisitState extends State<Visit> {
           const SizedBox(
             width: 8,
           ),
-          const Icon(
-            Icons.location_on_outlined,
-            color: Color(0xff205273),
+          SvgPicture.asset(
+            'assets/icons/location_icon.svg',
+            width: 25,
+            height: 25,
           )
         ],
       ),

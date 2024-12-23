@@ -80,6 +80,7 @@ flutter:
     - assets/img/logo.png
     - assets/icons/pick_date_icon.svg
     - assets/icons/pick_time_icon.svg
+    - assets/icons/location_icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
