@@ -25,15 +25,20 @@ Although you can use only one file for this. The best practice is to make one fi
 and one for production.  
 These are our files:
 
-- flutter_native_splash-dev.yaml => edit this to test
-- flutter_native_splash-prod.yaml => edit this for production
+- flutter_native_splash.yaml => edit this to test
+- flutter_native_splash-production.yaml => edit this for production
 
 After your changes run this command to update the splash files:
 
 ```bash
-dart run flutter_native_splash:create --flavor dev
+dart run flutter_native_splash:create
 ```
 
-Note that you need to choose your flavor (environment).  
-To take changes from `flutter_native_splash-prod.yaml` file simple change `--flavor prod`
+And for production run this:
 
+```bash
+dart run flutter_native_splash:create --flavor production
+```
+
+Note That for production it will create in `android/app/production` and will not use the default
+which is `main`.

@@ -1,6 +1,0 @@
-flutter_native_splash:
-  web: false
-  background_image: "assets/img/loading.png"
-  android_12:
-    background_image: "assets/img/loading.png"
-

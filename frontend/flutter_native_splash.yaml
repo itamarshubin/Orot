@@ -1,0 +1,12 @@
+flutter_native_splash:
+  web: false
+  #  color: "#ffffff"
+  background_image: "assets/img/loading.png"
+  #  image: "assets/img/logo.png"
+  android_gravity: "fill"
+  android_12:
+    #    color: "#ffffff"
+    background_image: "assets/img/loading.png"
+    #    image: "assets/img/logo.png"
+    android_gravity: "fill"
+
