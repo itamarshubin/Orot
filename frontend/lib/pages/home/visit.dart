@@ -103,35 +103,47 @@ class _VisitState extends State<Visit> {
   Widget _getButton(VisitButtonOption option) {
     switch (option) {
       case VisitButtonOption.edit:
-        return _updateVisitButton('שינוי פרטים', () {});
+        return CustomGradientButton(text: 'שינוי פרטים', onPressed: () {});
       case VisitButtonOption.view:
-        return _updateVisitButton('צפייה בסיכום', () {});
+        return CustomGradientButton(text: 'צפייה בסיכום', onPressed: () {});
     }
   }
+}
 
-  Widget _updateVisitButton(String text, void Function() onPressed) {
+class CustomGradientButton extends StatelessWidget {
+  final String text;
+  final VoidCallback? onPressed;
+
+  const CustomGradientButton({
+    super.key,
+    required this.text,
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-      height: 36,
-      width: 88,
+      margin: const EdgeInsets.only(left: 10),
+      padding: const EdgeInsets.all(0),
+      height: 30,
+      width: 90,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withAlpha(70),
             offset: const Offset(0, 4),
             blurRadius: 4,
-            spreadRadius: 0,
+            spreadRadius: 1,
           ),
         ],
-        borderRadius: BorderRadius.circular(17),
+        borderRadius: BorderRadius.circular(15),
         gradient: LinearGradient(
           colors: [
-            const Color(0xFFD9D9D9),
-            const Color(0xFFF27E7E).withOpacity(0.26),
+            const Color(0xFFCFCECE),
+            const Color(0xFFF27E7E).withAlpha(150),
           ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
       ),
       child: ElevatedButton(
@@ -152,64 +164,6 @@ class _VisitState extends State<Visit> {
                     color: Color(0xff205273),
                     fontWeight: FontWeight.w500,
                     fontSize: 15)),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomGradientButton extends StatelessWidget {
-  final String text;
-  final VoidCallback? onPressed;
-
-  const CustomGradientButton({
-    super.key,
-    required this.text,
-    this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 36,
-      margin: const EdgeInsets.only(top: 166, left: 56),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(17),
-        gradient: LinearGradient(
-          colors: [
-            const Color(0xFFD9D9D9),
-            const Color(0xFFF27E7E).withOpacity(0.26),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            offset: const Offset(0, 4),
-            blurRadius: 4,
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          padding: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(17),
-          ),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
           ),
         ),
       ),
