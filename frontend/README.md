@@ -17,7 +17,13 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Updating Flutter Native Splash
 
-There are two files.
+Flutter Native Splash helps us update all files that related to splash art at the app launch.  
+The package will change it for android, ios and web (configurable by you).
+That means you can only change one file and it will change it for all platforms!.
+
+Although you can use only one file for this. The best practice is to make one file for development
+and one for production.  
+These are our files:
 
 - flutter_native_splash-dev.yaml => edit this to test
 - flutter_native_splash-prod.yaml => edit this for production
