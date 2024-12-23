@@ -125,12 +125,12 @@ class CustomGradientButton extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(left: 10),
       padding: const EdgeInsets.all(0),
-      height: 30,
+      height: 35,
       width: 90,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withAlpha(70),
+            color: Colors.black.withAlpha(80),
             offset: const Offset(0, 4),
             blurRadius: 4,
             spreadRadius: 1,
@@ -139,8 +139,8 @@ class CustomGradientButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         gradient: LinearGradient(
           colors: [
-            const Color(0xFFCFCECE),
-            const Color(0xFFF27E7E).withAlpha(150),
+            const Color(0xFFD9D9D9),
+            const Color(0xFFFAA5A5).withAlpha(250),
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
