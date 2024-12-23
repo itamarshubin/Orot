@@ -27,10 +27,10 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final User? user = FirebaseAuth.instance.currentUser;
-
   @override
   Widget build(BuildContext context) {
+    final User? user = FirebaseAuth.instance.currentUser;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Open Sans'),
