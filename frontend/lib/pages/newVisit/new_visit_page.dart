@@ -1,11 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:orot/components/AppFooter.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/pages/newVisit/field.dart';
+import 'package:orot/services/auth_service.dart';
 import 'package:orot/services/google_auth.dart';
 import 'package:orot/services/google_calender/calender_service.dart';
 import 'package:orot/services/google_calender/schemas/event.dart';
 import 'package:orot/services/google_calender/schemas/event_time.dart';
+import 'package:orot/services/volunteer_service.dart';
 
 class NewVisitPage extends StatefulWidget {
   const NewVisitPage({super.key});
@@ -17,6 +21,7 @@ class NewVisitPage extends StatefulWidget {
 class _NewVisitPageState extends State<NewVisitPage> {
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
+  User? _user = AuthService().getCurrentUser();
 
   String formatTimeOfDay(TimeOfDay timeOfDay) {
     final hours = timeOfDay.hour.toString().padLeft(2, '0');
@@ -65,30 +70,27 @@ class _NewVisitPageState extends State<NewVisitPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF3EDED),
-      body: Container(
-        height: double.maxFinite,
-        padding: const EdgeInsets.fromLTRB(60, 80, 60, 0),
-        child: Align(
-          alignment: Alignment.topRight,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _from(),
-              _sendButton(),
-            ],
-          ),
-        ),
-      ),
-    );
+        backgroundColor: const Color(0xFFF3EDED),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+                padding: const EdgeInsets.fromLTRB(60, 80, 60, 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [_title(), _from()],
+                )),
+            const Spacer(),
+            _sendButton(),
+            const AppFooter()
+          ],
+        ));
   }
 
   Widget _from() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        _title(),
-        const SizedBox(height: 20),
         _addDate(),
         const SizedBox(height: 20),
         _addTime(),
@@ -157,15 +159,14 @@ class _NewVisitPageState extends State<NewVisitPage> {
   }
 
   Widget _sendButton() {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: MainButton(
-        text: 'שליחה',
-        onPress: () {
-          // TODO: Implement send button functionality
-        },
-      ),
-    );
+    return Padding(
+        padding: const EdgeInsets.only(bottom: 20.0, left: 60, right: 60),
+        child: MainButton(
+          text: 'שליחה',
+          onPress: () {
+            VolunteerService().createVisit(dateTime: getUpdatedDateTime());
+          },
+        ));
   }
 
   DateTime getUpdatedDateTime() {

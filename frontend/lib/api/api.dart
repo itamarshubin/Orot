@@ -29,7 +29,6 @@ Future fetchMeetingDates(String name) async {
   final res = await http.get(Uri.parse("$baseUrl/meetings/$name"));
 
   if (res.statusCode == 200) {
-    // print(jsonDecode(res.body));
     return jsonDecode(res.body);
   } else {
     throw Exception('Failed to fetch joke');

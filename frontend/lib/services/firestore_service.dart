@@ -6,24 +6,6 @@ class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> createUserDocument(
-      {required User user, required String displayName}) async {
-    await user.updateDisplayName(displayName);
-
-    await _firestore.collection('volunteers').doc(user.uid).set({
-      'displayName': displayName,
-    });
-  }
-
-  Future<void> createCoordinatorDocument(
-      {required User user, required String displayName}) async {
-    await user.updateDisplayName(displayName);
-
-    await _firestore.collection('coordinators').doc(user.uid).set({
-      'displayName': displayName,
-    });
-  }
-
   Future<OrotUser?> _getCurrentUser() async {
     User? currentUser = _auth.currentUser;
     if (currentUser != null) {

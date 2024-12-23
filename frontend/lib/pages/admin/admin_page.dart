@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:orot/pages/admin/add_coordinator_page.dart';
 import 'package:orot/pages/admin/add_district_page.dart';
-import 'package:orot/pages/admin/add_user_page.dart';
+import 'package:orot/pages/admin/add_family_page.dart';
+import 'package:orot/pages/admin/add_volunteer_page.dart';
 
 class AdminPage extends StatelessWidget {
   const AdminPage({super.key});
@@ -19,7 +20,8 @@ class AdminPage extends StatelessWidget {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => AddUserPage()));
+                          builder: (BuildContext context) =>
+                              AddVolunteerPage()));
                 },
                 child: const Text('הוספת משתמש')),
           ),
@@ -48,6 +50,18 @@ class AdminPage extends StatelessWidget {
                               AddDistrictPage()));
                 },
                 child: const Text('הוספת מחוז')),
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(0, 200, 0, 0),
+            alignment: Alignment.center,
+            child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => AddFamilyPage()));
+                },
+                child: const Text('הוספת משפחה')),
           ),
         ],
       ),

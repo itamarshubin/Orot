@@ -15,7 +15,14 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
 
-  String _district = 'מחוז צפון';
+  @override
+  void initState() {
+    super.initState();
+    _initDistricts();
+  }
+
+  List<District> _districts = [District(id: '0', name: 'loading...')];
+  String _selectedDistrictId = '0';
 
   @override
   Widget build(BuildContext context) {
@@ -162,10 +169,22 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
     );
   }
 
+  Widget _createCoordinator() {
+    return MainButton(
+        text: 'יצירת רכזת',
+        onPress: () async {
+          await AdminService().createCoordinator(
+              email: _emailController.text,
+              password: _passwordController.text,
+              name: _nameController.text,
+              districtId: _selectedDistrictId);
+        });
+  }
+
   Widget _districtDropdown() {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           alignment: Alignment.centerRight,
@@ -181,41 +200,45 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
         const SizedBox(
           height: 10,
         ),
-        DropdownButton<String>(
-          value: _district,
-          icon: const Icon(Icons.arrow_drop_down),
-          iconSize: 24,
-          elevation: 16,
-          style: const TextStyle(color: Colors.black),
-          underline: Container(
-            height: 2,
-            color: Colors.black,
+        Container(
+          alignment: Alignment.centerRight,
+          child: DropdownButton<District>(
+            value: _districts
+                .firstWhere((district) => district.id == _selectedDistrictId),
+            onChanged: (District? newValue) {
+              setState(() {
+                _selectedDistrictId = newValue!.id;
+              });
+            },
+            items:
+                _districts.map<DropdownMenuItem<District>>((District district) {
+              return DropdownMenuItem<District>(
+                value: district,
+                child: Text(district.name),
+              );
+            }).toList(),
           ),
-          onChanged: (String? newValue) {
-            setState(() {
-              _district = newValue!;
-            });
-          },
-          items: <String>['מחוז צפון', 'מחוז מרכז', 'מחוז דרום']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
         )
       ],
     );
   }
 
-  Widget _createCoordinator() {
-    return MainButton(
-        text: 'יצירת רכזת',
-        onPress: () async {
-          await AdminService().createCoordinator(
-              email: _emailController.text,
-              password: _passwordController.text,
-              name: _nameController.text);
-        });
+  Future<void> _initDistricts() async {
+    try {
+      final List<District> districts = await AdminService().getDistricts();
+      setState(() {
+        _districts = districts;
+        _selectedDistrictId = districts.first.id;
+      });
+    } catch (e) {
+      _districts = [District(id: '0', name: 'error loading districts')];
+    }
   }
+}
+
+class District {
+  final String id;
+  final String name;
+
+  District({required this.id, required this.name});
 }
