@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
 import 'package:orot/pages/admin/admin_page.dart';
+import 'package:orot/pages/home/home_page.dart';
 import 'package:orot/pages/login_page.dart';
 
 Future<void> main() async {
@@ -29,6 +30,7 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
 
   @override
   Widget build(BuildContext context) {
