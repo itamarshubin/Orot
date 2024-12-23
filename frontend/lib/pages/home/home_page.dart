@@ -1,11 +1,13 @@
+import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
-import 'package:orot/pages/home/upcoming_visits.dart';
 import 'package:orot/pages/home/visit.dart';
-import 'package:orot/pages/home/visits_history.dart';
+import 'package:orot/pages/home/visits_list.dart';
+import 'package:orot/pages/newVisit/new_visit_page.dart';
 import 'package:orot/services/auth_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,9 +17,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-//TODO: change to FUTURE<Visit> and find a way to handle this
-Visit getNearestVisit() {
-  return const Visit(
+VisitCard getNearestVisit() {
+  return const VisitCard(
     visitButtonOption: VisitButtonOption.edit,
   );
 }
@@ -39,44 +40,76 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [
-          Stack(
-            children: [
-              const Title(),
-              Container(
-                margin: const EdgeInsets.fromLTRB(40, 100, 40, 0),
-                child: Column(
-                  children: [_nearestVisitTitle(), getNearestVisit()],
-                ),
-              )
-            ],
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-            child: Column(
+        resizeToAvoidBottomInset: false,
+        body: Column(
+          spacing: 10,
+          children: [
+            Stack(
               children: [
-                _addVisitButton(),
-                const UpcomingVisits(),
-                const VisitsHistory()
+                const Title(),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(40, 100, 40, 0),
+                  child: Column(
+                    children: [
+                      _nearestVisitTitle(),
+                      getNearestVisit(),
+                    ],
+                  ),
+                )
               ],
             ),
-          )
-        ],
-      ),
-    );
+            Container(
+                margin: const EdgeInsets.symmetric(horizontal: 40),
+                child: Column(
+                  spacing: 10,
+                  children: [_addVisitButton(), _visits()],
+                ))
+          ],
+        ));
   }
 
   Widget _addVisitButton() {
-    return Container(
-        margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-        child: MainButton(
-            text: 'קביעת מפגש',
-            onPress: () {
-              print('test');
-            }));
+    return MainButton(
+      text: 'קביעת מפגש',
+      onPress: () => {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => const NewVisitPage()))
+      },
+    );
   }
+}
+
+Widget _visits() {
+  return Column(
+    spacing: 10,
+    children: [
+      VisitsList("פגישות עתידיות", getFuture()),
+      VisitsList("היסטורית פגישות", getHistory()),
+    ],
+  );
+}
+
+List<VisitCard> getHistory() {
+  return [
+    for (int i = 0; i < 10; i++)
+      VisitCard(
+        visitButtonOption: VisitButtonOption.view,
+        hasVisited: Random().nextDouble() > .3,
+        address: "חנה רובינא $i, חיפה",
+      )
+  ];
+}
+
+List<VisitCard> getFuture() {
+  return [
+    for (int i = 0; i < 10; i++)
+      VisitCard(
+        visitButtonOption: VisitButtonOption.edit,
+        address: "חנה רובינא $i, חיפה",
+      )
+  ];
 }
 
 class Title extends StatefulWidget {
