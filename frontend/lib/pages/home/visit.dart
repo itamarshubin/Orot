@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 enum VisitButtonOption { edit, view }
@@ -6,10 +7,12 @@ enum VisitButtonOption { edit, view }
 class Visit extends StatefulWidget {
   final String address;
   final VisitButtonOption visitButtonOption;
-  const Visit(
-      {super.key,
-      this.address = 'איפושהו בעולם',
-      this.visitButtonOption = VisitButtonOption.edit});
+
+  const Visit({
+    super.key,
+    this.address = 'איפושהו בעולם',
+    this.visitButtonOption = VisitButtonOption.edit,
+  });
 
   @override
   State<Visit> createState() => _VisitState();
@@ -58,9 +61,10 @@ class _VisitState extends State<Visit> {
           const SizedBox(
             width: 8,
           ),
-          const Icon(
-            Icons.calendar_month_outlined,
-            color: Color(0xff205273),
+          SvgPicture.asset(
+            'assets/icons/pick_date_icon.svg',
+            width: 25,
+            height: 25,
           )
         ],
       ),
