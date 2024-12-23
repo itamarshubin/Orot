@@ -16,8 +16,8 @@ class HomePage extends StatefulWidget {
 }
 
 //TODO: change to FUTURE<Visit> and find a way to handle this
-Visit getNearestVisit() {
-  return const Visit(
+VisitCard getNearestVisit() {
+  return const VisitCard(
     visitButtonOption: VisitButtonOption.edit,
   );
 }
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
         child: MainButton(
             text: 'קביעת מפגש',
             onPress: () {
-              print('test');
+              debugPrint('test');
             }));
   }
 }

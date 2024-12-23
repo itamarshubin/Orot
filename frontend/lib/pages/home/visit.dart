@@ -4,97 +4,57 @@ import 'package:google_fonts/google_fonts.dart';
 
 enum VisitButtonOption { edit, view }
 
-class Visit extends StatefulWidget {
+class VisitCard extends StatefulWidget {
   final String address;
+  final String dateAndTime;
   final VisitButtonOption visitButtonOption;
 
-  const Visit({
+  const VisitCard({
     super.key,
     this.address = 'איפושהו בעולם',
+    this.dateAndTime = '16:00 | 19.1',
     this.visitButtonOption = VisitButtonOption.edit,
   });
 
   @override
-  State<Visit> createState() => _VisitState();
+  State<VisitCard> createState() => _VisitCardState();
 }
 
-class _VisitState extends State<Visit> {
+class _VisitCardState extends State<VisitCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 85,
-      margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadiusDirectional.all(Radius.circular(30)),
-          color: Color(0xFFFFFFFF)),
-      child: Column(
-        children: [
-          _visitDate(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _getButton(widget.visitButtonOption),
-              _visitLocation(),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _visitDate() {
-    return Container(
-      alignment: Alignment.centerRight,
-      margin: const EdgeInsets.fromLTRB(0, 10, 20, 0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            '16:00 | 19.1',
-            style: GoogleFonts.openSans(
-                textStyle: const TextStyle(
-                    color: Color(0xff205273),
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20)),
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          SvgPicture.asset(
-            'assets/icons/pick_date_icon.svg',
-            width: 25,
-            height: 25,
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _visitLocation() {
-    return Container(
-      alignment: Alignment.centerRight,
-      margin: const EdgeInsets.fromLTRB(0, 10, 20, 0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            widget.address,
-            style: GoogleFonts.openSans(
-                textStyle: const TextStyle(
-                    color: Color(0xff205273),
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20)),
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          SvgPicture.asset(
-            'assets/icons/location_icon.svg',
-            width: 25,
-            height: 25,
-          )
-        ],
+    return Card(
+      color: Colors.white,
+      child: Container(
+        width: double.infinity,
+        height: 100,
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          spacing: 10,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              spacing: 5,
+              children: [
+                TextWithIcon(
+                  widget.dateAndTime,
+                  'assets/icons/pick_date_icon.svg',
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              spacing: 5,
+              children: [
+                _getButton(VisitButtonOption.edit),
+                TextWithIcon(
+                  widget.address,
+                  'assets/icons/location_icon.svg',
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -107,6 +67,28 @@ class _VisitState extends State<Visit> {
       case VisitButtonOption.view:
         return CustomGradientButton(text: 'צפייה בסיכום', onPressed: () {});
     }
+  }
+}
+
+class TextWithIcon extends StatelessWidget {
+  final String text;
+  final String iconPath;
+
+  const TextWithIcon(this.text, this.iconPath, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(spacing: 5, children: <Widget>[
+      Text(text,
+          textDirection: TextDirection.rtl,
+          style: GoogleFonts.openSans(
+              textStyle: const TextStyle(
+            color: Color(0xff205273),
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+          ))),
+      SvgPicture.asset(iconPath, width: 25, height: 25),
+    ]);
   }
 }
 
@@ -123,7 +105,7 @@ class CustomGradientButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 10),
+      // margin: const EdgeInsets.only(left: 10),
       padding: EdgeInsets.zero,
       height: 35,
       width: 90,

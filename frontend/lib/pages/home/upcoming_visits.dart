@@ -11,9 +11,10 @@ class UpcomingVisits extends StatefulWidget {
 
 class _UpcomingVisitsState extends State<UpcomingVisits> {
   ScrollController controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
-    List<Visit> visits = getUpcomingVisits();
+    List<VisitCard> visits = getUpcomingVisits();
     return Column(
       children: [
         _title(),
@@ -33,12 +34,12 @@ class _UpcomingVisitsState extends State<UpcomingVisits> {
     );
   }
 
-  List<Visit> getUpcomingVisits() {
+  List<VisitCard> getUpcomingVisits() {
     return [
       for (int i = 0; i < 5; i++)
-        Visit(
+        VisitCard(
           visitButtonOption: VisitButtonOption.edit,
-          address: "upcoming visit $i",
+          address: "חנה רובינא $i, חיפה",
         )
     ];
   }

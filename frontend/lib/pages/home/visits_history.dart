@@ -11,9 +11,10 @@ class VisitsHistory extends StatefulWidget {
 
 class _VisitsHistoryState extends State<VisitsHistory> {
   ScrollController controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
-    List<Visit> visits = getVisitHistory();
+    List<VisitCard> visits = getVisitHistory();
     return Column(
       children: [
         _title(),
@@ -33,12 +34,12 @@ class _VisitsHistoryState extends State<VisitsHistory> {
     );
   }
 
-  List<Visit> getVisitHistory() {
+  List<VisitCard> getVisitHistory() {
     return [
       for (int i = 0; i < 5; i++)
-        Visit(
+        VisitCard(
           visitButtonOption: VisitButtonOption.view,
-          address: "history visit $i",
+          address: "חנה רובינא $i, חיפה",
         )
     ];
   }
