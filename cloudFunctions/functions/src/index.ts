@@ -95,7 +95,7 @@ export const createVolunteer = onCall(async (data, context) => {
     await getFirestore()
       .collection("volunteers")
       .doc(newVolunteer.uid)
-      .set({ displayName: data.data.name });
+      .set({ displayName: data.data.displayName });
   }
 });
 
