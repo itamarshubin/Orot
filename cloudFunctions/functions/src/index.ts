@@ -128,3 +128,39 @@ export const createVisit = onCall(async (data, context) => {
     });
   return newVisit;
 });
+
+export const scheduleVisitNotification = onCall(async (data, context) => {
+    await getFirestore()
+        .doc("visits/{visitId}")
+        .onCreate(async (snap, context) => {
+            const data = snap.data();
+            const visitTime = new Date(data.timeStamp).getTime();
+            const oneDayBefore = visitTime - 24 * 60 * 60 * 1000;
+
+            if (oneDayBefore > Date.now()) {
+                const attendees = data.attendees; // Array of ref/volunteers
+                const familySnap = await data.family.get(); // Get family details
+                const familyData = familySnap.data();
+
+                for (const attendeeRef of attendees) {
+                    const attendeeSnap = await attendeeRef.get();
+                    const attendeeData = attendeeSnap.data();
+
+                    if (attendeeData.email) {
+                        const payload = {
+                            notification: {
+                                title: "תזכורת לפגישה",
+                                body: `יש לך פגישה עם משפחת ${familyData.name} מחר`,
+                            },
+                            data: {
+                                visitId: context.params.visitId,
+                                familyName: familyData.name,
+                            },
+                        };
+                        await admin.messaging().sendToDevice(attendeeData.deviceToken, payload);
+                    }
+                }
+            }
+            return null;
+            }
+    });
