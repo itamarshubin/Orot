@@ -1,4 +1,3 @@
-
 class Profile {
   String fullname;
   String address;
@@ -8,13 +7,12 @@ class Profile {
       : fullname = json['fullname'],
         address = json['address'],
         phoneNumber = json['phoneNumber'];
-
 }
 
 class FamilyProfile extends Profile {
   String contact;
 
   FamilyProfile.fromJson(super.json)
-    : contact = json['contact'] ?? 'ccc',
-      super.fromJson();
+      : contact = json['contact'] ?? 'ccc',
+        super.fromJson();
 }

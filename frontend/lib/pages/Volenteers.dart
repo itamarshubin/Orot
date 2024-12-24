@@ -13,11 +13,10 @@ class _VolenteersPageState extends State<VolenteersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+        body: Container(
       width: 1000,
-
       decoration: const BoxDecoration(
-        color:Color.fromARGB(100, 243, 217, 217),
+        color: Color.fromARGB(100, 243, 217, 217),
         image: DecorationImage(
           image: AssetImage('assets/img/punk2.png'),
           scale: 0.87,
@@ -41,10 +40,10 @@ class _VolenteersPageState extends State<VolenteersPage> {
                 decoration: InputDecoration(
                   hintTextDirection: TextDirection.rtl,
                   hintText: "חיפוש שם",
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),),
-                  )
-              )
-          ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                ))),
         Expanded(
             child: ListView.builder(
                 padding: const EdgeInsets.only(top: 10),
@@ -67,15 +66,14 @@ class VolenteerCube extends StatelessWidget {
       alignment: Alignment.center,
       color: Colors.white,
       height: 50,
-      child: const Row(mainAxisAlignment: MainAxisAlignment.spaceAround
-      , children: [
-        Text("מחוז"),
-        Text("name"),
-        Row(children: [
-          Text("the third"),
-          Text("icon")
-          ]),
-      ],),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Text("מחוז"),
+          Text("name"),
+          Row(children: [Text("the third"), Text("icon")]),
+        ],
+      ),
     );
   }
 }

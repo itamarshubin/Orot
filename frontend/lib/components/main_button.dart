@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class MainButton extends StatelessWidget {
   final String text;
   final VoidCallback onPress;
+
   const MainButton({super.key, required this.text, required this.onPress});
 
   @override
