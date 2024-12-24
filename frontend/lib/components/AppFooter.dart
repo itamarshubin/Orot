@@ -11,7 +11,8 @@ class _AppFooterState extends State<AppFooter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(50.0),
+      height: 100,
+      width: double.infinity,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadiusDirectional.all(Radius.circular(30)),

@@ -48,6 +48,7 @@ dependencies:
   json_annotation: ^4.9.0
   google_sign_in: ^6.2.2
   flutter_native_splash: ^2.4.3
+  scaffold_gradient_background: ^1.0.3+1
 
 dev_dependencies:
   flutter_test:
@@ -70,18 +71,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/img/hand.svg
-    - assets/img/punk.png
-    - assets/img/blue.png
-    - assets/img/hand.png
-    - assets/img/logo.png
-    - assets/img/loading.png
-    - assets/img/heart_hug.png
-    - assets/icons/pick_date_icon.svg
-    - assets/icons/pick_time_icon.svg
-    - assets/icons/location_icon.svg
-    - assets/icons/green_circle_icon.svg
-    - assets/icons/grey_circle_icon.svg
+    - assets/img/
+    - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

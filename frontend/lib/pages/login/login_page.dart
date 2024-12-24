@@ -1,0 +1,115 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/components/field_input.dart';
+import 'package:orot/components/main_button.dart';
+import 'package:orot/services/auth_service.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
+
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaffoldGradientBackground(
+        resizeToAvoidBottomInset: false,
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.center,
+          colors: [
+            Color(0xFFFFC3C3),
+            Color(0xFFFFFFFF),
+          ],
+        ),
+        appBar: AppBar(
+          toolbarHeight: 100,
+          centerTitle: true,
+          title: Image.asset('assets/img/logo.png'),
+          backgroundColor: Colors.transparent,
+        ),
+        body: Container(
+          margin: const EdgeInsets.only(top: 20),
+          decoration: const BoxDecoration(
+              borderRadius:
+                  BorderRadiusDirectional.vertical(top: Radius.circular(30)),
+              color: Color(0xffF3EDED)),
+          child: const LoginForm(),
+        ));
+  }
+}
+
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+        child: Padding(
+            padding: const EdgeInsets.only(top: 30, left: 40, right: 40),
+            child: Column(
+              spacing: 20,
+              children: [
+                _title(),
+                FieldInput(
+                  inputTitle: 'מייל',
+                  textEditingController: _emailController,
+                  hintText: 'example@gmail.com',
+                  onEditingCompleteFunction: () => {
+                    //TODO: validate mail before submit
+                  },
+                ),
+                FieldInput(
+                  inputTitle: 'סיסמה',
+                  textEditingController: _passwordController,
+                  obscureText: true,
+                  hintText: '•••',
+                ),
+                _signIn(context),
+                _signOutButton()
+              ],
+            )));
+  }
+
+  Widget _title() {
+    return Container(
+      alignment: Alignment.centerRight,
+      child: Text(
+        'כניסה למערכת',
+        style: GoogleFonts.openSans(
+            textStyle: const TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 32,
+          color: Color.fromRGBO(32, 82, 1145, 1),
+        )),
+      ),
+    );
+  }
+
+  Widget _signIn(BuildContext context) {
+    return MainButton(
+        text: 'כניסה למערכת',
+        onPress: () async {
+          await AuthService().signin(
+            email: _emailController.text,
+            password: _passwordController.text,
+            context: context,
+          );
+        });
+  }
+
+  //TODO: delete
+  Widget _signOutButton() {
+    return ElevatedButton(
+        onPressed: () {
+          AuthService().quickSignout();
+        },
+        child: const Text('signOUt'));
+  }
+}
