@@ -83,7 +83,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               _forgotPassword(),
               SizedBox(height: 20),
-              _signIn(context),
+              _signInButton(context),
               _signOutButton(),
               SvgPicture.asset(
                 '/assets/img/kids_with_clouds.svg',
@@ -129,7 +129,7 @@ class _LoginFormState extends State<LoginForm> {
         ));
   }
 
-  Widget _signIn(BuildContext context) {
+  Widget _signInButton(BuildContext context) {
     return MainButton(
         text: 'כניסה למערכת',
         onPress: () async {
