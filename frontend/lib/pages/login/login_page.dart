@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/field_input.dart';
 import 'package:orot/components/main_button.dart';
@@ -26,13 +27,23 @@ class LoginPage extends StatelessWidget {
           title: Image.asset('assets/img/logo.png'),
           backgroundColor: Colors.transparent,
         ),
-        body: Container(
-          margin: const EdgeInsets.only(top: 20),
-          decoration: const BoxDecoration(
-              borderRadius:
-                  BorderRadiusDirectional.vertical(top: Radius.circular(30)),
-              color: Color(0xffF3EDED)),
-          child: const LoginForm(),
+        body: Stack(
+          fit: StackFit.loose,
+          alignment: Alignment.bottomCenter,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 20, bottom: 20),
+              decoration: const BoxDecoration(
+                  borderRadius:
+                      BorderRadiusDirectional.all(Radius.circular(30)),
+                  color: Color(0xffF3EDED)),
+              child: const LoginForm(),
+            ),
+            SvgPicture.asset(
+              "assets/img/kids_with_clouds.svg",
+              fit: BoxFit.cover,
+            )
+          ],
         ));
   }
 }
@@ -51,30 +62,38 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-        child: Padding(
-            padding: const EdgeInsets.only(top: 30, left: 40, right: 40),
-            child: Column(
-              spacing: 20,
-              children: [
-                _title(),
-                FieldInput(
-                  inputTitle: 'מייל',
-                  textEditingController: _emailController,
-                  hintText: 'example@gmail.com',
-                  onEditingCompleteFunction: () => {
-                    //TODO: validate mail before submit
-                  },
-                ),
-                FieldInput(
-                  inputTitle: 'סיסמה',
-                  textEditingController: _passwordController,
-                  obscureText: true,
-                  hintText: '•••',
-                ),
-                _signIn(context),
-                _signOutButton()
-              ],
-            )));
+      child: Padding(
+          padding: const EdgeInsets.only(top: 30, left: 40, right: 40),
+          child: Column(
+            spacing: 10,
+            children: [
+              _title(),
+              FieldInput(
+                inputTitle: 'מייל',
+                textEditingController: _emailController,
+                hintText: 'example@gmail.com',
+                onEditingCompleteFunction: () => {
+                  //TODO: validate mail before submit
+                },
+              ),
+              FieldInput(
+                inputTitle: 'סיסמה',
+                textEditingController: _passwordController,
+                obscureText: true,
+                hintText: '•••',
+              ),
+              _forgotPassword(),
+              SizedBox(height: 20),
+              _signIn(context),
+              _signOutButton(),
+              SvgPicture.asset(
+                '/assets/img/kids_with_clouds.svg',
+                width: double.infinity,
+                height: 300,
+              )
+            ],
+          )),
+    );
   }
 
   Widget _title() {
@@ -88,6 +107,20 @@ class _LoginFormState extends State<LoginForm> {
           fontSize: 32,
           color: Color.fromRGBO(32, 82, 1145, 1),
         )),
+      ),
+    );
+  }
+
+  Widget _forgotPassword() {
+    return Container(
+      alignment: Alignment.topRight,
+      child: Text(
+        "שכחתי סיסמה",
+        style: GoogleFonts.varelaRound(
+          fontSize: 17,
+          fontWeight: FontWeight.w400,
+          color: Color(0xffA1A1A1),
+        ),
       ),
     );
   }

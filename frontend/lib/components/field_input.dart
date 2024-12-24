@@ -25,6 +25,7 @@ class _FieldInputState extends State<FieldInput> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 3,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
