@@ -28,8 +28,6 @@ class LoginPage extends StatelessWidget {
           backgroundColor: Colors.transparent,
         ),
         body: Stack(
-          fit: StackFit.loose,
-          alignment: Alignment.bottomCenter,
           children: [
             Container(
               margin: const EdgeInsets.only(top: 20, bottom: 20),
