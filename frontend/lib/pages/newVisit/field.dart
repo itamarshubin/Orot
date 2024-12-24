@@ -3,15 +3,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Field extends StatefulWidget {
-  const Field(this._fieldTitle, this._onTap, this.context, this._content,
-      this._iconPath,
-      {super.key});
+  const Field({
+    super.key,
+    this.onTap,
+    this.iconPath,
+    required this.fieldTitle,
+    required this.content,
+    required this.context,
+  });
 
-  final String _fieldTitle;
-  final Future<void> Function(BuildContext) _onTap;
+  final String fieldTitle;
+  final VoidCallback? onTap;
   final BuildContext context;
-  final String _content;
-  final String _iconPath;
+  final String content;
+  final String? iconPath;
 
   @override
   State<Field> createState() => _FieldState();
@@ -28,7 +33,7 @@ class _FieldState extends State<Field> {
         Container(
             alignment: Alignment.bottomRight,
             child: Text(
-              widget._fieldTitle,
+              widget.fieldTitle,
               style: GoogleFonts.varelaRound(
                 color: Color(0xff205273),
                 fontWeight: FontWeight.w400,
@@ -38,16 +43,17 @@ class _FieldState extends State<Field> {
         SizedBox(
           height: 40,
           child: InkWell(
-            onTap: () async {
-              await widget._onTap(widget.context);
-            },
-            // borderRadius: BorderRadius.circular(18),
+            onTap: widget.onTap,
             child: Container(
                 alignment: Alignment.centerRight,
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: const BoxDecoration(
                   borderRadius:
                       BorderRadiusDirectional.all(Radius.circular(30)),
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 3, color: Colors.grey, offset: Offset(0, 1))
+                  ],
                   color: Color(0xFFFFFFFF),
                 ),
                 child: Row(
@@ -55,20 +61,20 @@ class _FieldState extends State<Field> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   spacing: 10,
                   children: [
-                    // Add some spacing
                     Text(
-                      widget._content,
+                      widget.content,
                       style: GoogleFonts.varelaRound(
                         color: Color(0xff205273),
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
                       ),
                     ),
-                    SvgPicture.asset(
-                      widget._iconPath,
-                      width: 25,
-                      height: 25,
-                    ) // Replace with your desired icon
+                    if (widget.iconPath != null)
+                      SvgPicture.asset(
+                        widget.iconPath!,
+                        width: 25,
+                        height: 25,
+                      )
                   ],
                 )),
           ),

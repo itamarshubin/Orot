@@ -1,14 +1,16 @@
 import 'dart:math';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
+import 'package:orot/modal/user_modal.dart';
 import 'package:orot/pages/home/visit.dart';
 import 'package:orot/pages/home/visits_list.dart';
 import 'package:orot/pages/newVisit/new_visit_page.dart';
-import 'package:orot/services/auth_service.dart';
+import 'package:orot/pages/profile_page.dart';
+import 'package:orot/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -38,34 +40,48 @@ Widget _nearestVisitTitle() {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      print('send request to the server');
+      context.read<UserProvider>().getUserData();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Column(
-          spacing: 10,
-          children: [
-            Stack(
-              children: [
-                const Title(),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(40, 100, 40, 0),
-                  child: Column(
-                    children: [
-                      _nearestVisitTitle(),
-                      getNearestVisit(),
-                    ],
+    return Consumer<UserProvider>(builder: (context, userProvider, child) {
+      print('doing this shit');
+      return Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Column(
+            spacing: 10,
+            children: [
+              Stack(
+                children: [
+                  Title(
+                    displayName: userProvider.userName,
                   ),
-                )
-              ],
-            ),
-            Container(
-                margin: const EdgeInsets.symmetric(horizontal: 40),
-                child: Column(
-                  spacing: 10,
-                  children: [_addVisitButton(), _visits()],
-                ))
-          ],
-        ));
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(40, 100, 40, 0),
+                    child: Column(
+                      children: [
+                        _nearestVisitTitle(),
+                        getNearestVisit(),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Column(
+                    spacing: 10,
+                    children: [_addVisitButton(), _visits()],
+                  ))
+            ],
+          ));
+    });
   }
 
   Widget _addVisitButton() {
@@ -75,7 +91,7 @@ class _HomePageState extends State<HomePage> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => const NewVisitPage()))
+                builder: (BuildContext context) => const ProfilePage()))
       },
     );
   }
@@ -113,32 +129,13 @@ List<VisitCard> getFuture() {
 }
 
 class Title extends StatefulWidget {
-  const Title({super.key});
-
+  const Title({super.key, this.displayName});
+  final String? displayName;
   @override
   State<Title> createState() => _TitleState();
 }
 
 class _TitleState extends State<Title> {
-  String _displayName = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _setDisplayName();
-  }
-
-  Future<void> _setDisplayName() async {
-    try {
-      final User? currentUser = AuthService().getCurrentUser();
-      setState(() {
-        _displayName = currentUser?.displayName ?? "אורח";
-      });
-    } catch (e) {
-      _displayName = 'שגיאה, $e';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -175,7 +172,7 @@ class _TitleState extends State<Title> {
               'assets/img/hand.svg',
             ),
             Text(
-              'שלום $_displayName',
+              'שלום ${widget.displayName}',
               style: GoogleFonts.assistant(
                   textStyle: const TextStyle(
                 fontWeight: FontWeight.w700,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -8,27 +9,18 @@ import 'package:orot/pages/login/login_page.dart';
 class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFunctions _functions = FirebaseFunctions.instance;
 
-  User? getCurrentUser() {
-    return _auth.currentUser;
-  }
-
-  Future<void> createDistrict({required String name}) async {
+  Future<dynamic> getCurrentUser() async {
     try {
-      await _firestore.collection('districts').doc().set({
-        'name': name,
-      });
+      final callable = _functions.httpsCallable('getCurrentUser');
+      final shit = await callable.call();
+      return shit.data;
+    } catch (e) {
+      print('error $e');
+
       Fluttertoast.showToast(
-        msg: "district created",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
-      );
-    } on FirebaseException catch (e) {
-      Fluttertoast.showToast(
-        msg: e.message ?? e.code,
+        msg: e.toString(),
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.SNACKBAR,
         backgroundColor: Colors.black54,
@@ -37,6 +29,7 @@ class AuthService {
       );
     }
   }
+  
 
   Future<void> signin({
     required String email,
