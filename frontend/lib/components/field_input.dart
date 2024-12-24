@@ -7,12 +7,14 @@ class FieldInput extends StatefulWidget {
   final String? hintText;
   final VoidCallback? onEditingCompleteFunction;
   final bool obscureText;
+  final FormFieldValidator<String>? inputValidation;
 
   const FieldInput({
     required this.textEditingController,
     required this.inputTitle,
     this.hintText,
     this.onEditingCompleteFunction,
+    this.inputValidation,
     this.obscureText = false,
     super.key,
   });
@@ -39,21 +41,22 @@ class _FieldInputState extends State<FieldInput> {
                 fontSize: 17,
               )),
             )),
-        TextField(
+        TextFormField(
           maxLines: 1,
           controller: widget.textEditingController,
           onEditingComplete: widget.onEditingCompleteFunction,
-          textAlignVertical: TextAlignVertical.bottom,
+          textAlignVertical: TextAlignVertical.center,
           obscureText: widget.obscureText,
+          validator: widget.inputValidation,
+          autovalidateMode: AutovalidateMode.onUnfocus,
           decoration: InputDecoration(
-            constraints: BoxConstraints(maxHeight: 36),
+            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
             filled: true,
             hintText: widget.hintText,
             hintStyle: GoogleFonts.varelaRound(
-                textStyle: const TextStyle(
               color: Color(0xffB7B4B4),
               fontSize: 20,
-            )),
+            ),
             fillColor: const Color(0xffF5F5F5),
             border: OutlineInputBorder(
               borderSide: BorderSide.none,

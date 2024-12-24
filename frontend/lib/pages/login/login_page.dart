@@ -57,6 +57,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +75,12 @@ class _LoginFormState extends State<LoginForm> {
                 onEditingCompleteFunction: () => {
                   //TODO: validate mail before submit
                 },
+                inputValidation: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'הוסיפי מייל (גם בשביל שכחתי סיסמה)';
+                  }
+                  return null;
+                },
               ),
               FieldInput(
                 inputTitle: 'סיסמה',
@@ -88,7 +95,6 @@ class _LoginFormState extends State<LoginForm> {
               SvgPicture.asset(
                 '/assets/img/kids_with_clouds.svg',
                 width: double.infinity,
-                height: 300,
               )
             ],
           )),
@@ -101,22 +107,26 @@ class _LoginFormState extends State<LoginForm> {
       child: Text(
         'כניסה למערכת',
         style: GoogleFonts.openSans(
-            textStyle: const TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 32,
           color: Color.fromRGBO(32, 82, 1145, 1),
-        )),
+        ),
       ),
     );
   }
 
   Widget _forgotPassword() {
+    String email;
     return Container(
         alignment: Alignment.topRight,
         child: InkWell(
-          onTap: () => {
-            //TODO: implement forgot password
-            Fluttertoast.showToast(msg: "forgot password")
+          onTap: () async => {
+            email = _emailController.text.trim(),
+            if (email.isNotEmpty)
+              Fluttertoast.showToast(
+                  msg: await _auth.resetPasswordWithEmail(email))
+            else
+              Fluttertoast.showToast(msg: "אנא כתבי את המייל בשדה למעלה")
           },
           child: Text(
             "שכחתי סיסמה",
@@ -133,7 +143,7 @@ class _LoginFormState extends State<LoginForm> {
     return MainButton(
         text: 'כניסה למערכת',
         onPress: () async {
-          await AuthService().signin(
+          await _auth.signin(
             email: _emailController.text,
             password: _passwordController.text,
             context: context,
@@ -144,7 +154,6 @@ class _LoginFormState extends State<LoginForm> {
   //TODO: delete
   Widget _signOutButton() {
     return ElevatedButton(
-        onPressed: () => AuthService().quickSignout(),
-        child: const Text('signOUt'));
+        onPressed: () => _auth.quickSignout(), child: const Text('signOUt'));
   }
 }
