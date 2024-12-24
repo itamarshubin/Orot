@@ -1,5 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+enum ComingOptions { comingAlone, notComingAlone, notComing }
+
+class UserArrivalDetails {
+  final bool? isComing;
+  final ComingOptions? comingOptions;
+
+  UserArrivalDetails({
+    this.isComing = true,
+    this.comingOptions = ComingOptions.comingAlone,
+  });
+
+  String toJson() {
+    return JsonEncoder()
+        .convert({"isComing": isComing, "comingOptions": comingOptions});
+  }
+}
 
 class EventReminderPage extends StatefulWidget {
   const EventReminderPage({super.key});
@@ -9,16 +29,22 @@ class EventReminderPage extends StatefulWidget {
 }
 
 class _EventReminderPageState extends State<EventReminderPage> {
+  final UserArrivalDetails userArrivalDetails = UserArrivalDetails();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffF3F3F3),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
         child: Column(
+          textDirection: TextDirection.rtl,
+          crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10,
           children: [
             _reminderCard(),
+            SvgPicture.asset('assets/img/shadow_floating_object.svg'),
+            _validateUserArrival(),
           ],
         ),
       ),
@@ -27,24 +53,96 @@ class _EventReminderPageState extends State<EventReminderPage> {
 
   Widget _reminderCard() {
     return Card(
-      child: Column(
-        children: [
-          Stack(
+        color: Colors.white,
+        child: Container(
+          padding: const EdgeInsets.all(15),
+          width: double.infinity,
+          height: 190,
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.centerRight,
             children: [
               Positioned(
-                top: -5,
-                left: -5,
-                child: SvgPicture.asset('assets/img/bell.svg'),
+                top: -40,
+                left: -35,
+                child: SvgPicture.asset(height: 70, 'assets/img/bell.svg'),
+              ),
+              Column(
+                textDirection: TextDirection.rtl,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "תזכורת!",
+                    textDirection: TextDirection.rtl,
+                    textAlign: TextAlign.right,
+                    style: GoogleFonts.assistant(
+                      color: Color(0xffB22759),
+                      fontSize: 32,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  RichText(
+                    textDirection: TextDirection.rtl,
+                    text: TextSpan(
+                        style: GoogleFonts.assistant(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        children: [
+                          TextSpan(text: "מחר - יום רביעי 12.11"),
+                          TextSpan(text: "\nמתרחשת פגישה עם משפחת אבגד"),
+                          TextSpan(text: "\nבכתובת חנה רובינא 3, חיפה"),
+                        ]),
+                  )
+                ],
               )
             ],
           ),
-          Title(color: Color(0xffB22759), child: Text("""
-            מחר - יום רביעי 12.11
-            מתרחשת פגישה עם משפחת אבגד
-            בכתובת חנה רובינא 3, חיפה
-            """))
-        ],
-      ),
+        ));
+  }
+
+  Widget _validateUserArrival() {
+    return Column(
+      textDirection: TextDirection.rtl,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 10,
+      children: [
+        _areYouComing(),
+        Text(
+          "במידה ואת מגיעה האם את באה לבד?",
+          textAlign: TextAlign.right,
+          textDirection: TextDirection.rtl,
+          style: GoogleFonts.assistant(
+              color: Color(0xff205273),
+              fontWeight: FontWeight.w600,
+              fontSize: 20),
+        ),
+      ],
+    );
+  }
+
+  Widget _areYouComing() {
+    return Column(
+      textDirection: TextDirection.rtl,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "האם תגיעי מחר לפגישה?",
+          textAlign: TextAlign.right,
+          textDirection: TextDirection.rtl,
+          style: GoogleFonts.assistant(
+              color: Color(0xff205273),
+              fontWeight: FontWeight.w600,
+              fontSize: 20),
+        ),
+        Row(
+          textDirection: TextDirection.rtl,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [Text("Yes"), Text("No")],
+        )
+      ],
     );
   }
 }
