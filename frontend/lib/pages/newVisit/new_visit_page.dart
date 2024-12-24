@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/pages/newVisit/field.dart';
@@ -29,11 +31,24 @@ class _NewVisitPageState extends State<NewVisitPage> {
         body: Column(
           spacing: 20,
           children: [
-            Container(
+            Padding(
                 padding: const EdgeInsets.fromLTRB(60, 80, 60, 0),
-                child: Column(
-                  spacing: 20,
-                  children: [_title(), _from()],
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: <Widget>[
+                    Positioned(
+                      top: -10,
+                      right: -20,
+                      child: _xRedButton(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: Column(
+                        spacing: 20,
+                        children: [_title(), _from()],
+                      ),
+                    )
+                  ],
                 )),
             Image.asset('assets/img/calendar_people.webp'),
             _sendButton()
@@ -41,28 +56,60 @@ class _NewVisitPageState extends State<NewVisitPage> {
         ));
   }
 
-  Widget _from() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _addDate(),
-        const SizedBox(height: 20),
-        _addTime(),
-        const SizedBox(height: 20),
-        _addToCalender(),
-      ],
+  Widget _xRedButton() {
+    return InkWell(
+      onTap: () => {
+        //TODO: implement button
+      },
+      child: Container(
+        alignment: Alignment.topRight,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            SvgPicture.asset(
+              "assets/icons/green_circle_icon.svg",
+              colorFilter: ColorFilter.mode(
+                Colors.redAccent,
+                BlendMode.srcATop,
+              ),
+              height: 35,
+            ),
+            Text(
+              "X",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.varelaRound(
+                color: Color(0xffF27E7E),
+                fontSize: 30,
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
   Widget _title() {
     return Container(
-      alignment: Alignment.topRight,
-      child: const Text("קביעת מפגש",
-          style: TextStyle(
-            fontFamily: 'VarelaRound',
-            fontWeight: FontWeight.w400,
+        alignment: Alignment.topRight,
+        child: Text(
+          "קביעת מפגש",
+          style: GoogleFonts.varelaRound(
+            color: Color(0xff205273),
+            fontWeight: FontWeight.w700,
             fontSize: 32,
-          )),
+          ),
+        ));
+  }
+
+  Widget _from() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      spacing: 20,
+      children: [
+        _addDate(),
+        _addTime(),
+        _addToCalender(),
+      ],
     );
   }
 

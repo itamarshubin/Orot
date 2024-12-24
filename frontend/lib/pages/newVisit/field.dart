@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Field extends StatefulWidget {
   const Field(this._fieldTitle, this._onTap, this.context, this._content,
@@ -22,18 +23,18 @@ class _FieldState extends State<Field> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 5,
       children: [
         Container(
             alignment: Alignment.bottomRight,
             child: Text(
               widget._fieldTitle,
-              style: const TextStyle(
-                fontFamily: 'VarelaRound',
+              style: GoogleFonts.varelaRound(
+                color: Color(0xff205273),
                 fontWeight: FontWeight.w400,
                 fontSize: 20,
               ),
             )),
-        const SizedBox(height: 10),
         SizedBox(
           height: 40,
           child: InkWell(
@@ -50,18 +51,19 @@ class _FieldState extends State<Field> {
                   color: Color(0xFFFFFFFF),
                 ),
                 child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.end, // Align to the end for RTL layout
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  spacing: 10,
                   children: [
                     // Add some spacing
                     Text(
                       widget._content,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                      style: GoogleFonts.varelaRound(
+                        color: Color(0xff205273),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
                       ),
                     ),
-                    const SizedBox(width: 10),
                     SvgPicture.asset(
                       widget._iconPath,
                       width: 25,
