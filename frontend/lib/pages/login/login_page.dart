@@ -39,10 +39,10 @@ class LoginPage extends StatelessWidget {
                   color: Color(0xffF3EDED)),
               child: const LoginForm(),
             ),
-            SvgPicture.asset(
-              "assets/img/kids_with_clouds.svg",
-              fit: BoxFit.fill,
-            )
+            Positioned(
+                bottom: 0,
+                left: 10,
+                child: SvgPicture.asset("assets/img/kids_with_clouds.svg"))
           ],
         ));
   }
