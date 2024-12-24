@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:orot/components/AppFooter.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/pages/newVisit/field.dart';
 import 'package:orot/services/auth_service.dart';
@@ -23,66 +22,21 @@ class _NewVisitPageState extends State<NewVisitPage> {
   TimeOfDay _selectedTime = TimeOfDay.now();
   User? _user = AuthService().getCurrentUser();
 
-  String formatTimeOfDay(TimeOfDay timeOfDay) {
-    final hours = timeOfDay.hour.toString().padLeft(2, '0');
-    final minutes = timeOfDay.minute.toString().padLeft(2, '0');
-    return '$hours:$minutes';
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime(
-        DateTime.now().year,
-        DateTime.now().month,
-        DateTime.now().day,
-      ),
-      lastDate: DateTime(2101),
-    );
-
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
-    }
-  }
-
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: const TimeOfDay(hour: 10, minute: 47),
-      builder: (BuildContext context, Widget? child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-          child: child!,
-        );
-      },
-    );
-
-    if (picked != null && picked != _selectedTime) {
-      setState(() {
-        _selectedTime = picked;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xFFF3EDED),
+        backgroundColor: const Color(0xffF3EDED),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          spacing: 20,
           children: [
             Container(
                 padding: const EdgeInsets.fromLTRB(60, 80, 60, 0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  spacing: 20,
                   children: [_title(), _from()],
                 )),
-            const Spacer(),
-            _sendButton(),
-            const AppFooter()
+            Image.asset('assets/img/calendar_people.webp'),
+            _sendButton()
           ],
         ));
   }
@@ -167,6 +121,50 @@ class _NewVisitPageState extends State<NewVisitPage> {
             VolunteerService().createVisit(dateTime: getUpdatedDateTime());
           },
         ));
+  }
+
+  String formatTimeOfDay(TimeOfDay timeOfDay) {
+    final hours = timeOfDay.hour.toString().padLeft(2, '0');
+    final minutes = timeOfDay.minute.toString().padLeft(2, '0');
+    return '$hours:$minutes';
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: const TimeOfDay(hour: 10, minute: 47),
+      builder: (BuildContext context, Widget? child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+      });
+    }
   }
 
   DateTime getUpdatedDateTime() {
