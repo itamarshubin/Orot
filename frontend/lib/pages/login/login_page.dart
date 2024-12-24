@@ -41,7 +41,7 @@ class LoginPage extends StatelessWidget {
             ),
             SvgPicture.asset(
               "assets/img/kids_with_clouds.svg",
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             )
           ],
         ));
