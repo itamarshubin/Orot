@@ -144,9 +144,7 @@ class _LoginFormState extends State<LoginForm> {
   //TODO: delete
   Widget _signOutButton() {
     return ElevatedButton(
-        onPressed: () {
-          AuthService().quickSignout();
-        },
+        onPressed: () => AuthService().quickSignout(),
         child: const Text('signOUt'));
   }
 }
