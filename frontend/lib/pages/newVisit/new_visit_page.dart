@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:orot/components/main_button.dart';
@@ -57,12 +58,10 @@ class _NewVisitPageState extends State<NewVisitPage> {
   }
 
   Widget _xRedButton() {
-    return InkWell(
-      onTap: () => {
-        //TODO: implement button
-      },
-      child: Container(
-        alignment: Alignment.topRight,
+    return Container(
+      alignment: Alignment.topRight,
+      child: InkWell(
+        onTap: () => Fluttertoast.showToast(msg: "clicked"),
         child: Stack(
           alignment: Alignment.center,
           children: [

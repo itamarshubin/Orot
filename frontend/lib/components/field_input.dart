@@ -7,12 +7,14 @@ class FieldInput extends StatefulWidget {
   final String? hintText;
   final VoidCallback? onEditingCompleteFunction;
   final bool obscureText;
+  final FormFieldValidator<String>? inputValidation;
 
   const FieldInput({
     required this.textEditingController,
     required this.inputTitle,
     this.hintText,
     this.onEditingCompleteFunction,
+    this.inputValidation,
     this.obscureText = false,
     super.key,
   });
@@ -39,25 +41,31 @@ class _FieldInputState extends State<FieldInput> {
                 fontSize: 17,
               )),
             )),
-        TextField(
-          maxLines: 1,
-          controller: widget.textEditingController,
-          onEditingComplete: widget.onEditingCompleteFunction,
-          textAlignVertical: TextAlignVertical.bottom,
-          obscureText: widget.obscureText,
-          decoration: InputDecoration(
-            constraints: BoxConstraints(maxHeight: 36),
-            filled: true,
-            hintText: widget.hintText,
-            hintStyle: GoogleFonts.varelaRound(
-                textStyle: const TextStyle(
-              color: Color(0xffB7B4B4),
-              fontSize: 20,
-            )),
-            fillColor: const Color(0xffF5F5F5),
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(30),
+        Directionality(
+          textDirection: TextDirection.rtl,
+          child: TextFormField(
+            maxLines: 1,
+            textDirection: TextDirection.ltr,
+            controller: widget.textEditingController,
+            onEditingComplete: widget.onEditingCompleteFunction,
+            textAlignVertical: TextAlignVertical.center,
+            obscureText: widget.obscureText,
+            validator: widget.inputValidation,
+            autovalidateMode: AutovalidateMode.onUnfocus,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+              filled: true,
+              hintText: widget.hintText,
+              hintTextDirection: TextDirection.ltr,
+              hintStyle: GoogleFonts.varelaRound(
+                color: Color(0xffB7B4B4),
+                fontSize: 20,
+              ),
+              fillColor: const Color(0xffF5F5F5),
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(30),
+              ),
             ),
           ),
         )

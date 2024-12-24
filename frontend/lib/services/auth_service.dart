@@ -75,4 +75,15 @@ class AuthService {
   Future<void> quickSignout() async {
     await FirebaseAuth.instance.signOut();
   }
+
+  Future<String> resetPasswordWithEmail(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return "בדקי את תיבת המייל שלך";
+    } on FirebaseAuthException catch (err) {
+      return err.code;
+    } catch (err) {
+      return err.toString();
+    }
+  }
 }
