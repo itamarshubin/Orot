@@ -77,7 +77,7 @@ class _LoginFormState extends State<LoginForm> {
                 },
                 inputValidation: (text) {
                   if (text == null || text.isEmpty) {
-                    return 'הוסיפי מייל (גם בשביל שכחתי סיסמה)';
+                    return 'יש להזין מייל';
                   }
                   return null;
                 },
@@ -87,6 +87,12 @@ class _LoginFormState extends State<LoginForm> {
                 textEditingController: _passwordController,
                 obscureText: true,
                 hintText: '•••',
+                inputValidation: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'יש להזין סיסמה';
+                  }
+                  return null;
+                },
               ),
               _forgotPassword(),
               SizedBox(height: 20),
