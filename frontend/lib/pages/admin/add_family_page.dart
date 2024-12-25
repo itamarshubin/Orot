@@ -1,14 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
+import 'package:orot/pages/admin/add_coordinator_page.dart';
+import 'package:orot/pages/admin/components/back_button.dart';
+import 'package:orot/pages/admin/components/districts_dropdown.dart';
 import 'package:orot/services/admin_service.dart';
 
-class AddFamilyPage extends StatelessWidget {
+class AddFamilyPage extends StatefulWidget {
   AddFamilyPage({super.key});
 
+  @override
+  State<AddFamilyPage> createState() => _AddFamilyPageState();
+}
+
+class _AddFamilyPageState extends State<AddFamilyPage> {
   final _familyNameController = TextEditingController();
   final _addressController = TextEditingController();
   final _contactController = TextEditingController();
+  List<District> _districts = [District(id: '0', name: 'loading...')];
+  String _selectedDistrictId = '0';
+
+  void _updateSelectedDistrict(String? districtId) {
+    setState(() {
+      _selectedDistrictId = districtId ?? "0";
+    });
+  }
+
+  @override
+  void initState() {
+    _initDistricts();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +40,7 @@ class AddFamilyPage extends StatelessWidget {
       child: Column(
         //spacing: , consider using this instead of SizeBox
         children: [
+          BackToAdminPage(),
           _title(),
           const SizedBox(height: 30),
           _familyName(),
@@ -26,6 +49,11 @@ class AddFamilyPage extends StatelessWidget {
           const SizedBox(height: 30),
           _contact(),
           const SizedBox(height: 30),
+          DistrictsDropdown(
+            districts: _districts,
+            selectedDistrictId: _selectedDistrictId,
+            onSelectedIdChange: _updateSelectedDistrict,
+          ),
           _createFamily(),
         ],
       ),
@@ -149,6 +177,18 @@ class AddFamilyPage extends StatelessWidget {
     );
   }
 
+  Future<void> _initDistricts() async {
+    try {
+      final List<District> districts = await AdminService().getDistricts();
+      setState(() {
+        _districts = districts;
+        _selectedDistrictId = districts.first.id;
+      });
+    } catch (e) {
+      _districts = [District(id: '0', name: 'error loading districts')];
+    }
+  }
+
   Widget _createFamily() {
     return MainButton(
         text: 'שמירת משפחה',
@@ -156,7 +196,8 @@ class AddFamilyPage extends StatelessWidget {
           await AdminService().createFamily(
               name: _familyNameController.text,
               address: _addressController.text,
-              contact: _contactController.text);
+              contact: _contactController.text,
+              districtId: _selectedDistrictId);
         });
   }
 }

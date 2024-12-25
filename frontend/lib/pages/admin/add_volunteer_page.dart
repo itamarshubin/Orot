@@ -1,35 +1,107 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
+import 'package:orot/modal/user_modal.dart';
+import 'package:orot/pages/admin/admin_page.dart';
+import 'package:orot/pages/admin/components/back_button.dart';
+import 'package:orot/pages/admin/components/districts_dropdown.dart';
+import 'package:orot/pages/admin/components/families_dropdown.dart';
+import 'package:orot/services/admin_service.dart';
 import 'package:orot/services/coordinator_service.dart';
+import 'package:orot/user_provider.dart';
+import 'package:provider/provider.dart';
 
-class AddVolunteerPage extends StatelessWidget {
+class AddVolunteerPage extends StatefulWidget {
   AddVolunteerPage({super.key});
 
+  @override
+  State<AddVolunteerPage> createState() => _AddVolunteerPageState();
+}
+
+class _AddVolunteerPageState extends State<AddVolunteerPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
 
+  List<District> _districts = [District(id: '0', name: 'loading...')];
+  List<Family> _families = [Family(id: '0', name: 'loading...')];
+  String _selectedDistrictId = '0';
+  String _selectedFamilyId = '0';
+
+  @override
+  void initState() {
+    _initDistricts();
+    super.initState();
+  }
+
+  void _updateSelectedDistrict(String? districtId) {
+    setState(() {
+      _selectedDistrictId = districtId ?? "0";
+    });
+    _getFamilies(_selectedDistrictId);
+  }
+
+  void _updateSelectedFamily(String? familyId) {
+    setState(() {
+      _selectedFamilyId = familyId ?? "0";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-      padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
-      child: Column(
-        //spacing: , consider using this instead of SizeBox
-        children: [
-          _title(),
-          const SizedBox(height: 30),
-          _emailAddress(),
-          const SizedBox(height: 30),
-          _password(),
-          const SizedBox(height: 30),
-          _name(),
-          const SizedBox(height: 30),
-          _createVolunteer(),
-        ],
-      ),
-    ));
+    return Consumer<UserProvider>(builder: (context, userProvider, child) {
+      if (userProvider.userPermission == UserPermission.coordinator) {
+        _selectedDistrictId = userProvider.user!.district!.id;
+      }
+      return Scaffold(
+          body: Container(
+        padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
+        child: Column(
+          //TODO: spacing: , consider using this instead of SizeBox
+          children: [
+            BackToAdminPage(),
+            _title(),
+            const SizedBox(height: 30),
+            _emailAddress(),
+            const SizedBox(height: 30),
+            _password(),
+            const SizedBox(height: 30),
+            _name(),
+            const SizedBox(height: 30),
+            if (userProvider.userPermission == UserPermission.admin)
+              DistrictsDropdown(
+                districts: _districts,
+                selectedDistrictId: _selectedDistrictId,
+                onSelectedIdChange: _updateSelectedDistrict,
+              )
+            else
+              _district(userProvider.user?.district),
+            const SizedBox(height: 30),
+            FamiliesDropdown(
+              families: _families,
+              selectedFamilyId: _selectedFamilyId,
+              onSelectedFamilyChange: _updateSelectedFamily,
+            ),
+            _createVolunteer(),
+          ],
+        ),
+      ));
+    });
+  }
+
+  Widget _district(District? district) {
+    return Container(
+      alignment: Alignment.topRight,
+      child: Text(
+          'מחוז: ${district?.name ?? 'שגיאה - יש לנסות לרענן את האפליקצייה'}',
+          style: GoogleFonts.openSans(
+              textStyle: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20))),
+    );
   }
 
   Widget _title() {
@@ -151,15 +223,54 @@ class AddVolunteerPage extends StatelessWidget {
     );
   }
 
+  Future<void> _initDistricts() async {
+    try {
+      final List<District> districts = await AdminService().getDistricts();
+      setState(() {
+        _districts = districts;
+        _selectedDistrictId = districts.first.id;
+      });
+
+      try {
+        await _getFamilies(_selectedDistrictId);
+      } catch (e) {
+        setState(() {
+          _families = [Family(id: '0', name: 'error loading families')];
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _districts = [District(id: '0', name: 'error loading districts')];
+      });
+    }
+  }
+
+  Future<void> _getFamilies(String? districtId) async {
+    print('getting families:$districtId');
+    try {
+      final List<Family> families =
+          await CoordinatorService().getFamilies(districtId);
+      setState(() {
+        _families = families;
+        _selectedFamilyId = families.first.id;
+      });
+    } catch (e) {
+      setState(() {
+        _families = [Family(id: '0', name: 'error loading families')];
+      });
+    }
+  }
+
   Widget _createVolunteer() {
     return MainButton(
         text: 'יצירת משתמש',
         onPress: () async {
           await CoordinatorService().createVolunteer(
-            email: _emailController.text,
-            password: _passwordController.text,
-            displayName: _nameController.text,
-          );
+              email: _emailController.text,
+              password: _passwordController.text,
+              displayName: _nameController.text,
+              districtId: _selectedDistrictId,
+              familyId: _selectedFamilyId);
         });
   }
 }

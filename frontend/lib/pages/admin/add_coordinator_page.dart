@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
+import 'package:orot/pages/admin/components/back_button.dart';
+import 'package:orot/pages/admin/components/districts_dropdown.dart';
 import 'package:orot/services/admin_service.dart';
 
 class AddCoordinatorPage extends StatefulWidget {
@@ -15,14 +17,14 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    _initDistricts();
-  }
-
   List<District> _districts = [District(id: '0', name: 'loading...')];
   String _selectedDistrictId = '0';
+
+  void _updateSelectedDistrict(String? districtId) {
+    setState(() {
+      _selectedDistrictId = districtId ?? "0";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
       padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
       child: Column(
         children: [
+          BackToAdminPage(),
           _title(),
           const SizedBox(
             height: 30,
@@ -47,7 +50,11 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
           const SizedBox(
             height: 30,
           ),
-          _districtDropdown(),
+          DistrictsDropdown(
+            districts: _districts,
+            selectedDistrictId: _selectedDistrictId,
+            onSelectedIdChange: _updateSelectedDistrict,
+          ),
           _createCoordinator(),
         ],
       ),
@@ -180,65 +187,4 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
               districtId: _selectedDistrictId);
         });
   }
-
-  Widget _districtDropdown() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          alignment: Alignment.centerRight,
-          child: Text(
-            'מחוז',
-            style: GoogleFonts.openSans(
-                textStyle: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20)),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          alignment: Alignment.centerRight,
-          child: DropdownButton<District>(
-            value: _districts
-                .firstWhere((district) => district.id == _selectedDistrictId),
-            onChanged: (District? newValue) {
-              setState(() {
-                _selectedDistrictId = newValue!.id;
-              });
-            },
-            items:
-                _districts.map<DropdownMenuItem<District>>((District district) {
-              return DropdownMenuItem<District>(
-                value: district,
-                child: Text(district.name),
-              );
-            }).toList(),
-          ),
-        )
-      ],
-    );
-  }
-
-  Future<void> _initDistricts() async {
-    try {
-      final List<District> districts = await AdminService().getDistricts();
-      setState(() {
-        _districts = districts;
-        _selectedDistrictId = districts.first.id;
-      });
-    } catch (e) {
-      _districts = [District(id: '0', name: 'error loading districts')];
-    }
-  }
-}
-
-class District {
-  final String id;
-  final String name;
-
-  District({required this.id, required this.name});
 }

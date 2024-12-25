@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
-import 'package:orot/modal/user_modal.dart';
+import 'package:orot/pages/admin/admin_page.dart';
 import 'package:orot/pages/home/visit.dart';
 import 'package:orot/pages/home/visits_list.dart';
-import 'package:orot/pages/newVisit/new_visit_page.dart';
 import 'package:orot/pages/profile_page.dart';
 import 'package:orot/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -39,49 +38,56 @@ Widget _nearestVisitTitle() {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      print('send request to the server');
-      context.read<UserProvider>().getUserData();
+      _getUserData();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(builder: (context, userProvider, child) {
-      print('doing this shit');
       return Scaffold(
           resizeToAvoidBottomInset: false,
-          body: Column(
-            spacing: 10,
-            children: [
-              Stack(
-                children: [
-                  Title(
-                    displayName: userProvider.userName,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(40, 100, 40, 0),
-                    child: Column(
+          body: _isLoading
+              ? _Loading()
+              : Column(
+                  spacing: 10,
+                  children: [
+                    Stack(
                       children: [
-                        _nearestVisitTitle(),
-                        getNearestVisit(),
+                        Title(
+                          displayName: userProvider.userName,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(40, 100, 40, 0),
+                          child: Column(
+                            children: [
+                              _nearestVisitTitle(),
+                              getNearestVisit(),
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                  )
-                ],
-              ),
-              Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Column(
-                    spacing: 10,
-                    children: [_addVisitButton(), _visits()],
-                  ))
-            ],
-          ));
+                    Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 40),
+                        child: Column(
+                          spacing: 10,
+                          children: [_addVisitButton(), _visits()],
+                        ))
+                  ],
+                ));
     });
+  }
+
+//TODO: replace with something good
+  Widget _Loading() {
+    return Text('loading...');
   }
 
   Widget _addVisitButton() {
@@ -91,9 +97,16 @@ class _HomePageState extends State<HomePage> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => const ProfilePage()))
+                builder: (BuildContext context) => const AdminPage()))
       },
     );
+  }
+
+  Future<void> _getUserData() async {
+    await context.read<UserProvider>().getUserData();
+    setState(() {
+      _isLoading = false;
+    });
   }
 }
 

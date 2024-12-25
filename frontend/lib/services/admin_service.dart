@@ -2,6 +2,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:orot/pages/admin/add_coordinator_page.dart';
+import 'package:orot/pages/admin/components/districts_dropdown.dart';
 
 class AdminService {
   final FirebaseFunctions _functions = FirebaseFunctions.instance;
@@ -91,11 +92,30 @@ class AdminService {
   Future<void> createFamily(
       {required String name,
       required String address,
-      required String contact}) async {
+      required String contact,
+      required String districtId}) async {
+    if (name.isEmpty ||
+        address.isEmpty ||
+        contact.isEmpty ||
+        districtId.isEmpty) {
+      Fluttertoast.showToast(
+        msg: "אחד או יותר מהשדות ריקים",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: Colors.black54,
+        textColor: Colors.white,
+        fontSize: 14.0,
+      );
+      return;
+    }
     try {
       final callable = _functions.httpsCallable('createFamily');
-      await callable
-          .call({'name': name, 'address': address, 'contact': contact});
+      await callable.call({
+        'name': name,
+        'address': address,
+        'contact': contact,
+        'districtId': districtId
+      });
       Fluttertoast.showToast(
         msg: "משפחה נוצרה בהצלחה",
         toastLength: Toast.LENGTH_LONG,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
+import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/services/admin_service.dart';
 
 class AddDistrictPage extends StatelessWidget {
@@ -17,6 +18,7 @@ class AddDistrictPage extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
       child: Column(
         children: [
+          BackToAdminPage(),
           _title(),
           const SizedBox(height: 30),
           _name(),
