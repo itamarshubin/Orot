@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/components/switch_buttons.dart';
 
 enum ComingOptions { comingAlone, notComingAlone, notComing }
 
@@ -137,11 +138,7 @@ class _EventReminderPageState extends State<EventReminderPage> {
               fontWeight: FontWeight.w600,
               fontSize: 20),
         ),
-        Row(
-          textDirection: TextDirection.rtl,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [Text("Yes"), Text("No")],
-        )
+        SwitchButtons()
       ],
     );
   }
