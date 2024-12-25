@@ -7,6 +7,8 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
 import 'package:orot/pages/home/home_page.dart';
 import 'package:orot/pages/login/login_page.dart';
+import 'package:orot/pages/newVisit/new_visit_page.dart';
+import 'package:orot/pages/visit_reminder/visit_reminder.dart';
 import 'package:orot/user_provider.dart';
 import 'package:provider/provider.dart';
 
