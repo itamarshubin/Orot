@@ -5,7 +5,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
+import 'package:orot/pages/home/home_page.dart';
 import 'package:orot/pages/login/login_page.dart';
+import 'package:orot/pages/newVisit/new_visit_page.dart';
 import 'package:orot/pages/visit_reminder/visit_reminder.dart';
 import 'package:orot/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +48,7 @@ class OrotApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Open Sans'),
-      home: user == null ? const LoginPage() : const VisitReminderPage(),
+      home: user == null ? const LoginPage() : const LoginPage(),
     );
   }
 }
