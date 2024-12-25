@@ -45,7 +45,7 @@ class OrotApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Open Sans'),
-      home: user == null ? const LoginPage() : const LoginPage(),
+      home: user == null ? const LoginPage() : const HomePage(),
     );
   }
 }
