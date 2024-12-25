@@ -15,25 +15,6 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-VisitCard getNearestVisit() {
-  return const VisitCard(
-    placementOption: PlacementOption.editButton,
-  );
-}
-
-Widget _nearestVisitTitle() {
-  return Container(
-    alignment: Alignment.topRight,
-    child: Text(
-      'הביקור הקרוב',
-      style: GoogleFonts.assistant(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-          color: const Color(0xFFF27E7E)),
-    ),
-  );
-}
-
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
@@ -74,6 +55,25 @@ class _HomePageState extends State<HomePage> {
             ],
           ));
     });
+  }
+
+  VisitCard getNearestVisit() {
+    return const VisitCard(
+      placementOption: PlacementOption.editButton,
+    );
+  }
+
+  Widget _nearestVisitTitle() {
+    return Container(
+      alignment: Alignment.topRight,
+      child: Text(
+        'הביקור הקרוב',
+        style: GoogleFonts.assistant(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xFFF27E7E)),
+      ),
+    );
   }
 
   Widget _addVisitButton() {
@@ -135,11 +135,11 @@ class _TitleState extends State<Title> {
       height: 200,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+          begin: Alignment.centerRight,
+          end: Alignment.bottomLeft,
           colors: [
-            Color(0xFFFFC3C3), // Corrected first color
-            Color(0xFFFECED6), // Corrected second color
+            Color.fromRGBO(249, 204, 220, 1),
+            Color.fromRGBO(246, 201, 186, 1)
           ],
         ),
         borderRadius: BorderRadius.only(
@@ -166,11 +166,10 @@ class _TitleState extends State<Title> {
             Text(
               'שלום ${widget.displayName}',
               style: GoogleFonts.assistant(
-                  textStyle: const TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 32,
-                color: Color.fromRGBO(32, 82, 1145, 1),
-              )),
+                color: Color.fromRGBO(178, 39, 89, 1),
+              ),
             ),
           ],
         ));
