@@ -25,6 +25,7 @@ class _NewVisitPageState extends State<NewVisitPage> {
   TimeOfDay _selectedTime = TimeOfDay.now();
   // User? _user = AuthService().getCurrentUser();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
