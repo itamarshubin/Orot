@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
 import 'package:orot/pages/login/login_page.dart';
+import 'package:orot/pages/visits_history/visits_history_page.dart';
 import 'package:orot/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +46,7 @@ class OrotApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Open Sans'),
-      home: user == null ? const LoginPage() : const LoginPage(),
+      home: user == null ? const LoginPage() : const VisitsHistoryPage(),
     );
   }
 }
