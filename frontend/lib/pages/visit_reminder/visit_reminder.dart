@@ -8,7 +8,7 @@ import 'package:orot/components/switch_buttons.dart';
 enum ComingOptions { comingAlone, notComingAlone, notComing }
 
 class UserArrivalDetails {
-  final bool? isComing;
+  final bool isComing;
   final ComingOptions? comingOptions;
 
   UserArrivalDetails({
@@ -22,14 +22,14 @@ class UserArrivalDetails {
   }
 }
 
-class EventReminderPage extends StatefulWidget {
-  const EventReminderPage({super.key});
+class VisitReminderPage extends StatefulWidget {
+  const VisitReminderPage({super.key});
 
   @override
-  State<EventReminderPage> createState() => _EventReminderPageState();
+  State<VisitReminderPage> createState() => _VisitReminderPageState();
 }
 
-class _EventReminderPageState extends State<EventReminderPage> {
+class _VisitReminderPageState extends State<VisitReminderPage> {
   final UserArrivalDetails userArrivalDetails = UserArrivalDetails();
 
   @override
@@ -128,6 +128,7 @@ class _EventReminderPageState extends State<EventReminderPage> {
     return Column(
       textDirection: TextDirection.rtl,
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 10,
       children: [
         Text(
           "האם תגיעי מחר לפגישה?",
@@ -138,7 +139,27 @@ class _EventReminderPageState extends State<EventReminderPage> {
               fontWeight: FontWeight.w600,
               fontSize: 20),
         ),
-        SwitchButtons()
+        SwitchButtons(activated: userArrivalDetails.isComing)
+      ],
+    );
+  }
+
+  Widget _whoAreYouComingWith() {
+    return Column(
+      textDirection: TextDirection.rtl,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 10,
+      children: [
+        Text(
+          "במידה ואת מגיעה האם את באה לבד?",
+          textAlign: TextAlign.right,
+          textDirection: TextDirection.rtl,
+          style: GoogleFonts.assistant(
+              color: Color(0xff205273),
+              fontWeight: FontWeight.w600,
+              fontSize: 20),
+        ),
+        SwitchButtons(activated: userArrivalDetails.isComing)
       ],
     );
   }

@@ -9,7 +9,7 @@ class SwitchButtons extends StatefulWidget {
 
   SwitchButtons({
     super.key,
-    this.activated = false,
+    required this.activated,
     this.activateTextButton = "כן",
     this.deactivateTextButton = "לא",
   });
@@ -38,9 +38,7 @@ class _SwitchButtonsState extends State<SwitchButtons> {
         backgroundColor: getCurrentBackgroundColor(text),
         padding: const EdgeInsets.symmetric(horizontal: 35),
         shadowColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       ),
       onPressed: () => setActivationOnPressed(text),
       child: Text(
