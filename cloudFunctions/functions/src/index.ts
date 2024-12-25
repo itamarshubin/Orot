@@ -50,6 +50,43 @@ const isCoordinator = async (data: CallableRequest) => {
   return coordinatorDoc.exists;
 };
 
+interface User {
+  permission: "admin" | "coordinator" | "volunteer";
+  uid: string;
+  name?: string;
+  family?: {
+    name: string;
+    address: string;
+    contact: string;
+  };
+}
+
+export const getCurrentUser = onCall(async (data, context) => {
+  const user: User = {} as User;
+  if (!data.auth) return user;
+  user.uid = data.auth.uid;
+  if (await isAdmin(data)) {
+    user.permission = "admin";
+  } else if (await isCoordinator(data)) {
+    user.permission = "coordinator";
+  } else {
+    const volunteer = await getFirestore()
+      .collection("volunteers")
+      .doc(data.auth?.uid)
+      .get();
+
+    console.log("family data", volunteer.data()?.family);
+
+    user.permission = "volunteer";
+    user.family = volunteer.data()?.family;
+  }
+
+  console.log("this is the fucking user", user);
+  return user;
+
+  //return volunteer data
+});
+
 export const createCoordinator = onCall<CoordinatorData>(
   async (data, context) => {
     if (await isAdmin(data)) {

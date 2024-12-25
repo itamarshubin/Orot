@@ -23,7 +23,8 @@ class NewVisitPage extends StatefulWidget {
 class _NewVisitPageState extends State<NewVisitPage> {
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
-  final User? _user = AuthService().getCurrentUser();
+  // User? _user = AuthService().getCurrentUser();
+
 
   @override
   Widget build(BuildContext context) {
@@ -114,25 +115,24 @@ class _NewVisitPageState extends State<NewVisitPage> {
 
   Widget _addDate() {
     return Field(
-      "תאריך",
-      _selectDate,
-      context,
-      DateFormat('dd/MM/yyyy').format(_selectedDate),
-      "assets/icons/pick_date_icon.svg",
+      fieldTitle: "תאריך",
+      content: DateFormat('dd/MM/yyyy').format(_selectedDate),
+      context: context,
+      iconPath: "assets/icons/pick_date_icon.svg",
+      onTap: () => _selectDate(context),
     );
   }
 
   Widget _addTime() {
     return Container(
-      alignment: Alignment.topRight,
-      child: Field(
-        'שעה',
-        _selectTime,
-        context,
-        formatTimeOfDay(_selectedTime),
-        "assets/icons/pick_time_icon.svg",
-      ),
-    );
+        alignment: Alignment.topRight,
+        child: Field(
+          fieldTitle: 'שעה',
+          content: formatTimeOfDay(_selectedTime),
+          context: context,
+          iconPath: "assets/icons/pick_time_icon.svg",
+          onTap: () => _selectTime(context),
+        ));
   }
 
   Widget _addToCalender() {

@@ -5,7 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class CoordinatorService {
   final FirebaseFunctions _functions = FirebaseFunctions.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> createVolunteer(
       {required String email,

@@ -14,7 +14,8 @@ Future addCalenderEvent(
   bool addCurrentUser = true,
   String? accessToken,
 }) async {
-  final User? currentUser = AuthService().getCurrentUser();
+  // final User? currentUser = AuthService().getCurrentUser();
+  final currentUser = null;
   if (currentUser == null) throw "User is not logged in";
   // TODO: consider  calling signin from auth_service
 
