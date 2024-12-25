@@ -5,8 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
-import 'package:orot/pages/event_reminder/visit_reminder.dart';
 import 'package:orot/pages/login/login_page.dart';
+import 'package:orot/pages/visit_reminder/visit_reminder.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Open Sans'),
-      home: user == null ? const LoginPage() : const EventReminderPage(),
+      home: user == null ? const LoginPage() : const VisitReminderPage(),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/switch_buttons.dart';
+import 'package:orot/pages/visit_reminder/question_title.dart';
 
 enum ComingOptions { comingAlone, notComingAlone, notComing }
 
@@ -110,56 +111,10 @@ class _VisitReminderPageState extends State<VisitReminderPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 10,
       children: [
-        _areYouComing(),
-        Text(
-          "במידה ואת מגיעה האם את באה לבד?",
-          textAlign: TextAlign.right,
-          textDirection: TextDirection.rtl,
-          style: GoogleFonts.assistant(
-              color: Color(0xff205273),
-              fontWeight: FontWeight.w600,
-              fontSize: 20),
-        ),
-      ],
-    );
-  }
-
-  Widget _areYouComing() {
-    return Column(
-      textDirection: TextDirection.rtl,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 10,
-      children: [
-        Text(
-          "האם תגיעי מחר לפגישה?",
-          textAlign: TextAlign.right,
-          textDirection: TextDirection.rtl,
-          style: GoogleFonts.assistant(
-              color: Color(0xff205273),
-              fontWeight: FontWeight.w600,
-              fontSize: 20),
-        ),
-        SwitchButtons(activated: userArrivalDetails.isComing)
-      ],
-    );
-  }
-
-  Widget _whoAreYouComingWith() {
-    return Column(
-      textDirection: TextDirection.rtl,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 10,
-      children: [
-        Text(
-          "במידה ואת מגיעה האם את באה לבד?",
-          textAlign: TextAlign.right,
-          textDirection: TextDirection.rtl,
-          style: GoogleFonts.assistant(
-              color: Color(0xff205273),
-              fontWeight: FontWeight.w600,
-              fontSize: 20),
-        ),
-        SwitchButtons(activated: userArrivalDetails.isComing)
+        QuestionTitle(text: "האם תגיעי מחר לפגישה?"),
+        SwitchButtons(activated: userArrivalDetails.isComing),
+        QuestionTitle(text: "במידה ואת מגיעה האם את באה לבד?"),
+        SwitchButtons(activated: userArrivalDetails.isComing),
       ],
     );
   }
