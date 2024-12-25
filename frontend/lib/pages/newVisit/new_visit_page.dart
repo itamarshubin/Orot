@@ -1,13 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/pages/home/home_page.dart';
 import 'package:orot/pages/newVisit/field.dart';
-import 'package:orot/services/auth_service.dart';
 import 'package:orot/services/google_auth.dart';
 import 'package:orot/services/google_calender/calender_service.dart';
 import 'package:orot/services/google_calender/schemas/event.dart';
@@ -24,6 +21,7 @@ class NewVisitPage extends StatefulWidget {
 class _NewVisitPageState extends State<NewVisitPage> {
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
+
   // User? _user = AuthService().getCurrentUser();
 
   @override

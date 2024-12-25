@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
-import 'package:orot/services/auth_service.dart';
 import 'package:orot/services/google_calender/schemas/event.dart';
 import 'package:orot/services/google_calender/schemas/event_attended.dart';
 

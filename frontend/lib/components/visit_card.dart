@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-enum PlacementOption { showPastDate, editButton }
-
 class VisitCard extends StatefulWidget {
   final String address;
   final String dateAndTime;
-  final PlacementOption? placementOption;
+  final bool showEditButton;
+  final bool? hasVisited;
 
+  //TODO: get an actual datetime and parse it to this
+  //TODO: pass object that has all visit info
   const VisitCard({
     super.key,
-    this.address = 'איפושהו בעולם', //TODO: pass object that has all visit info
-    this.dateAndTime =
-        '16:00 | 19.1', //TODO: get an actual datetime and parse it to this
-    this.placementOption,
+    this.address = 'איפושהו בעולם',
+    this.showEditButton = false,
+    this.dateAndTime = '16:00 | 19.1',
+    this.hasVisited,
   });
 
   @override
@@ -31,6 +32,15 @@ class _VisitCardState extends State<VisitCard> {
         width: 330,
         height: 110,
         padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          border: Border(
+            left: BorderSide(
+              color: haVisitedBorderColor(),
+              width: 5,
+            ),
+          ),
+        ),
         child: Column(
           textDirection: TextDirection.rtl,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +57,7 @@ class _VisitCardState extends State<VisitCard> {
                 Transform.translate(
                   offset: const Offset(-5, -10),
                   // Moves 5 to the left and 10 higher
-                  child: _getPlacementOption(),
+                  child: _editButton(),
                 ),
               ],
             ),
@@ -67,30 +77,23 @@ class _VisitCardState extends State<VisitCard> {
     );
   }
 
-  Widget _getPlacementOption() {
-    if (widget.placementOption == PlacementOption.editButton) {
+  Color haVisitedBorderColor() {
+    debugPrint(widget.hasVisited.toString());
+    if (widget.hasVisited == true) {
+      return Color.fromRGBO(252, 164, 164, 1);
+    } else if (widget.hasVisited == false) {
+      return Color.fromRGBO(141, 235, 166, 1);
+    }
+    return Colors.white;
+  }
+
+  Widget _editButton() {
+    if (widget.showEditButton == true) {
       return CustomGradientButton(
           text: 'שינוי פרטים',
           onPressed: () {
             //TODO: implement the button functunality
           });
-    } else if (widget.placementOption == PlacementOption.showPastDate) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(255, 229, 99, 0.34),
-          borderRadius: BorderRadius.all(Radius.circular(30)),
-        ),
-        child: Text(
-          'לפני 5 ימים',
-          //TODO: should parse from datetime (we didn't pass it yet)
-          style: GoogleFonts.assistant(
-            color: Color.fromRGBO(196, 127, 25, 1),
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-        ),
-      );
     }
     return SizedBox.shrink();
   }

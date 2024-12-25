@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/components/visit_card.dart';
@@ -68,7 +70,7 @@ class _HomePageState extends State<HomePage> {
               offset: const Offset(10, 0),
               child: HomeLabelText(text: 'הביקור הקרוב'),
             ),
-            VisitCard(placementOption: PlacementOption.editButton)
+            VisitCard(showEditButton: true)
           ],
         ));
   }
@@ -100,7 +102,8 @@ List<VisitCard> getHistory() {
   return [
     for (int i = 0; i < 10; i++)
       VisitCard(
-        placementOption: PlacementOption.showPastDate,
+        hasVisited: Random().nextDouble() <= 0.3,
+        showEditButton: true,
         address: "חנה רובינא $i, חיפה",
       )
   ];
