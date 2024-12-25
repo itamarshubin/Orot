@@ -109,12 +109,11 @@ class _VisitReminderPageState extends State<VisitReminderPage> {
     return Column(
       textDirection: TextDirection.rtl,
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 10,
+      spacing: 20,
       children: [
         QuestionTitle(text: "האם תגיעי מחר לפגישה?"),
         SwitchButtons(activated: userArrivalDetails.isComing),
         QuestionTitle(text: "במידה ואת מגיעה האם את באה לבד?"),
-        SwitchButtons(activated: userArrivalDetails.isComing),
       ],
     );
   }
