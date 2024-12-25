@@ -65,15 +65,15 @@ class _HomePageState extends State<HomePage> {
 
   Widget _nearestVisitTitle() {
     return Container(
-      alignment: Alignment.topRight,
-      child: Text(
-        'הביקור הקרוב',
-        style: GoogleFonts.assistant(
+        alignment: Alignment.topRight,
+        child: Text(
+          'הביקור הקרוב',
+          style: GoogleFonts.assistant(
             fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: const Color(0xFFF27E7E)),
-      ),
-    );
+            fontWeight: FontWeight.w700,
+            color: Color.fromRGBO(32, 82, 115, 1),
+          ),
+        ));
   }
 
   Widget _addVisitButton() {
