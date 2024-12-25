@@ -10,7 +10,7 @@ class MainButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 500,
+      width: 350,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [

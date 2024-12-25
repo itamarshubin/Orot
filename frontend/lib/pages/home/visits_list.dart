@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/visit_card.dart';
+import 'package:orot/pages/home/home_label.dart';
 
 class VisitsList extends StatefulWidget {
   final List<VisitCard> visits;
@@ -18,15 +18,13 @@ class _VisitsListState extends State<VisitsList> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      textDirection: TextDirection.rtl,
+      mainAxisAlignment: MainAxisAlignment.start,
       spacing: 5,
       children: [
         Container(
           alignment: Alignment.topRight,
-          child: Text(widget.listTitle,
-              style: GoogleFonts.assistant(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              )),
+          child: HomeLabelText(text: widget.listTitle),
         ),
         SizedBox(
           height: 215,

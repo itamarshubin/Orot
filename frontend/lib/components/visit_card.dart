@@ -28,7 +28,7 @@ class _VisitCardState extends State<VisitCard> {
       color: Colors.white,
       shadowColor: Color.fromRGBO(255, 195, 195, 0.37),
       child: Container(
-        width: double.infinity,
+        width: 330,
         height: 110,
         padding: const EdgeInsets.all(10),
         child: Column(
