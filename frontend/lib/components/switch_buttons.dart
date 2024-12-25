@@ -22,6 +22,8 @@ class _SwitchButtonsState extends State<SwitchButtons> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      textDirection: TextDirection.rtl,
       spacing: 10,
       children: [
         _button(widget.activateTextButton),
@@ -31,28 +33,22 @@ class _SwitchButtonsState extends State<SwitchButtons> {
   }
 
   Widget _button(String text) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(
-        color: getCurrentBackgroundColor(text),
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: getCurrentBackgroundColor(text),
+        padding: const EdgeInsets.symmetric(horizontal: 35),
+        shadowColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
         ),
-        onPressed: () => setActivationOnPressed(text),
-        child: Text(
-          text,
-          style: GoogleFonts.assistant(
-            color: getCurrentColor(text),
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-          ),
+      ),
+      onPressed: () => setActivationOnPressed(text),
+      child: Text(
+        text,
+        style: GoogleFonts.assistant(
+          color: getCurrentColor(text),
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );
