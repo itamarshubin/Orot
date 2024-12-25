@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:orot/components/main_button.dart';
+import 'package:orot/pages/home/home_page.dart';
 import 'package:orot/pages/newVisit/field.dart';
 import 'package:orot/services/auth_service.dart';
 import 'package:orot/services/google_auth.dart';
@@ -25,44 +26,45 @@ class _NewVisitPageState extends State<NewVisitPage> {
   TimeOfDay _selectedTime = TimeOfDay.now();
   // User? _user = AuthService().getCurrentUser();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xffF3EDED),
-        body: Column(
-          spacing: 20,
+      backgroundColor: const Color(0xffF3EDED),
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
+        child: Column(
           children: [
+            _xRedButton(),
+            SizedBox(
+              height: 50,
+            ),
             Padding(
-                padding: const EdgeInsets.fromLTRB(60, 80, 60, 0),
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: <Widget>[
-                    Positioned(
-                      top: -10,
-                      right: -20,
-                      child: _xRedButton(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 50),
-                      child: Column(
-                        spacing: 20,
-                        children: [_title(), _from()],
-                      ),
-                    )
-                  ],
-                )),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                spacing: 20,
+                children: [_title(), _from()],
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
             Image.asset('assets/img/calendar_people.webp'),
             _sendButton()
           ],
-        ));
+        ),
+      ),
+    );
   }
 
   Widget _xRedButton() {
     return Container(
       alignment: Alignment.topRight,
       child: InkWell(
-        onTap: () => Fluttertoast.showToast(msg: "clicked"),
+        customBorder: const CircleBorder(),
+        onTap: () => {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (BuildContext context) => HomePage()))
+        },
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -166,6 +168,7 @@ class _NewVisitPageState extends State<NewVisitPage> {
           onPress: () {
             VolunteerService().createVisit(dateTime: getUpdatedDateTime());
           },
+          size: MainButtonSize.small,
         ));
   }
 

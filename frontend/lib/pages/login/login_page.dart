@@ -98,10 +98,6 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(height: 20),
               _signInButton(context),
               _signOutButton(),
-              SvgPicture.asset(
-                '/assets/img/kids_with_clouds.svg',
-                width: double.infinity,
-              )
             ],
           )),
     );

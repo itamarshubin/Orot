@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+enum MainButtonSize { big, small }
+
 class MainButton extends StatelessWidget {
   final String text;
   final VoidCallback onPress;
+  final MainButtonSize size;
 
-  const MainButton({super.key, required this.text, required this.onPress});
+  const MainButton(
+      {super.key,
+      required this.text,
+      required this.onPress,
+      this.size = MainButtonSize.big});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 500,
+      height: size == MainButtonSize.big ? 53 : 43,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [
@@ -35,7 +43,8 @@ class MainButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          padding: const EdgeInsets.all(0),
+          minimumSize: Size.zero,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
