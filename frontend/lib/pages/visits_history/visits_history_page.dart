@@ -1,5 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:orot/pages/home/home_page.dart';
+import 'package:orot/components/visit_card.dart';
 import 'package:orot/pages/visits_history/visits_history_app_bar.dart';
 
 class VisitsHistoryPage extends StatefulWidget {
@@ -11,7 +13,6 @@ class VisitsHistoryPage extends StatefulWidget {
 
 class _VisitsHistoryPageState extends State<VisitsHistoryPage> {
   ScrollController controller = ScrollController();
-  final visits = getHistory();
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,7 @@ class _VisitsHistoryPageState extends State<VisitsHistoryPage> {
   }
 
   Widget getHistoryVisits() {
+    final visits = _getHistory();
     return ListView.separated(
       addSemanticIndexes: true,
       controller: controller,
@@ -44,5 +46,15 @@ class _VisitsHistoryPageState extends State<VisitsHistoryPage> {
         return SizedBox(height: 5);
       },
     );
+  }
+
+  List<VisitCard> _getHistory() {
+    return [
+      for (int i = 0; i < 10; i++)
+        VisitCard(
+          hasVisited: Random().nextDouble() <= 0.3,
+          address: "חנה רובינא $i, חיפה",
+        )
+    ];
   }
 }

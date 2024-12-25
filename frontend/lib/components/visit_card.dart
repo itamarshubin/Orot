@@ -6,13 +6,16 @@ class VisitCard extends StatefulWidget {
   final String address;
   final String dateAndTime;
   final bool showEditButton;
+  final bool? hasVisited;
 
+  //TODO: get an actual datetime and parse it to this
+  //TODO: pass object that has all visit info
   const VisitCard({
     super.key,
-    this.address = 'איפושהו בעולם', //TODO: pass object that has all visit info
-    this.dateAndTime =
-        '16:00 | 19.1', //TODO: get an actual datetime and parse it to this
+    this.address = 'איפושהו בעולם',
     this.showEditButton = false,
+    this.dateAndTime = '16:00 | 19.1',
+    this.hasVisited,
   });
 
   @override
@@ -29,6 +32,15 @@ class _VisitCardState extends State<VisitCard> {
         width: 330,
         height: 110,
         padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          border: Border(
+            left: BorderSide(
+              color: haVisitedBorderColor(),
+              width: 5,
+            ),
+          ),
+        ),
         child: Column(
           textDirection: TextDirection.rtl,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -63,6 +75,16 @@ class _VisitCardState extends State<VisitCard> {
         ),
       ),
     );
+  }
+
+  Color haVisitedBorderColor() {
+    debugPrint(widget.hasVisited.toString());
+    if (widget.hasVisited == true) {
+      return Color.fromRGBO(252, 164, 164, 1);
+    } else if (widget.hasVisited == false) {
+      return Color.fromRGBO(141, 235, 166, 1);
+    }
+    return Colors.white;
   }
 
   Widget _editButton() {

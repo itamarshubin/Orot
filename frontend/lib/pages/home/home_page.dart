@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/components/visit_card.dart';
@@ -100,6 +102,7 @@ List<VisitCard> getHistory() {
   return [
     for (int i = 0; i < 10; i++)
       VisitCard(
+        hasVisited: Random().nextDouble() <= 0.3,
         showEditButton: true,
         address: "חנה רובינא $i, חיפה",
       )
