@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
               offset: const Offset(10, 0),
               child: HomeLabelText(text: 'הביקור הקרוב'),
             ),
-            VisitCard(placementOption: PlacementOption.editButton)
+            VisitCard(showEditButton: true)
           ],
         ));
   }
@@ -100,7 +100,7 @@ List<VisitCard> getHistory() {
   return [
     for (int i = 0; i < 10; i++)
       VisitCard(
-        placementOption: PlacementOption.showPastDate,
+        showEditButton: true,
         address: "חנה רובינא $i, חיפה",
       )
   ];

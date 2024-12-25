@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-enum PlacementOption { showPastDate, editButton }
-
 class VisitCard extends StatefulWidget {
   final String address;
   final String dateAndTime;
-  final PlacementOption? placementOption;
+  final bool showEditButton;
 
   const VisitCard({
     super.key,
     this.address = 'איפושהו בעולם', //TODO: pass object that has all visit info
     this.dateAndTime =
         '16:00 | 19.1', //TODO: get an actual datetime and parse it to this
-    this.placementOption,
+    this.showEditButton = false,
   });
 
   @override
@@ -47,7 +45,7 @@ class _VisitCardState extends State<VisitCard> {
                 Transform.translate(
                   offset: const Offset(-5, -10),
                   // Moves 5 to the left and 10 higher
-                  child: _getPlacementOption(),
+                  child: _editButton(),
                 ),
               ],
             ),
@@ -67,30 +65,13 @@ class _VisitCardState extends State<VisitCard> {
     );
   }
 
-  Widget _getPlacementOption() {
-    if (widget.placementOption == PlacementOption.editButton) {
+  Widget _editButton() {
+    if (widget.showEditButton == true) {
       return CustomGradientButton(
           text: 'שינוי פרטים',
           onPressed: () {
             //TODO: implement the button functunality
           });
-    } else if (widget.placementOption == PlacementOption.showPastDate) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(255, 229, 99, 0.34),
-          borderRadius: BorderRadius.all(Radius.circular(30)),
-        ),
-        child: Text(
-          'לפני 5 ימים',
-          //TODO: should parse from datetime (we didn't pass it yet)
-          style: GoogleFonts.assistant(
-            color: Color.fromRGBO(196, 127, 25, 1),
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-        ),
-      );
     }
     return SizedBox.shrink();
   }

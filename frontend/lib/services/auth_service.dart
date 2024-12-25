@@ -29,7 +29,6 @@ class AuthService {
       );
     }
   }
-  
 
   Future<void> signin({
     required String email,
