@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orot/pages/home/visit.dart';
+import 'package:orot/components/visit_card.dart';
 
 class VisitsList extends StatefulWidget {
   final List<VisitCard> visits;

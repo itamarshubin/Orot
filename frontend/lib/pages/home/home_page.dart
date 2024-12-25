@@ -1,13 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
-import 'package:orot/modal/user_modal.dart';
-import 'package:orot/pages/home/visit.dart';
+import 'package:orot/components/visit_card.dart';
 import 'package:orot/pages/home/visits_list.dart';
-import 'package:orot/pages/newVisit/new_visit_page.dart';
 import 'package:orot/pages/profile_page.dart';
 import 'package:orot/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 VisitCard getNearestVisit() {
   return const VisitCard(
-    visitButtonOption: VisitButtonOption.edit,
+    placementOption: PlacementOption.editButton,
   );
 }
 
@@ -43,7 +39,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      print('send request to the server');
       context.read<UserProvider>().getUserData();
     });
   }
@@ -51,7 +46,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(builder: (context, userProvider, child) {
-      print('doing this shit');
       return Scaffold(
           resizeToAvoidBottomInset: false,
           body: Column(
@@ -59,9 +53,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Stack(
                 children: [
-                  Title(
-                    displayName: userProvider.userName,
-                  ),
+                  Title(displayName: userProvider.userName),
                   Container(
                     margin: const EdgeInsets.fromLTRB(40, 100, 40, 0),
                     child: Column(
@@ -111,8 +103,7 @@ List<VisitCard> getHistory() {
   return [
     for (int i = 0; i < 10; i++)
       VisitCard(
-        visitButtonOption: VisitButtonOption.view,
-        hasVisited: Random().nextDouble() > .3,
+        placementOption: PlacementOption.showPastDate,
         address: "חנה רובינא $i, חיפה",
       )
   ];
@@ -122,7 +113,6 @@ List<VisitCard> getFuture() {
   return [
     for (int i = 0; i < 10; i++)
       VisitCard(
-        visitButtonOption: VisitButtonOption.edit,
         address: "חנה רובינא $i, חיפה",
       )
   ];
@@ -130,7 +120,9 @@ List<VisitCard> getFuture() {
 
 class Title extends StatefulWidget {
   const Title({super.key, this.displayName});
+
   final String? displayName;
+
   @override
   State<Title> createState() => _TitleState();
 }
