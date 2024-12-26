@@ -5,9 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
-import 'package:orot/pages/login/login_page.dart';
-import 'package:orot/pages/volunteer/visit_reminder/visit_reminder.dart';
 import 'package:orot/providers/user_provider.dart';
+import 'package:orot/router.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -28,12 +27,10 @@ Future<void> main() async {
 
   FlutterNativeSplash.remove();
 
-  runApp(
-    ChangeNotifierProvider(
-      create: (_) => UserProvider(),
-      child: OrotApp(),
-    ),
-  );
+  runApp(ChangeNotifierProvider(
+    create: (_) => UserProvider(),
+    child: OrotApp(),
+  ));
 }
 
 class OrotApp extends StatelessWidget {
@@ -43,10 +40,11 @@ class OrotApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
 
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Open Sans'),
-      home: user == null ? const LoginPage() : const VisitReminderPage(),
+      routerConfig: getConfigRouter(),
+      // home: user == null ? const LoginPage() : const VisitsHistoryPage(),
     );
   }
 }

@@ -8,11 +8,12 @@ class MainButton extends StatelessWidget {
   final VoidCallback onPress;
   final MainButtonSize size;
 
-  const MainButton(
-      {super.key,
-      required this.text,
-      required this.onPress,
-      this.size = MainButtonSize.big});
+  const MainButton({
+    super.key,
+    required this.text,
+    required this.onPress,
+    this.size = MainButtonSize.big,
+  });
 
   @override
   Widget build(BuildContext context) {
