@@ -44,7 +44,6 @@ class OrotApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Open Sans'),
       routerConfig: getConfigRouter(),
-      // home: user == null ? const LoginPage() : const VisitsHistoryPage(),
     );
   }
 }
