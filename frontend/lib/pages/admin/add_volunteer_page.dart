@@ -6,9 +6,9 @@ import 'package:orot/modal/user_modal.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/pages/admin/components/districts_dropdown.dart';
 import 'package:orot/pages/admin/components/families_dropdown.dart';
+import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/admin_service.dart';
 import 'package:orot/services/coordinator_service.dart';
-import 'package:orot/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class AddVolunteerPage extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orot/components/visit_card.dart';
-import 'package:orot/pages/home/home_label.dart';
+import 'package:orot/pages/volunteer/home/home_label.dart';
 
 class VisitsList extends StatefulWidget {
   final List<VisitCard> visits;

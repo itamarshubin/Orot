@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/switch_buttons.dart';
-import 'package:orot/pages/visit_reminder/question_title.dart';
+import 'package:orot/pages/volunteer/visit_reminder/question_title.dart';
 
 enum ComingOptions { comingAlone, notComingAlone, notComing }
 

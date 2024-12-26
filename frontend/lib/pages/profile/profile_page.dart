@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orot/pages/newVisit/field.dart';
-import 'package:orot/user_provider.dart';
+import 'package:orot/pages/volunteer/new_visit/field.dart';
+import 'package:orot/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+
+//TODO: this page is waiting for ui-ux decision.
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

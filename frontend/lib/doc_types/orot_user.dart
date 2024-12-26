@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+//TODO: looks like this is not used. @itamarshubin can we remove this?
+
 class OrotUser {
   final String displayName;
 
