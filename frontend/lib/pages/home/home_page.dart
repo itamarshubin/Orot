@@ -7,7 +7,6 @@ import 'package:orot/pages/admin/admin_page.dart';
 import 'package:orot/pages/home/home_label.dart';
 import 'package:orot/pages/home/home_title.dart';
 import 'package:orot/pages/home/visits_list.dart';
-import 'package:orot/pages/profile_page.dart';
 import 'package:orot/user_provider.dart';
 import 'package:provider/provider.dart';
 
