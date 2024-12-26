@@ -85,15 +85,18 @@ export const getCurrentUser = onCall(async (data, context) => {
       name: (await district.get()).data()?.name,
     };
   } else {
-    const volunteer = await getFirestore()
+    const volunteerDocument = await getFirestore()
       .collection("volunteers")
       .doc(data.auth?.uid)
       .get();
 
-    console.log("family data", volunteer.data()?.family);
+    console.log("family data", volunteerDocument.data()?.family);
+    const familyRef: DocumentReference = volunteerDocument.data()?.family;
 
+    console.log("nigger", (await familyRef.get()).data());
     user.permission = "volunteer";
-    user.family = volunteer.data()?.family;
+    //@ts-ignore
+    user.family = (await familyRef.get()).data();
   }
 
   return user;
@@ -215,48 +218,14 @@ export const createVisit = onCall(async (data, context) => {
     .get();
   const familyRef = volunteerDocument.data()?.family;
 
-  const newVisit = await getFirestore()
+  console.log("family ref", familyRef);
+  console.log("volunteer ref", volunteerDocument.ref);
+
+  await getFirestore()
     .collection("visits")
     .add({
       family: familyRef,
       visitDate: new Date(data.data.dateTime),
       attendees: [volunteerDocument.ref],
     });
-  return newVisit;
 });
-
-// export const scheduleVisitNotification = onCall(async (data, context) => {
-//     await getFirestore()
-//         .doc("visits/{visitId}")
-//         .onCreate(async (snap, context) => {
-//             const data = snap.data();
-//             const visitTime = new Date(data.timeStamp).getTime();
-//             const oneDayBefore = visitTime - 24 * 60 * 60 * 1000;
-
-//             if (oneDayBefore > Date.now()) {
-//                 const attendees = data.attendees; // Array of ref/volunteers
-//                 const familySnap = await data.family.get(); // Get family details
-//                 const familyData = familySnap.data();
-
-//                 for (const attendeeRef of attendees) {
-//                     const attendeeSnap = await attendeeRef.get();
-//                     const attendeeData = attendeeSnap.data();
-
-//                     if (attendeeData.email) {
-//                         const payload = {
-//                             notification: {
-//                                 title: "תזכורת לפגישה",
-//                                 body: `יש לך פגישה עם משפחת ${familyData.name} מחר`,
-//                             },
-//                             data: {
-//                                 visitId: context.params.visitId,
-//                                 familyName: familyData.name,
-//                             },
-//                         };
-//                         await admin.messaging().sendToDevice(attendeeData.deviceToken, payload);
-//                     }
-//                 }
-//             }
-//             return null;
-//             }
-//     });
