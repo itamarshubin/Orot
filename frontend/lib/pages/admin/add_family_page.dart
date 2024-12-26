@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
-import 'package:orot/pages/admin/add_coordinator_page.dart';
+import 'package:orot/modal/district_modal.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/pages/admin/components/districts_dropdown.dart';
 import 'package:orot/services/admin_service.dart';
