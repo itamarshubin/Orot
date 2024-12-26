@@ -28,12 +28,6 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
   }
 
   @override
-  void initState() {
-    _initDistricts();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
@@ -61,6 +55,7 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
             districts: _districts,
             selectedDistrictId: _selectedDistrictId,
             onSelectedIdChange: _updateSelectedDistrict,
+            onInit: _initDistricts,
           ),
           _createCoordinator(),
         ],

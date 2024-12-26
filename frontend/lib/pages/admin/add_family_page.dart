@@ -27,12 +27,6 @@ class _AddFamilyPageState extends State<AddFamilyPage> {
   }
 
   @override
-  void initState() {
-    _initDistricts();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
@@ -53,6 +47,7 @@ class _AddFamilyPageState extends State<AddFamilyPage> {
             districts: _districts,
             selectedDistrictId: _selectedDistrictId,
             onSelectedIdChange: _updateSelectedDistrict,
+            onInit: _initDistricts,
           ),
           _createFamily(),
         ],
