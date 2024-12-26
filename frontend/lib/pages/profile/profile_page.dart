@@ -5,6 +5,10 @@ import 'package:orot/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 //TODO: this page is waiting for ui-ux decision.
+/*
+* This file can be used for both coordinator and volunteer.
+* We need to pass the volunteer's details via route to page.
+* */
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
