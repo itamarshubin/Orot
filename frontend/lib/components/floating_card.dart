@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class FloatingCard extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
 
-  const FloatingCard({required this.child, super.key});
+  const FloatingCard({this.child, super.key});
 
   @override
   Widget build(BuildContext context) {
