@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'district_modal.dart';
+import 'district_model.dart';
 
 enum UserPermission { admin, coordinator, volunteer }
 

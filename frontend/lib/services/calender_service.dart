@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:orot/modal/calendar/event.dart';
-import 'package:orot/modal/calendar/event_attended.dart';
+import 'package:orot/models/calendar/event.dart';
+import 'package:orot/models/calendar/event_attended.dart';
 
 const String googleCalenderAPI = "https://www.googleapis.com/calender/v3";
 

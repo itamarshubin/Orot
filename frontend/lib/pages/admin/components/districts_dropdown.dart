@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orot/modal/district_modal.dart';
+import 'package:orot/models/district_model.dart';
 
 class DistrictsDropdown extends StatefulWidget {
   ValueChanged<String?> onSelectedIdChange;
