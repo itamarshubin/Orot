@@ -1,8 +1,7 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:orot/pages/admin/add_coordinator_page.dart';
-import 'package:orot/pages/admin/components/districts_dropdown.dart';
+import 'package:orot/modal/district_modal.dart';
 
 class AdminService {
   final FirebaseFunctions _functions = FirebaseFunctions.instance;
