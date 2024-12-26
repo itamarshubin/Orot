@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class FloatingCard extends StatelessWidget {
@@ -13,7 +13,15 @@ class FloatingCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 10,
       children: [
-        child,
+        Card(
+          color: Colors.white,
+          child: Container(
+            padding: const EdgeInsets.all(15),
+            width: double.infinity,
+            height: 190,
+            child: child,
+          ),
+        ),
         SvgPicture.asset('assets/img/shadow_floating_object.svg'),
       ],
     );

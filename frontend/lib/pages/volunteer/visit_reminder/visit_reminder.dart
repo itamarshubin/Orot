@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/components/floating_card.dart';
 import 'package:orot/components/switch_buttons.dart';
 import 'package:orot/pages/volunteer/visit_reminder/question_title.dart';
 
@@ -44,8 +45,7 @@ class _VisitReminderPageState extends State<VisitReminderPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10,
           children: [
-            _reminderCard(),
-            SvgPicture.asset('assets/img/shadow_floating_object.svg'),
+            FloatingCard(child: _reminderCard()),
             _validateUserArrival(),
           ],
         ),
@@ -54,55 +54,48 @@ class _VisitReminderPageState extends State<VisitReminderPage> {
   }
 
   Widget _reminderCard() {
-    return Card(
-        color: Colors.white,
-        child: Container(
-          padding: const EdgeInsets.all(15),
-          width: double.infinity,
-          height: 190,
-          child: Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.centerRight,
-            children: [
-              Positioned(
-                top: -40,
-                left: -35,
-                child: SvgPicture.asset(height: 70, 'assets/img/bell.svg'),
+    return Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.centerRight,
+      children: [
+        Positioned(
+          top: -40,
+          left: -35,
+          child: SvgPicture.asset(height: 70, 'assets/img/bell.svg'),
+        ),
+        Column(
+          textDirection: TextDirection.rtl,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "תזכורת!",
+              textDirection: TextDirection.rtl,
+              textAlign: TextAlign.right,
+              style: GoogleFonts.assistant(
+                color: Color(0xffB22759),
+                fontSize: 32,
+                fontWeight: FontWeight.w700,
               ),
-              Column(
-                textDirection: TextDirection.rtl,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "תזכורת!",
-                    textDirection: TextDirection.rtl,
-                    textAlign: TextAlign.right,
-                    style: GoogleFonts.assistant(
-                      color: Color(0xffB22759),
-                      fontSize: 32,
-                      fontWeight: FontWeight.w700,
-                    ),
+            ),
+            RichText(
+              textDirection: TextDirection.rtl,
+              text: TextSpan(
+                  style: GoogleFonts.assistant(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
-                  RichText(
-                    textDirection: TextDirection.rtl,
-                    text: TextSpan(
-                        style: GoogleFonts.assistant(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        children: [
-                          TextSpan(text: "מחר - יום רביעי 12.11"),
-                          TextSpan(text: "\nמתרחשת פגישה עם משפחת אבגד"),
-                          TextSpan(text: "\nבכתובת חנה רובינא 3, חיפה"),
-                        ]),
-                  )
-                ],
-              )
-            ],
-          ),
-        ));
+                  children: [
+                    TextSpan(text: "מחר - יום רביעי 12.11"),
+                    TextSpan(text: "\nמתרחשת פגישה עם משפחת אבגד"),
+                    TextSpan(text: "\nבכתובת חנה רובינא 3, חיפה"),
+                  ]),
+            )
+          ],
+        )
+      ],
+    );
   }
 
   Widget _validateUserArrival() {
