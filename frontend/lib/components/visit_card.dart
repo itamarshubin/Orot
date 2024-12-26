@@ -78,7 +78,6 @@ class _VisitCardState extends State<VisitCard> {
   }
 
   Color haVisitedBorderColor() {
-    debugPrint(widget.hasVisited.toString());
     if (widget.hasVisited == true) {
       return Color.fromRGBO(252, 164, 164, 1);
     } else if (widget.hasVisited == false) {
