@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orot/models/user_model.dart';
+import 'package:orot/models/user.dart';
 import 'package:orot/services/auth_service.dart';
 
 class UserProvider with ChangeNotifier {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
-import 'package:orot/models/district_model.dart';
-import 'package:orot/models/user_model.dart';
+import 'package:orot/models/district.dart';
+import 'package:orot/models/user.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/pages/admin/components/districts_dropdown.dart';
 import 'package:orot/pages/admin/components/families_dropdown.dart';

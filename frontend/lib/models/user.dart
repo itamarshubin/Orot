@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'district_model.dart';
+import 'district.dart';
 
 enum UserPermission { admin, coordinator, volunteer }
 
-//TODO: use JsonSerializable
 class User {
   final String uid;
   final UserPermission permission;

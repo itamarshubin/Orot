@@ -1,4 +1,4 @@
-I used `json_serializable` to create this schemas so here is what you should know.
+I used `json_serializable` to create this models so here is what you should know.
 
 I added these packages to pubspec:
 
