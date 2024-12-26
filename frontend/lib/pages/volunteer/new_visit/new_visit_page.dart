@@ -3,12 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:orot/components/main_button.dart';
-import 'package:orot/pages/home/home_page.dart';
-import 'package:orot/pages/newVisit/field.dart';
+import 'package:orot/models/calendar/event.dart';
+import 'package:orot/models/calendar/event_time.dart';
+import 'package:orot/pages/volunteer/home/home_page.dart';
+import 'package:orot/pages/volunteer/new_visit/field.dart';
+import 'package:orot/services/calender_service.dart';
 import 'package:orot/services/google_auth.dart';
-import 'package:orot/services/google_calender/calender_service.dart';
-import 'package:orot/services/google_calender/schemas/event.dart';
-import 'package:orot/services/google_calender/schemas/event_time.dart';
 import 'package:orot/services/volunteer_service.dart';
 
 class NewVisitPage extends StatefulWidget {

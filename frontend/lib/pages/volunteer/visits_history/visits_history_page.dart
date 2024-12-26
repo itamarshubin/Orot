@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:orot/components/visit_card.dart';
-import 'package:orot/pages/visits_history/visits_history_app_bar.dart';
+import 'package:orot/pages/volunteer/visits_history/visits_history_app_bar.dart';
 
 class VisitsHistoryPage extends StatefulWidget {
   const VisitsHistoryPage({super.key});

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class VolenteersPage extends StatefulWidget {
-  const VolenteersPage({super.key});
+class VolunteersPage extends StatefulWidget {
+  const VolunteersPage({super.key});
 
   @override
-  State<VolenteersPage> createState() => _VolenteersPageState();
+  State<VolunteersPage> createState() => _VolunteersPageState();
 }
 
-class _VolenteersPageState extends State<VolenteersPage> {
+class _VolunteersPageState extends State<VolunteersPage> {
   final TextEditingController controller = TextEditingController();
 
   @override

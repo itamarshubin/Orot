@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orot/services/coordinator_service.dart';
 
 class FamiliesDropdown extends StatefulWidget {
   List<Family> families;
   String selectedFamilyId;
   ValueChanged<String?> onSelectedFamilyChange;
+
   FamiliesDropdown(
       {super.key,
       required this.families,

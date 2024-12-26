@@ -1,13 +1,13 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:orot/modal/user_modal.dart';
+import 'package:orot/models/user.dart';
 import 'package:orot/pages/admin/add_coordinator_page.dart';
 import 'package:orot/pages/admin/add_district_page.dart';
 import 'package:orot/pages/admin/add_family_page.dart';
 import 'package:orot/pages/admin/add_volunteer_page.dart';
-import 'package:orot/pages/home/home_page.dart';
-import 'package:orot/user_provider.dart';
+import 'package:orot/pages/volunteer/home/home_page.dart';
+import 'package:orot/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class AdminPage extends StatelessWidget {

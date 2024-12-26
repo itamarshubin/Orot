@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orot/pages/admin/add_coordinator_page.dart';
-import 'package:orot/services/admin_service.dart';
+import 'package:orot/models/district.dart';
 
 class DistrictsDropdown extends StatefulWidget {
   ValueChanged<String?> onSelectedIdChange;
   List<District> districts;
   String selectedDistrictId;
+
   DistrictsDropdown(
       {super.key,
       required this.districts,
@@ -58,11 +58,4 @@ class _DistrictsDropdownState extends State<DistrictsDropdown> {
       ],
     );
   }
-}
-
-class District {
-  final String id;
-  final String name;
-
-  District({required this.id, required this.name});
 }
