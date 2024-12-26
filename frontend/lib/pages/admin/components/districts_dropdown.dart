@@ -4,6 +4,7 @@ import 'package:orot/models/district.dart';
 
 class DistrictsDropdown extends StatefulWidget {
   ValueChanged<String?> onSelectedIdChange;
+  Function onInit;
   List<District> districts;
   String selectedDistrictId;
 
@@ -11,13 +12,20 @@ class DistrictsDropdown extends StatefulWidget {
       {super.key,
       required this.districts,
       required this.selectedDistrictId,
-      required this.onSelectedIdChange});
+      required this.onSelectedIdChange,
+      required this.onInit});
 
   @override
   State<DistrictsDropdown> createState() => _DistrictsDropdownState();
 }
 
 class _DistrictsDropdownState extends State<DistrictsDropdown> {
+  @override
+  void initState() {
+    widget.onInit();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
