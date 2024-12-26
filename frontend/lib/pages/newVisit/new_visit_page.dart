@@ -21,6 +21,7 @@ class NewVisitPage extends StatefulWidget {
 class _NewVisitPageState extends State<NewVisitPage> {
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
+
   // User? _user = AuthService().getCurrentUser();
 
   @override

@@ -17,7 +17,7 @@ class MainButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 500,
+      width: 350,
       height: size == MainButtonSize.big ? 53 : 43,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
