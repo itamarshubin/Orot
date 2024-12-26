@@ -40,7 +40,11 @@ class AuthService {
           .signInWithEmailAndPassword(email: email, password: password);
 
       await Future.delayed(const Duration(seconds: 1));
-      if (context.mounted) context.go('/');
+      if (!context.mounted) return;
+      // context.push('/');
+      context.go('/');
+      Fluttertoast.showToast(msg: '${context.mounted}');
+      // if (context.mounted) context.pushReplacement('/');
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'invalid-email') {

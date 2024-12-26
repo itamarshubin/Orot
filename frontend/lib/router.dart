@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:orot/pages/admin/admin_page.dart';
+import 'package:orot/pages/coordinator/show_volunteers/volunteers_page.dart';
 import 'package:orot/pages/login/login_page.dart';
 import 'package:orot/pages/profile/profile_page.dart';
 import 'package:orot/pages/volunteer/home/home_page.dart';
@@ -12,7 +14,7 @@ GoRouter getConfigRouter() {
   final User? user = FirebaseAuth.instance.currentUser;
   final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>();
-
+  Fluttertoast.showToast(msg: '$user');
   return GoRouter(
     navigatorKey: rootNavigatorKey,
     redirect: (context, state) {
@@ -49,7 +51,7 @@ GoRoute volunteerRoutes(GlobalKey<NavigatorState> rootNavigatorKey) {
       ShellRoute(
         navigatorKey: rootNavigatorKey,
         builder: (context, state, child) {
-          return VolunteerNavigation(child: child);
+          return VolunteerNavigation();
         },
         routes: [
           GoRoute(
@@ -80,6 +82,6 @@ GoRoute adminRoutes() {
 GoRoute coordinatorRoutes() {
   return GoRoute(
     path: '/coordinator',
-    builder: /* point to coordinator homepage */ null,
+    builder: (context, state) => const VolunteersPage(),
   );
 }
