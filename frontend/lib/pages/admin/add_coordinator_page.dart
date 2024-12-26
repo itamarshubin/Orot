@@ -27,6 +27,12 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
   }
 
   @override
+  void initState() {
+    _initDistricts();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
@@ -174,6 +180,18 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
         )
       ],
     );
+  }
+
+  Future<void> _initDistricts() async {
+    try {
+      final List<District> districts = await AdminService().getDistricts();
+      setState(() {
+        _districts = districts;
+        _selectedDistrictId = districts.first.id;
+      });
+    } catch (e) {
+      _districts = [District(id: '0', name: 'error loading districts')];
+    }
   }
 
   Widget _createCoordinator() {

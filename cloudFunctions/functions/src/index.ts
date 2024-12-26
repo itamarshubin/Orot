@@ -81,7 +81,7 @@ export const getCurrentUser = onCall(async (data, context) => {
     const district: DocumentReference = coordinatorDocument.data()?.district;
     console.log("district", (await district.get()).data()?.name);
     user.district = {
-      id: coordinatorDocument.id,
+      id: district.id,
       name: (await district.get()).data()?.name,
     };
   } else {
