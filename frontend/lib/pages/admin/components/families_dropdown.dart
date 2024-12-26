@@ -37,8 +37,8 @@ class _FamiliesDropdownState extends State<FamiliesDropdown> {
         Container(
           alignment: Alignment.centerRight,
           child: DropdownButton<Family>(
-            value: widget.families.firstWhere(
-                (district) => district.id == widget.selectedFamilyId),
+            value: widget.families
+                .firstWhere((family) => family.id == widget.selectedFamilyId),
             onChanged: (Family? newValue) {
               widget.onSelectedFamilyChange(newValue?.id);
             },

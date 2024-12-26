@@ -30,12 +30,6 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
   String _selectedDistrictId = '0';
   String _selectedFamilyId = '0';
 
-  @override
-  void initState() {
-    _initDistricts();
-    super.initState();
-  }
-
   void _updateSelectedDistrict(String? districtId) {
     setState(() {
       _selectedDistrictId = districtId ?? "0";
@@ -53,8 +47,12 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(builder: (context, userProvider, child) {
       if (userProvider.userPermission == UserPermission.coordinator) {
-        _selectedDistrictId = userProvider.user!.district!.id;
+        if (_selectedFamilyId == "0") {
+          _selectedFamilyId = "1";
+          _getFamilies(userProvider.user?.district?.id);
+        }
       }
+
       return Scaffold(
           body: Container(
         padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
@@ -79,11 +77,14 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
             else
               _district(userProvider.user?.district),
             const SizedBox(height: 30),
-            FamiliesDropdown(
-              families: _families,
-              selectedFamilyId: _selectedFamilyId,
-              onSelectedFamilyChange: _updateSelectedFamily,
-            ),
+            //TODO: fix this shit, its bad.
+            //TODO: add loading stuff until this dropdown shown
+            if (_selectedFamilyId != "1")
+              FamiliesDropdown(
+                families: _families,
+                selectedFamilyId: _selectedFamilyId,
+                onSelectedFamilyChange: _updateSelectedFamily,
+              ),
             _createVolunteer(),
           ],
         ),
@@ -246,7 +247,6 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
   }
 
   Future<void> _getFamilies(String? districtId) async {
-    print('getting families:$districtId');
     try {
       final List<Family> families =
           await CoordinatorService().getFamilies(districtId);

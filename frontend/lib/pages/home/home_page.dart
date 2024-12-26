@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/components/visit_card.dart';
+import 'package:orot/pages/admin/admin_page.dart';
 import 'package:orot/pages/home/home_label.dart';
 import 'package:orot/pages/home/home_title.dart';
 import 'package:orot/pages/home/visits_list.dart';
@@ -18,11 +19,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<UserProvider>().getUserData();
+      _getUserData();
     });
   }
 
@@ -31,30 +34,33 @@ class _HomePageState extends State<HomePage> {
     return Consumer<UserProvider>(builder: (context, userProvider, child) {
       return Scaffold(
           resizeToAvoidBottomInset: false,
-          body: Column(
-            spacing: 10,
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.bottomCenter,
-                children: <Widget>[
-                  Positioned(
-                    child: HomePageTitle(displayName: userProvider.userName),
-                  ),
-                  Positioned(
-                    bottom: -65,
-                    child: _nearestVisitTitle(),
-                  )
-                ],
-              ),
-              SizedBox(height: 70),
-              _addVisitButton(),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: _visits(),
-              ),
-            ],
-          ));
+          body: _isLoading
+              ? _loading()
+              : Column(
+                  spacing: 10,
+                  children: [
+                    Stack(
+                      clipBehavior: Clip.none,
+                      alignment: Alignment.bottomCenter,
+                      children: <Widget>[
+                        Positioned(
+                          child:
+                              HomePageTitle(displayName: userProvider.userName),
+                        ),
+                        Positioned(
+                          bottom: -65,
+                          child: _nearestVisitTitle(),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 70),
+                    _addVisitButton(),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: _visits(),
+                    ),
+                  ],
+                ));
     });
   }
 
@@ -75,6 +81,11 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
+  //TODO: replace with something good
+  Widget _loading() {
+    return Text('loading...');
+  }
+
   Widget _addVisitButton() {
     return MainButton(
       text: 'קביעת מפגש',
@@ -82,9 +93,16 @@ class _HomePageState extends State<HomePage> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => const ProfilePage()))
+                builder: (BuildContext context) => const AdminPage()))
       },
     );
+  }
+
+  Future<void> _getUserData() async {
+    await context.read<UserProvider>().getUserData();
+    setState(() {
+      _isLoading = false;
+    });
   }
 }
 
