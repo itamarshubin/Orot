@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:orot/components/main_button.dart';
-import 'package:orot/pages/admin/admin_page.dart';
-import 'package:orot/pages/home/visit.dart';
+import 'package:orot/components/visit_card.dart';
+import 'package:orot/pages/home/home_label.dart';
+import 'package:orot/pages/home/home_title.dart';
 import 'package:orot/pages/home/visits_list.dart';
 import 'package:orot/pages/profile_page.dart';
 import 'package:orot/user_provider.dart';
@@ -17,13 +18,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _isLoading = true;
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _getUserData();
+      context.read<UserProvider>().getUserData();
     });
   }
 
@@ -32,41 +31,48 @@ class _HomePageState extends State<HomePage> {
     return Consumer<UserProvider>(builder: (context, userProvider, child) {
       return Scaffold(
           resizeToAvoidBottomInset: false,
-          body: _isLoading
-              ? _Loading()
-              : Column(
-                  spacing: 10,
-                  children: [
-                    Stack(
-                      children: [
-                        Title(
-                          displayName: userProvider.userName,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(40, 100, 40, 0),
-                          child: Column(
-                            children: [
-                              _nearestVisitTitle(),
-                              getNearestVisit(),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 40),
-                        child: Column(
-                          spacing: 10,
-                          children: [_addVisitButton(), _visits()],
-                        ))
-                  ],
-                ));
+          body: Column(
+            spacing: 10,
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  Positioned(
+                    child: HomePageTitle(displayName: userProvider.userName),
+                  ),
+                  Positioned(
+                    bottom: -65,
+                    child: _nearestVisitTitle(),
+                  )
+                ],
+              ),
+              SizedBox(height: 70),
+              _addVisitButton(),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: _visits(),
+              ),
+            ],
+          ));
     });
   }
 
-//TODO: replace with something good
-  Widget _Loading() {
-    return Text('loading...');
+  Widget _nearestVisitTitle() {
+    return Container(
+        alignment: Alignment.topRight,
+        child: Column(
+          spacing: 10,
+          textDirection: TextDirection.rtl,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Transform.translate(
+              offset: const Offset(10, 0),
+              child: HomeLabelText(text: 'הביקור הקרוב'),
+            ),
+            VisitCard(showEditButton: true)
+          ],
+        ));
   }
 
   Widget _addVisitButton() {
@@ -76,16 +82,9 @@ class _HomePageState extends State<HomePage> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => const AdminPage()))
+                builder: (BuildContext context) => const ProfilePage()))
       },
     );
-  }
-
-  Future<void> _getUserData() async {
-    await context.read<UserProvider>().getUserData();
-    setState(() {
-      _isLoading = false;
-    });
   }
 }
 
