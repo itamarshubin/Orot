@@ -7,8 +7,8 @@ import 'package:orot/modal/calendar/event.dart';
 import 'package:orot/modal/calendar/event_time.dart';
 import 'package:orot/pages/home/home_page.dart';
 import 'package:orot/pages/newVisit/field.dart';
+import 'package:orot/services/calender_service.dart';
 import 'package:orot/services/google_auth.dart';
-import 'package:orot/services/google_calender/calender_service.dart';
 import 'package:orot/services/volunteer_service.dart';
 
 class NewVisitPage extends StatefulWidget {
