@@ -21,10 +21,9 @@ GoRouter getConfigRouter() {
       if (user == null) {
         return '/login';
       } else {
-        return '/volunteer/home';
+        //ITAMAR IF YOU WANT TO CHANGE PAGES YOU CAN DO IT HERE!
+        return '/volunteer/home'; //TODO: when logged in check if user is volunteer or coordinator and send to its root route.
       }
-      //TODO: when logged in check if user is volunteer or coordinator and send to its root route.
-
       //TODO: manage admin access here
       // if (state.uri.toString().startsWith('/admin') && user is not admin ) {
       //   return '/home';
