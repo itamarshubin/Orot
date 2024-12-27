@@ -36,8 +36,9 @@ class _HomePageState extends State<HomePage> {
           return Consumer<UserProvider>(
               builder: (context, userProvider, child) {
             return Scaffold(
-                resizeToAvoidBottomInset: false,
-                body: Column(
+              resizeToAvoidBottomInset: false,
+              body: SingleChildScrollView(
+                child: Column(
                   spacing: 10,
                   children: [
                     Stack(
@@ -55,13 +56,20 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(height: 70),
-                    _addVisitButton(),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: _visits(),
+                      child: Column(
+                        spacing: 10,
+                        children: [
+                          _addVisitButton(),
+                          VisitsList("פגישות עתידיות נוספות", getFuture()),
+                        ],
+                      ),
                     ),
                   ],
-                ));
+                ),
+              ),
+            );
           });
         }
       },
@@ -98,16 +106,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget _visits() {
-  return Column(
-    spacing: 10,
-    children: [
-      VisitsList("פגישות עתידיות נוספות", getFuture()),
-      VisitsList("היסטורית פגישות", getHistory()),
-    ],
-  );
-}
-
 List<VisitCard> getHistory() {
   return [
     for (int i = 0; i < 10; i++)
@@ -121,7 +119,7 @@ List<VisitCard> getHistory() {
 
 List<VisitCard> getFuture() {
   return [
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 3; i++)
       VisitCard(
         address: "חנה רובינא $i, חיפה",
       )
