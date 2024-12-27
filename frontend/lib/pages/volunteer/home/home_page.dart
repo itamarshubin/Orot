@@ -18,24 +18,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _getUserData();
-    });
-  }
-
+  //
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserProvider>(builder: (context, userProvider, child) {
-      return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: _isLoading
-              ? _loading()
-              : Column(
+    return FutureBuilder(
+      future: Provider.of<UserProvider>(context, listen: false).getUserData(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.error != null) {
+          return Center(
+            child: Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'),
+          );
+        } else {
+          return Consumer<UserProvider>(
+              builder: (context, userProvider, child) {
+            return Scaffold(
+                resizeToAvoidBottomInset: false,
+                body: Column(
                   spacing: 10,
                   children: [
                     Stack(
@@ -60,7 +62,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ));
-    });
+          });
+        }
+      },
+    );
   }
 
   Widget _nearestVisitTitle() {
@@ -80,11 +85,6 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  //TODO: replace with something good
-  Widget _loading() {
-    return Text('loading...');
-  }
-
   Widget _addVisitButton() {
     return MainButton(
       text: 'קביעת מפגש',
@@ -96,20 +96,13 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
-
-  Future<void> _getUserData() async {
-    await context.read<UserProvider>().getUserData();
-    setState(() {
-      _isLoading = false;
-    });
-  }
 }
 
 Widget _visits() {
   return Column(
     spacing: 10,
     children: [
-      VisitsList("פגישות עתידיות", getFuture()),
+      VisitsList("פגישות עתידיות נוספות", getFuture()),
       VisitsList("היסטורית פגישות", getHistory()),
     ],
   );
