@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/components/fixed_column.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/components/visit_card.dart';
 import 'package:orot/pages/volunteer/home/home_label.dart';
@@ -37,9 +39,9 @@ class _HomePageState extends State<HomePage> {
               builder: (context, userProvider, child) {
             return Scaffold(
               resizeToAvoidBottomInset: false,
+              backgroundColor: Color.fromRGBO(237, 237, 237, 1),
               body: SingleChildScrollView(
-                child: Column(
-                  spacing: 10,
+                child: FixedColumn(
                   children: [
                     Stack(
                       clipBehavior: Clip.none,
@@ -58,11 +60,11 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(height: 70),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: Column(
-                        spacing: 10,
+                      child: FixedColumn(
                         children: [
                           _addVisitButton(),
                           VisitsList("פגישות עתידיות נוספות", getFuture()),
+                          _getTips(),
                         ],
                       ),
                     ),
@@ -79,10 +81,7 @@ class _HomePageState extends State<HomePage> {
   Widget _nearestVisitTitle() {
     return Container(
         alignment: Alignment.topRight,
-        child: Column(
-          spacing: 10,
-          textDirection: TextDirection.rtl,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: FixedColumn(
           children: [
             Transform.translate(
               offset: const Offset(10, 0),
@@ -104,6 +103,34 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
+
+  Widget _getTips() {
+    return Column(
+      textDirection: TextDirection.rtl,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 10,
+      children: [
+        HomeLabelText(text: 'הביקור הקרוב'),
+        Text(
+          textAlign: TextAlign.right,
+          textDirection: TextDirection.rtl,
+          '5 טיפים שיוכלו לעזור לנו להתנהל במפגש',
+          style: GoogleFonts.assistant(
+            color: Color.fromRGBO(32, 82, 115, 1),
+            fontWeight: FontWeight.w400,
+            fontSize: 18,
+          ),
+        ),
+        Container(
+          height: 200,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+        )
+      ],
+    );
+  }
 }
 
 List<VisitCard> getHistory() {
@@ -119,7 +146,7 @@ List<VisitCard> getHistory() {
 
 List<VisitCard> getFuture() {
   return [
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 2; i++)
       VisitCard(
         address: "חנה רובינא $i, חיפה",
       )
