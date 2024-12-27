@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/models/visit.dart';
+import 'package:orot/pages/volunteer/home/home_page.dart';
 
 class VisitCard extends StatefulWidget {
-  final String address;
-  final String dateAndTime;
   final bool showEditButton;
   final bool? hasVisited;
+  final Visit visit;
 
   //TODO: get an actual datetime and parse it to this
   //TODO: pass object that has all visit info
-  const VisitCard({
-    super.key,
-    this.address = 'איפושהו בעולם',
-    this.showEditButton = false,
-    this.dateAndTime = '16:00 | 19.1',
-    this.hasVisited,
-  });
+  const VisitCard(
+      {super.key,
+      this.showEditButton = false,
+      this.hasVisited,
+      required this.visit});
 
   @override
   State<VisitCard> createState() => _VisitCardState();
@@ -51,7 +50,7 @@ class _VisitCardState extends State<VisitCard> {
               textDirection: TextDirection.rtl,
               children: [
                 TextWithIcon(
-                  widget.dateAndTime,
+                  formatDateTime(widget.visit.visitDate),
                   'assets/icons/pick_date_icon.svg',
                 ),
                 Transform.translate(
@@ -66,7 +65,7 @@ class _VisitCardState extends State<VisitCard> {
               textDirection: TextDirection.rtl,
               children: <Widget>[
                 TextWithIcon(
-                  widget.address,
+                  widget.visit.family.address,
                   'assets/icons/location_icon.svg',
                 ),
               ],
