@@ -17,31 +17,33 @@ class _VolunteerNavigationState extends State<VolunteerNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: currentChild,
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) => _onItemTapped(context, index),
-        iconSize: 25,
-        currentIndex: currentIndex,
-        items: const [
-          BottomNavigationBarItem(
-            // backgroundColor: Colors.black,
-            tooltip: 'פרופיל',
-            icon: Icon(Icons.person),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            tooltip: 'היסטורית פגישות',
-            icon: Icon(Icons.history),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            tooltip: 'מסך ראשי',
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-        ],
-      ),
-    );
+        body: currentChild,
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (index) => _onItemTapped(context, index),
+          iconSize: 25,
+          currentIndex: currentIndex,
+          selectedItemColor: Color(0xFF205273),
+          // selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.grey,
+          items: const [
+            BottomNavigationBarItem(
+              // backgroundColor: Colors.black,
+              tooltip: 'פרופיל',
+              icon: Icon(Icons.person),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              tooltip: 'היסטורית פגישות',
+              icon: Icon(Icons.history),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              tooltip: 'מסך ראשי',
+              icon: Icon(Icons.home),
+              label: '',
+            ),
+          ],
+        ));
   }
 
   void _onItemTapped(BuildContext context, int index) {
