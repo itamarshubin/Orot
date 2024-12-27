@@ -5,6 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
+import 'package:orot/pages/login/login_page.dart';
+import 'package:orot/pages/volunteer/home/home_page.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:orot/router.dart';
 import 'package:provider/provider.dart';
@@ -40,10 +42,11 @@ class OrotApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
 
-    return MaterialApp.router(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Open Sans'),
-      routerConfig: getConfigRouter(),
+      // routerConfig: getConfigRouter(),
+      home: HomePage(),
     );
   }
 }

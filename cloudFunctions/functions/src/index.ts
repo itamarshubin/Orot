@@ -9,7 +9,12 @@
 
 import { auth } from "firebase-admin";
 import { initializeApp } from "firebase-admin/app";
-import { DocumentReference, getFirestore } from "firebase-admin/firestore";
+import {
+  DocumentReference,
+  getFirestore,
+  QueryDocumentSnapshot,
+  Timestamp,
+} from "firebase-admin/firestore";
 import { CallableRequest, onCall } from "firebase-functions/v2/https";
 
 // Start writing functions
@@ -90,10 +95,8 @@ export const getCurrentUser = onCall(async (data, context) => {
       .doc(data.auth?.uid)
       .get();
 
-    console.log("family data", volunteerDocument.data()?.family);
     const familyRef: DocumentReference = volunteerDocument.data()?.family;
 
-    console.log("nigger", (await familyRef.get()).data());
     user.permission = "volunteer";
     //@ts-ignore
     user.family = (await familyRef.get()).data();
@@ -228,4 +231,44 @@ export const createVisit = onCall(async (data, context) => {
       visitDate: new Date(data.data.dateTime),
       attendees: [volunteerDocument.ref],
     });
+});
+
+export const getUpcomingVisits = onCall(async (data, context) => {
+  const volunteerRef = getFirestore().doc(`volunteers/${data.auth?.uid}`);
+
+  const now = Timestamp.now();
+
+  const visitsSnapshot = await getFirestore()
+    .collection("visits")
+    .where("attendees", "array-contains", volunteerRef)
+    .where("visitDate", ">", now)
+    .orderBy("visitDate")
+    .get();
+
+  console.log("visitsSnapshot", visitsSnapshot.empty);
+  if (visitsSnapshot.empty) {
+    return [];
+  }
+
+  visitsSnapshot.docs.map((doc) => doc.data());
+
+  return Promise.all(
+    visitsSnapshot.docs.map(async (visitDoc) => {
+      const familySnapshot: QueryDocumentSnapshot = await visitDoc
+        .data()
+        .family.get();
+      return {
+        id: visitDoc.id,
+        visitDate: (visitDoc.data().visitDate as Timestamp)
+          .toDate()
+          .toISOString(),
+        family: {
+          id: familySnapshot.id,
+          name: familySnapshot.data().name,
+          address: familySnapshot.data().address,
+          contact: familySnapshot.data().contact,
+        },
+      };
+    })
+  );
 });

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/models/family.dart';
 
 class FamiliesDropdown extends StatefulWidget {
   List<Family> families;
@@ -54,11 +55,4 @@ class _FamiliesDropdownState extends State<FamiliesDropdown> {
       ],
     );
   }
-}
-
-class Family {
-  final String id;
-  final String name;
-
-  Family({required this.id, required this.name});
 }
