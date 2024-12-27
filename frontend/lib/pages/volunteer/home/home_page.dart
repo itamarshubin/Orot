@@ -38,7 +38,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Provider.of<UserProvider>(context, listen: false).getUserData(),
+      future: Future.wait([
+        Provider.of<UserProvider>(context, listen: false).getUserData(),
+      ]),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
