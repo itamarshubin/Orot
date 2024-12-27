@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:orot/models/visit.dart';
 
 class VolunteerService {
   final FirebaseFunctions _functions = FirebaseFunctions.instance;
@@ -30,6 +33,20 @@ class VolunteerService {
         textColor: Colors.white,
         fontSize: 14.0,
       );
+    }
+  }
+
+  Future<List<Visit>?> getUpcomingVisits() async {
+    final callable = _functions.httpsCallable('getUpcomingVisits');
+    try {
+      final result = await callable.call();
+
+      return (result.data as List)
+          .map((visit) => Visit.fromJson(visit))
+          .toList();
+    } catch (e) {
+      print('some fucking error:$e');
+      return null;
     }
   }
 }

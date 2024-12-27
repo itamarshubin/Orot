@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/models/district.dart';
+import 'package:orot/models/family.dart';
 import 'package:orot/models/user.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/pages/admin/components/districts_dropdown.dart';
@@ -24,7 +25,9 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
   final _nameController = TextEditingController();
 
   List<District> _districts = [District(id: '0', name: 'loading...')];
-  List<Family> _families = [Family(id: '0', name: 'loading...')];
+  List<Family> _families = [
+    Family(id: '0', name: 'loading...', address: "add", contact: "con")
+  ];
   String _selectedDistrictId = '0';
   String _selectedFamilyId = '0';
 
@@ -51,6 +54,34 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
         }
       }
 
+      Future<void> _initDistricts() async {
+        try {
+          final List<District> districts = await AdminService().getDistricts();
+          setState(() {
+            _districts = districts;
+            _selectedDistrictId = districts.first.id;
+          });
+
+          try {
+            await _getFamilies(_selectedDistrictId);
+          } catch (e) {
+            setState(() {
+              _families = [
+                Family(
+                    id: '0',
+                    name: 'error loading families',
+                    address: "add",
+                    contact: "con")
+              ];
+            });
+          }
+        } catch (e) {
+          setState(() {
+            _districts = [District(id: '0', name: 'error loading districts')];
+          });
+        }
+      }
+
       return Scaffold(
           body: Container(
         padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
@@ -71,6 +102,7 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
                 districts: _districts,
                 selectedDistrictId: _selectedDistrictId,
                 onSelectedIdChange: _updateSelectedDistrict,
+                onInit: _initDistricts,
               )
             else
               _district(userProvider.user?.district),
@@ -222,28 +254,6 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
     );
   }
 
-  Future<void> _initDistricts() async {
-    try {
-      final List<District> districts = await AdminService().getDistricts();
-      setState(() {
-        _districts = districts;
-        _selectedDistrictId = districts.first.id;
-      });
-
-      try {
-        await _getFamilies(_selectedDistrictId);
-      } catch (e) {
-        setState(() {
-          _families = [Family(id: '0', name: 'error loading families')];
-        });
-      }
-    } catch (e) {
-      setState(() {
-        _districts = [District(id: '0', name: 'error loading districts')];
-      });
-    }
-  }
-
   Future<void> _getFamilies(String? districtId) async {
     try {
       final List<Family> families =
@@ -254,7 +264,13 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
       });
     } catch (e) {
       setState(() {
-        _families = [Family(id: '0', name: 'error loading families')];
+        _families = [
+          Family(
+              id: '0',
+              name: 'error loading families',
+              address: "add",
+              contact: "con")
+        ];
       });
     }
   }

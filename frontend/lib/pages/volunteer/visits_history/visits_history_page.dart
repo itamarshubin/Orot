@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:orot/components/visit_card.dart';
+import 'package:orot/models/family.dart';
+import 'package:orot/models/visit.dart';
 import 'package:orot/pages/volunteer/visits_history/visits_history_app_bar.dart';
 
 class VisitsHistoryPage extends StatefulWidget {
@@ -54,7 +56,11 @@ class _VisitsHistoryPageState extends State<VisitsHistoryPage> {
       for (int i = 0; i < 10; i++)
         VisitCard(
           hasVisited: Random().nextDouble() <= 0.3,
-          address: "חנה רובינא $i, חיפה",
+          visit: Visit(
+              id: 'id',
+              family: Family(
+                  id: 'id', name: 'name', address: 'ddd', contact: "con"),
+              visitDate: DateTime.now()),
         )
     ];
   }

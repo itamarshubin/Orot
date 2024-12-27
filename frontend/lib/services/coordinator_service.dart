@@ -2,6 +2,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:orot/models/family.dart';
 import 'package:orot/pages/admin/components/families_dropdown.dart';
 
 class CoordinatorService {
@@ -64,8 +65,7 @@ class CoordinatorService {
       print('this what we fucking got:${results.data}');
 
       return (results.data as List)
-          .map((item) =>
-              Family(name: item['name'] as String, id: item['id'] as String))
+          .map((item) => Family.fromJson(item))
           .toList();
     } catch (e) {
       Fluttertoast.showToast(

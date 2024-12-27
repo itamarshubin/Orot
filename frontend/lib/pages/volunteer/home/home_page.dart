@@ -5,11 +5,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/fixed_column.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/components/visit_card.dart';
+import 'package:intl/src/intl/date_format.dart';
+import 'package:orot/components/main_button.dart';
+import 'package:orot/components/visit_card.dart';
+import 'package:orot/models/family.dart';
+import 'package:orot/models/visit.dart';
+import 'package:orot/pages/admin/admin_page.dart';
 import 'package:orot/pages/volunteer/home/home_label.dart';
 import 'package:orot/pages/volunteer/home/home_title.dart';
 import 'package:orot/pages/volunteer/home/visits_list.dart';
 import 'package:orot/pages/volunteer/new_visit/new_visit_page.dart';
 import 'package:orot/providers/user_provider.dart';
+import 'package:orot/services/volunteer_service.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,7 +27,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -53,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Positioned(
                           bottom: -65,
-                          child: _nearestVisitTitle(),
+                          child: _nearestVisit(),
                         )
                       ],
                     ),
@@ -78,7 +85,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _nearestVisitTitle() {
+  Widget _nearestVisit() {
     return Container(
         alignment: Alignment.topRight,
         child: FixedColumn(
@@ -87,7 +94,11 @@ class _HomePageState extends State<HomePage> {
               offset: const Offset(10, 0),
               child: HomeLabelText(text: 'הביקור הקרוב'),
             ),
-            VisitCard(showEditButton: true)
+            if (_upcomingVisits?[0] != null)
+              VisitCard(
+                showEditButton: true,
+                visit: _upcomingVisits![0],
+              )
           ],
         ));
   }
@@ -131,6 +142,14 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
+
+  Future<void> _getUpcomingVisits() async {
+    final List<Visit>? upcomingVisits =
+        await VolunteerService().getUpcomingVisits();
+    setState(() {
+      _upcomingVisits = upcomingVisits;
+    });
+  }
 }
 
 List<VisitCard> getHistory() {
@@ -139,7 +158,10 @@ List<VisitCard> getHistory() {
       VisitCard(
         hasVisited: Random().nextDouble() <= 0.3,
         showEditButton: true,
-        address: "חנה רובינא $i, חיפה",
+        visit: Visit(
+            id: 'id',
+            family: Family(id: 'id', name: 'name', address: 'ddd', contact: ''),
+            visitDate: DateTime.now()),
       )
   ];
 }
@@ -148,7 +170,15 @@ List<VisitCard> getFuture() {
   return [
     for (int i = 0; i < 2; i++)
       VisitCard(
-        address: "חנה רובינא $i, חיפה",
+        visit: Visit(
+            id: 'id',
+            family: Family(id: 'id', name: 'name', address: 'ddd', contact: ''),
+            visitDate: DateTime.now()),
       )
   ];
+}
+
+String formatDateTime(DateTime dateTime) {
+  final DateFormat formatter = DateFormat('dd.MM | HH:mm');
+  return formatter.format(dateTime);
 }

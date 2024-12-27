@@ -9,7 +9,12 @@
 
 import { auth } from "firebase-admin";
 import { initializeApp } from "firebase-admin/app";
-import { DocumentReference, getFirestore } from "firebase-admin/firestore";
+import {
+  DocumentReference,
+  getFirestore,
+  QueryDocumentSnapshot,
+  Timestamp,
+} from "firebase-admin/firestore";
 import { CallableRequest, onCall } from "firebase-functions/v2/https";
 
 // Start writing functions
@@ -85,15 +90,16 @@ export const getCurrentUser = onCall(async (data, context) => {
       name: (await district.get()).data()?.name,
     };
   } else {
-    const volunteer = await getFirestore()
+    const volunteerDocument = await getFirestore()
       .collection("volunteers")
       .doc(data.auth?.uid)
       .get();
 
-    console.log("family data", volunteer.data()?.family);
+    const familyRef: DocumentReference = volunteerDocument.data()?.family;
 
     user.permission = "volunteer";
-    user.family = volunteer.data()?.family;
+    //@ts-ignore
+    user.family = (await familyRef.get()).data();
   }
 
   return user;
@@ -215,48 +221,54 @@ export const createVisit = onCall(async (data, context) => {
     .get();
   const familyRef = volunteerDocument.data()?.family;
 
-  const newVisit = await getFirestore()
+  console.log("family ref", familyRef);
+  console.log("volunteer ref", volunteerDocument.ref);
+
+  await getFirestore()
     .collection("visits")
     .add({
       family: familyRef,
       visitDate: new Date(data.data.dateTime),
       attendees: [volunteerDocument.ref],
     });
-  return newVisit;
 });
 
-// export const scheduleVisitNotification = onCall(async (data, context) => {
-//     await getFirestore()
-//         .doc("visits/{visitId}")
-//         .onCreate(async (snap, context) => {
-//             const data = snap.data();
-//             const visitTime = new Date(data.timeStamp).getTime();
-//             const oneDayBefore = visitTime - 24 * 60 * 60 * 1000;
+export const getUpcomingVisits = onCall(async (data, context) => {
+  const volunteerRef = getFirestore().doc(`volunteers/${data.auth?.uid}`);
 
-//             if (oneDayBefore > Date.now()) {
-//                 const attendees = data.attendees; // Array of ref/volunteers
-//                 const familySnap = await data.family.get(); // Get family details
-//                 const familyData = familySnap.data();
+  const now = Timestamp.now();
 
-//                 for (const attendeeRef of attendees) {
-//                     const attendeeSnap = await attendeeRef.get();
-//                     const attendeeData = attendeeSnap.data();
+  const visitsSnapshot = await getFirestore()
+    .collection("visits")
+    .where("attendees", "array-contains", volunteerRef)
+    .where("visitDate", ">", now)
+    .orderBy("visitDate")
+    .get();
 
-//                     if (attendeeData.email) {
-//                         const payload = {
-//                             notification: {
-//                                 title: "תזכורת לפגישה",
-//                                 body: `יש לך פגישה עם משפחת ${familyData.name} מחר`,
-//                             },
-//                             data: {
-//                                 visitId: context.params.visitId,
-//                                 familyName: familyData.name,
-//                             },
-//                         };
-//                         await admin.messaging().sendToDevice(attendeeData.deviceToken, payload);
-//                     }
-//                 }
-//             }
-//             return null;
-//             }
-//     });
+  console.log("visitsSnapshot", visitsSnapshot.empty);
+  if (visitsSnapshot.empty) {
+    return [];
+  }
+
+  visitsSnapshot.docs.map((doc) => doc.data());
+
+  return Promise.all(
+    visitsSnapshot.docs.map(async (visitDoc) => {
+      const familySnapshot: QueryDocumentSnapshot = await visitDoc
+        .data()
+        .family.get();
+      return {
+        id: visitDoc.id,
+        visitDate: (visitDoc.data().visitDate as Timestamp)
+          .toDate()
+          .toISOString(),
+        family: {
+          id: familySnapshot.id,
+          name: familySnapshot.data().name,
+          address: familySnapshot.data().address,
+          contact: familySnapshot.data().contact,
+        },
+      };
+    })
+  );
+});
