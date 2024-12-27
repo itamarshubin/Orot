@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
 import 'package:orot/providers/user_provider.dart';
-import 'package:orot/router.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -28,7 +27,7 @@ Future<void> main() async {
   FlutterNativeSplash.remove();
 
   runApp(ChangeNotifierProvider(
-    create: (_) => UserProvider(),
+    create: (context) => UserProvider(),
     child: OrotApp(),
   ));
 }
@@ -38,12 +37,35 @@ class OrotApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = FirebaseAuth.instance.currentUser;
-
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Open Sans'),
-      routerConfig: getConfigRouter(),
-    );
+    return Consumer<UserProvider>(builder: (context, userProvider, child) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(fontFamily: 'Open Sans'),
+        home: userProvider.getUserStartPage(),
+      );
+    });
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return FutureBuilder(
+  //     future: Provider.of<UserProvider>(context, listen: false).getUserData(),
+  //     builder: (context, snapshot) {
+  //       return MaterialApp.router(
+  //         debugShowCheckedModeBanner: false,
+  //         theme: ThemeData(fontFamily: 'Open Sans'),
+  //         routerConfig: getConfigRouter(context),
+  //       );
+  //     },
+  //   );
+  // }
+
+// @override
+// Widget build(BuildContext context) {
+//   return MaterialApp.router(
+//     debugShowCheckedModeBanner: false,
+//     theme: ThemeData(fontFamily: 'Open Sans'),
+//     routerConfig: getConfigRouter(context),
+//   );
+// }
 }

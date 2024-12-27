@@ -42,3 +42,21 @@ dart run flutter_native_splash:create --flavor production
 
 Note That for production it will create in `android/app/production` and will not use the default
 which is `main`.
+
+## Router structure
+
+```
+[GoRouter] Full paths for routes:
+├─ (ShellRoute)
+│ └─/login (LoginPage)
+├─/management (AdminPage)
+├─/admin (Placeholder)
+│ └─/admin/home (AdminPage)
+├─/volunteer (Placeholder)
+│ └─ (ShellRoute)
+│   ├─/volunteer/home (HomePage)
+│   ├─/volunteer/history (VisitsHistoryPage)
+│   └─/volunteer/profile (ProfilePage)
+└─/coordinator (Placeholder)
+  └─/coordinator/home (VolunteersPage)
+```

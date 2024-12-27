@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
-import 'package:orot/pages/login/login_page.dart';
 
 class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -17,7 +16,7 @@ class AuthService {
       final shit = await callable.call();
       return shit.data;
     } catch (e) {
-      print('error $e');
+      debugPrint('error $e');
 
       Fluttertoast.showToast(
         msg: e.toString(),
@@ -33,16 +32,19 @@ class AuthService {
   Future<void> signin({
     required String email,
     required String password,
-    required BuildContext context,
   }) async {
     try {
-      await FirebaseAuth.instance
+      final user = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-
-      await Future.delayed(const Duration(seconds: 1));
-      if (!context.mounted) return;
-      context.go('/');
-      Fluttertoast.showToast(msg: '${context.mounted}');
+      await Future.delayed(const Duration(seconds: 1)); // TODO: remove in prod.
+      Fluttertoast.showToast(
+        msg: '$user',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: Colors.black54,
+        textColor: Colors.white,
+        fontSize: 14.0,
+      );
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'invalid-email') {
@@ -64,10 +66,12 @@ class AuthService {
   Future<void> signout({required BuildContext context}) async {
     await FirebaseAuth.instance.signOut();
     await Future.delayed(const Duration(seconds: 1));
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => const LoginPage()));
+
+    context.go('/');
+    // Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (BuildContext context) => const LoginPage()));
   }
 
   Future<void> quickSignout() async {

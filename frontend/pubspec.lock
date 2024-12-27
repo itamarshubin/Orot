@@ -405,6 +405,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  go_provider:
+    dependency: "direct main"
+    description:
+      name: go_provider
+      sha256: "886ff63b8bdb37daf8053db79484e2aa120540d6b08e02b36721f32e869f2f0f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.8.0"
   go_router:
     dependency: "direct main"
     description:

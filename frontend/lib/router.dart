@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_provider/go_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:orot/pages/admin/admin_page.dart';
 import 'package:orot/pages/coordinator/show_volunteers/volunteers_page.dart';
@@ -9,31 +9,33 @@ import 'package:orot/pages/profile/profile_page.dart';
 import 'package:orot/pages/volunteer/home/home_page.dart';
 import 'package:orot/pages/volunteer/navigation.dart';
 import 'package:orot/pages/volunteer/visits_history/visits_history_page.dart';
+import 'package:orot/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
-GoRouter getConfigRouter() {
-  final User? user = FirebaseAuth.instance.currentUser;
+GoRouter getConfigRouter(BuildContext context) {
   final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>();
-  Fluttertoast.showToast(msg: '$user');
   return GoRouter(
+    debugLogDiagnostics: true,
     navigatorKey: rootNavigatorKey,
+    initialLocation: '/',
     redirect: (context, state) {
-      if (user == null) {
+      final user = Provider.of<UserProvider>(context, listen: false).user;
+      Fluttertoast.showToast(msg: 'XXUSER: ${user?.permission}');
+      if (user != null) {
         return '/login';
-      } else {
-        //ITAMAR IF YOU WANT TO CHANGE PAGES YOU CAN DO IT HERE!
-        return '/volunteer/home'; //TODO: when logged in check if user is volunteer or coordinator and send to its root route.
       }
-      //TODO: manage admin access here
-      // if (state.uri.toString().startsWith('/admin') && user is not admin ) {
-      //   return '/home';
-      // }
-      return null;
+      return '/login';
     },
     routes: <RouteBase>[
-      GoRoute(
+      GoProviderRoute(
         path: '/login',
+        providers: [Provider(create: (context) => UserProvider())],
         builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: '/management',
+        builder: (context, state) => const AdminPage(),
       ),
       adminRoutes(),
       volunteerRoutes(rootNavigatorKey),
@@ -45,7 +47,7 @@ GoRouter getConfigRouter() {
 GoRoute volunteerRoutes(GlobalKey<NavigatorState> rootNavigatorKey) {
   return GoRoute(
     path: '/volunteer',
-    builder: (context, state) => const HomePage(),
+    builder: (context, state) => const Placeholder(),
     routes: [
       ShellRoute(
         navigatorKey: rootNavigatorKey,
@@ -74,13 +76,25 @@ GoRoute volunteerRoutes(GlobalKey<NavigatorState> rootNavigatorKey) {
 GoRoute adminRoutes() {
   return GoRoute(
     path: '/admin',
-    builder: (context, state) => const AdminPage(),
+    builder: (context, state) => const Placeholder(),
+    routes: [
+      GoRoute(
+        path: 'home',
+        builder: (context, state) => const AdminPage(),
+      )
+    ],
   );
 }
 
 GoRoute coordinatorRoutes() {
   return GoRoute(
     path: '/coordinator',
-    builder: (context, state) => const VolunteersPage(),
+    builder: (context, state) => const Placeholder(),
+    routes: [
+      GoRoute(
+        path: 'home',
+        builder: (context, state) => const VolunteersPage(),
+      )
+    ],
   );
 }
