@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 10,
       children: [
-        HomeLabelText(text: 'הביקור הקרוב'),
+        HomeLabelText(text: 'איך נתמודד במפגש?'),
         Text(
           textAlign: TextAlign.right,
           textDirection: TextDirection.rtl,
