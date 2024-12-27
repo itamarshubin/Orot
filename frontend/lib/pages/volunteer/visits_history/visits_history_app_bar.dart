@@ -9,6 +9,7 @@ class VisitsHistoryAppBar extends StatelessWidget
   @override
   PreferredSizeWidget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Color.fromRGBO(237, 237, 237, 1),
       toolbarHeight: 200,
       centerTitle: true,
       leading: Transform.translate(
