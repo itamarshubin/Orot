@@ -1,6 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/components/fixed_column.dart';
+import 'package:orot/components/main_button.dart';
+import 'package:orot/components/visit_card.dart';
 import 'package:intl/src/intl/date_format.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/components/visit_card.dart';
@@ -23,26 +27,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _isLoading = true;
-  List<Visit>? _upcomingVisits = [];
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _getUserData();
-      _getUpcomingVisits();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserProvider>(builder: (context, userProvider, child) {
-      return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: _isLoading
-              ? _loading()
-              : Column(
-                  spacing: 10,
+    return FutureBuilder(
+      future: Provider.of<UserProvider>(context, listen: false).getUserData(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.error != null) {
+          return Center(
+            child: Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'),
+          );
+        } else {
+          return Consumer<UserProvider>(
+              builder: (context, userProvider, child) {
+            return Scaffold(
+              resizeToAvoidBottomInset: false,
+              backgroundColor: Color.fromRGBO(237, 237, 237, 1),
+              body: SingleChildScrollView(
+                child: FixedColumn(
                   children: [
                     Stack(
                       clipBehavior: Clip.none,
@@ -59,23 +65,30 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(height: 70),
-                    _addVisitButton(),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: _visits(),
+                      child: FixedColumn(
+                        children: [
+                          _addVisitButton(),
+                          VisitsList("פגישות עתידיות נוספות", getFuture()),
+                          _getTips(),
+                        ],
+                      ),
                     ),
                   ],
-                ));
-    });
+                ),
+              ),
+            );
+          });
+        }
+      },
+    );
   }
 
   Widget _nearestVisit() {
     return Container(
         alignment: Alignment.topRight,
-        child: Column(
-          spacing: 10,
-          textDirection: TextDirection.rtl,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: FixedColumn(
           children: [
             Transform.translate(
               offset: const Offset(10, 0),
@@ -90,11 +103,6 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  //TODO: replace with something good
-  Widget _loading() {
-    return Text('loading...');
-  }
-
   Widget _addVisitButton() {
     return MainButton(
       text: 'קביעת מפגש',
@@ -107,11 +115,32 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> _getUserData() async {
-    await context.read<UserProvider>().getUserData();
-    setState(() {
-      _isLoading = false;
-    });
+  Widget _getTips() {
+    return Column(
+      textDirection: TextDirection.rtl,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 10,
+      children: [
+        HomeLabelText(text: 'איך נתמודד במפגש?'),
+        Text(
+          textAlign: TextAlign.right,
+          textDirection: TextDirection.rtl,
+          '5 טיפים שיוכלו לעזור לנו להתנהל במפגש',
+          style: GoogleFonts.assistant(
+            color: Color.fromRGBO(32, 82, 115, 1),
+            fontWeight: FontWeight.w400,
+            fontSize: 18,
+          ),
+        ),
+        Container(
+          height: 200,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+        )
+      ],
+    );
   }
 
   Future<void> _getUpcomingVisits() async {
@@ -121,16 +150,6 @@ class _HomePageState extends State<HomePage> {
       _upcomingVisits = upcomingVisits;
     });
   }
-}
-
-Widget _visits() {
-  return Column(
-    spacing: 10,
-    children: [
-      VisitsList("פגישות עתידיות", getFuture()),
-      VisitsList("היסטורית פגישות", getHistory()),
-    ],
-  );
 }
 
 List<VisitCard> getHistory() {
@@ -149,7 +168,7 @@ List<VisitCard> getHistory() {
 
 List<VisitCard> getFuture() {
   return [
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 2; i++)
       VisitCard(
         visit: Visit(
             id: 'id',

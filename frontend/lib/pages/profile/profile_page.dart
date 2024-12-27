@@ -22,6 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(builder: (context, userProvider, child) {
       return Scaffold(
+          backgroundColor: Color.fromRGBO(237, 237, 237, 1),
           resizeToAvoidBottomInset: false,
           body: Column(
             children: [

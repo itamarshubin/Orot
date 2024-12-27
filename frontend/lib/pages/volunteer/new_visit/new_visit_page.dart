@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/models/calendar/event.dart';
 import 'package:orot/models/calendar/event_time.dart';
-import 'package:orot/pages/volunteer/home/home_page.dart';
+import 'package:orot/pages/volunteer/navigation.dart';
 import 'package:orot/pages/volunteer/new_visit/field.dart';
 import 'package:orot/services/calender_service.dart';
 import 'package:orot/services/google_auth.dart';
@@ -60,8 +60,11 @@ class _NewVisitPageState extends State<NewVisitPage> {
       child: InkWell(
         customBorder: const CircleBorder(),
         onTap: () => {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (BuildContext context) => HomePage()))
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => VolunteerNavigation(),
+              ))
         },
         child: Stack(
           alignment: Alignment.center,

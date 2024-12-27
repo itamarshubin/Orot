@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
 import 'package:orot/pages/login/login_page.dart';
+import 'package:orot/pages/volunteer/navigation.dart';
 import 'package:orot/pages/volunteer/home/home_page.dart';
 import 'package:orot/providers/user_provider.dart';
-import 'package:orot/router.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -30,7 +30,7 @@ Future<void> main() async {
   FlutterNativeSplash.remove();
 
   runApp(ChangeNotifierProvider(
-    create: (_) => UserProvider(),
+    create: (context) => UserProvider(),
     child: OrotApp(),
   ));
 }
@@ -40,13 +40,12 @@ class OrotApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = FirebaseAuth.instance.currentUser;
-
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Open Sans'),
-      // routerConfig: getConfigRouter(),
-      home: HomePage(),
-    );
+    return Consumer<UserProvider>(builder: (context, userProvider, child) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(fontFamily: 'Open Sans'),
+        home: userProvider.user == null ? LoginPage() : VolunteerNavigation(),
+      );
+    });
   }
 }

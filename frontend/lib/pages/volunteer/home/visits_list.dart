@@ -13,8 +13,6 @@ class VisitsList extends StatefulWidget {
 }
 
 class _VisitsListState extends State<VisitsList> {
-  ScrollController controller = ScrollController();
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,10 +25,11 @@ class _VisitsListState extends State<VisitsList> {
           child: HomeLabelText(text: widget.listTitle),
         ),
         SizedBox(
-          height: 215,
+          height: widget.visits.length * 120,
           child: ListView.builder(
+            shrinkWrap: true,
             addSemanticIndexes: true,
-            controller: controller,
+            physics: const ClampingScrollPhysics(),
             padding: const EdgeInsets.all(0),
             itemCount: widget.visits.length,
             itemBuilder: (_, index) => widget.visits[index],

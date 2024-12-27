@@ -13,7 +13,9 @@ class UserProvider with ChangeNotifier {
 
   Future<void> getUserData() async {
     final response = await AuthService().getCurrentUser();
-    _user = User.fromJson(response);
+    if (response != null) {
+      _user = User.fromJson(response);
+    }
     notifyListeners();
   }
 }

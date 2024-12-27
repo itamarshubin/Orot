@@ -19,6 +19,7 @@ class _VisitsHistoryPageState extends State<VisitsHistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(237, 237, 237, 1),
       appBar: VisitsHistoryAppBar(),
       body: Container(
         alignment: Alignment.bottomCenter,
