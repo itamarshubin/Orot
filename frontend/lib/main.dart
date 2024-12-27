@@ -5,6 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
+import 'package:orot/pages/login/login_page.dart';
+import 'package:orot/pages/volunteer/navigation.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -41,31 +43,8 @@ class OrotApp extends StatelessWidget {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Open Sans'),
-        home: userProvider.getUserStartPage(),
+        home: userProvider.user == null ? LoginPage() : VolunteerNavigation(),
       );
     });
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return FutureBuilder(
-  //     future: Provider.of<UserProvider>(context, listen: false).getUserData(),
-  //     builder: (context, snapshot) {
-  //       return MaterialApp.router(
-  //         debugShowCheckedModeBanner: false,
-  //         theme: ThemeData(fontFamily: 'Open Sans'),
-  //         routerConfig: getConfigRouter(context),
-  //       );
-  //     },
-  //   );
-  // }
-
-// @override
-// Widget build(BuildContext context) {
-//   return MaterialApp.router(
-//     debugShowCheckedModeBanner: false,
-//     theme: ThemeData(fontFamily: 'Open Sans'),
-//     routerConfig: getConfigRouter(context),
-//   );
-// }
 }

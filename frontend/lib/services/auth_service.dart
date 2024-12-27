@@ -3,7 +3,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
+import 'package:orot/pages/login/login_page.dart';
 
 class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -67,11 +67,10 @@ class AuthService {
     await FirebaseAuth.instance.signOut();
     await Future.delayed(const Duration(seconds: 1));
 
-    context.go('/');
-    // Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (BuildContext context) => const LoginPage()));
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => const LoginPage()));
   }
 
   Future<void> quickSignout() async {

@@ -6,7 +6,7 @@ import 'package:orot/pages/admin/add_coordinator_page.dart';
 import 'package:orot/pages/admin/add_district_page.dart';
 import 'package:orot/pages/admin/add_family_page.dart';
 import 'package:orot/pages/admin/add_volunteer_page.dart';
-import 'package:orot/pages/volunteer/home/home_page.dart';
+import 'package:orot/pages/volunteer/navigation.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +16,6 @@ class AdminPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(builder: (context, userProvider, child) {
-      print(userProvider.userPermission);
       return Scaffold(
         body: Container(
           margin: EdgeInsets.only(top: 50),
@@ -97,27 +96,25 @@ class AdminPage extends StatelessWidget {
   }
 
   Widget _backButton(BuildContext context) {
-    return Consumer<UserProvider>(builder: (context, userProvider, child) {
-      return Container(
-        alignment: Alignment.topRight,
-        margin: EdgeInsets.only(bottom: 20),
-        child: InkWell(
-          customBorder: const CircleBorder(),
-          child: Transform.rotate(
-            angle: 180 * math.pi / 180,
-            child: Icon(
-              Icons.arrow_back,
-              size: 30,
-            ),
+    return Container(
+      alignment: Alignment.topRight,
+      margin: EdgeInsets.only(bottom: 20),
+      child: InkWell(
+        customBorder: const CircleBorder(),
+        child: Transform.rotate(
+          angle: 180 * math.pi / 180,
+          child: Icon(
+            Icons.arrow_back,
+            size: 30,
           ),
-          onTap: () => {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) => HomePage()))
-          },
         ),
-      );
-    });
+        onTap: () => {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => VolunteerNavigation()))
+        },
+      ),
+    );
   }
 }

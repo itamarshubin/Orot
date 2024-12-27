@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/components/visit_card.dart';
-import 'package:orot/pages/admin/admin_page.dart';
 import 'package:orot/pages/volunteer/home/home_label.dart';
 import 'package:orot/pages/volunteer/home/home_title.dart';
 import 'package:orot/pages/volunteer/home/visits_list.dart';
+import 'package:orot/pages/volunteer/new_visit/new_visit_page.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => const AdminPage()))
+                builder: (BuildContext context) => const NewVisitPage()))
       },
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:orot/pages/profile/profile_page.dart';
 import 'package:orot/pages/volunteer/home/home_page.dart';
 import 'package:orot/pages/volunteer/visits_history/visits_history_page.dart';
@@ -12,45 +11,59 @@ class VolunteerNavigation extends StatefulWidget {
 }
 
 class _VolunteerNavigationState extends State<VolunteerNavigation> {
-  Widget _currentChild = const SizedBox();
+  Widget currentChild = const HomePage();
+  int currentIndex = 2;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _currentChild,
+      body: currentChild,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _getSelectedIndex(context),
         onTap: (index) => _onItemTapped(context, index),
+        iconSize: 25,
+        currentIndex: currentIndex,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Profile'),
+          BottomNavigationBarItem(
+            // backgroundColor: Colors.black,
+            tooltip: 'פרופיל',
+            icon: Icon(Icons.person),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            tooltip: 'היסטורית פגישות',
+            icon: Icon(Icons.history),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            tooltip: 'מסך ראשי',
+            icon: Icon(Icons.home),
+            label: '',
+          ),
         ],
       ),
     );
   }
 
-  int _getSelectedIndex(BuildContext context) {
-    final location = GoRouter.of(context).state?.uri.toString();
-    if (location!.endsWith('/home')) return 0;
-    if (location.endsWith('/history')) return 1;
-    if (location.endsWith('/profile')) return 2;
-    return 0;
-  }
-
   void _onItemTapped(BuildContext context, int index) {
     switch (index) {
       case 0:
-        context.go('/home');
-        setState(() => _currentChild = const HomePage());
+        setState(() {
+          currentIndex = 0;
+          currentChild = const ProfilePage();
+        });
         break;
       case 1:
-        context.go('/history');
-        setState(() => _currentChild = const VisitsHistoryPage());
+        setState(() {
+          currentIndex = 1;
+          ;
+          currentChild = const VisitsHistoryPage();
+        });
         break;
       case 2:
-        context.go('/profile');
-        setState(() => _currentChild = const ProfilePage());
+        setState(() {
+          currentIndex = 2;
+          currentChild = const HomePage();
+        });
         break;
     }
   }

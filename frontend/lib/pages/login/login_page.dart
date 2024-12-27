@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/field_input.dart';
 import 'package:orot/components/main_button.dart';
@@ -150,7 +149,14 @@ class _LoginPageState extends State<LoginPage> {
             password: _passwordController.text,
           );
           await userProvider.getUserData();
-          context.go('/');
+          if (userProvider.user != null) {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      userProvider.user!.getUserStartPage(),
+                ));
+          }
         });
   }
 

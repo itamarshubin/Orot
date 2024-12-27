@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_provider/go_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:orot/pages/admin/admin_page.dart';
 import 'package:orot/pages/coordinator/show_volunteers/volunteers_page.dart';
@@ -12,25 +11,39 @@ import 'package:orot/pages/volunteer/visits_history/visits_history_page.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
-GoRouter getConfigRouter(BuildContext context) {
+class TestPage extends StatefulWidget {
+  const TestPage({super.key});
+
+  @override
+  State<TestPage> createState() => _TestPageState();
+}
+
+class _TestPageState extends State<TestPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Text('${context.read<UserProvider>().user}');
+  }
+}
+
+GoRouter getConfigRouter() {
   final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>();
   return GoRouter(
     debugLogDiagnostics: true,
     navigatorKey: rootNavigatorKey,
-    initialLocation: '/',
-    redirect: (context, state) {
-      final user = Provider.of<UserProvider>(context, listen: false).user;
-      Fluttertoast.showToast(msg: 'XXUSER: ${user?.permission}');
-      if (user != null) {
-        return '/login';
-      }
-      return '/login';
-    },
+    initialLocation: '/login',
     routes: <RouteBase>[
-      GoProviderRoute(
+      GoRoute(
         path: '/login',
-        providers: [Provider(create: (context) => UserProvider())],
+        redirect: (context, state) {
+          final user = Provider.of<UserProvider>(context, listen: false).user;
+          Fluttertoast.showToast(msg: 'XXUSER: ${user?.permission}');
+          if (user != null) {
+            return '/volunteer/home';
+          }
+          return null;
+        },
+        // providers: [Provider(create: (context) => UserProvider())],
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
