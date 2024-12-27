@@ -2,15 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orot/components/fixed_column.dart';
-import 'package:orot/components/main_button.dart';
-import 'package:orot/components/visit_card.dart';
 import 'package:intl/src/intl/date_format.dart';
+import 'package:orot/components/fixed_column.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/components/visit_card.dart';
 import 'package:orot/models/family.dart';
 import 'package:orot/models/visit.dart';
-import 'package:orot/pages/admin/admin_page.dart';
 import 'package:orot/pages/volunteer/home/home_label.dart';
 import 'package:orot/pages/volunteer/home/home_title.dart';
 import 'package:orot/pages/volunteer/home/visits_list.dart';
@@ -27,6 +24,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Visit>? _upcomingVisits = [];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // TODO: use FutureBuild instead of this.
+      _getUpcomingVisits();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +154,7 @@ class _HomePageState extends State<HomePage> {
     final List<Visit>? upcomingVisits =
         await VolunteerService().getUpcomingVisits();
     setState(() {
-      _upcomingVisits = upcomingVisits;
+      _upcomingVisits = upcomingVisits ?? [];
     });
   }
 }
