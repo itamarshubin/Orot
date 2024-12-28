@@ -7,7 +7,10 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
 import 'package:orot/pages/login/login_page.dart';
 import 'package:orot/pages/volunteer/navigation.dart';
+import 'package:orot/pages/volunteer/home/home_page.dart';
 import 'package:orot/providers/user_provider.dart';
+import 'package:orot/providers/visits_provider.dart';
+import 'package:orot/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -28,8 +31,11 @@ Future<void> main() async {
 
   FlutterNativeSplash.remove();
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => UserProvider(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => UserProvider()),
+      ChangeNotifierProvider(create: (_) => VisitsProvider())
+    ],
     child: OrotApp(),
   ));
 }
@@ -39,12 +45,30 @@ class OrotApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserProvider>(builder: (context, userProvider, child) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Open Sans'),
-        home: userProvider.user == null ? LoginPage() : VolunteerNavigation(),
-      );
-    });
+    return FutureBuilder(
+        future: Provider.of<UserProvider>(context, listen: false).getUserData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            //TODO: make it look good
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.error != null) {
+            return Center(
+              child: Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'),
+            );
+          } else {
+            return Consumer<UserProvider>(
+                builder: (context, userProvider, child) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                theme: ThemeData(fontFamily: 'Open Sans'),
+                home: userProvider.user == null
+                    ? LoginPage()
+                    : userProvider.user!.getUserStartPage(),
+              );
+            });
+          }
+        });
   }
 }

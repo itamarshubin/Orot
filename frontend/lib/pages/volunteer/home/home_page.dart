@@ -24,22 +24,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Visit>? _upcomingVisits = [];
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // TODO: use FutureBuild instead of this.
-      _getUpcomingVisits();
-    });
-  }
+  final Future<List<Visit>?> _upcomingVisits =
+      VolunteerService().getUpcomingVisits();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Future.wait([
         Provider.of<UserProvider>(context, listen: false).getUserData(),
+        _upcomingVisits
       ]),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -69,7 +62,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Positioned(
                           bottom: -65,
-                          child: _nearestVisit(),
+                          child:
+                              _nearestVisit(snapshot.data![1] as List<Visit>),
                         )
                       ],
                     ),
@@ -94,7 +88,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _nearestVisit() {
+  Widget _nearestVisit(List<Visit> visits) {
+    if (visits.isEmpty) {
+      //TODO: make Widget for that
+      return Text('no upcoming visits');
+    }
+
     return Container(
         alignment: Alignment.topRight,
         child: FixedColumn(
@@ -103,11 +102,10 @@ class _HomePageState extends State<HomePage> {
               offset: const Offset(10, 0),
               child: HomeLabelText(text: 'הביקור הקרוב'),
             ),
-            if (_upcomingVisits?[0] != null)
-              VisitCard(
-                showEditButton: true,
-                visit: _upcomingVisits![0],
-              )
+            VisitCard(
+              showEditButton: false,
+              visit: visits[0],
+            )
           ],
         ));
   }
@@ -150,14 +148,6 @@ class _HomePageState extends State<HomePage> {
         )
       ],
     );
-  }
-
-  Future<void> _getUpcomingVisits() async {
-    final List<Visit>? upcomingVisits =
-        await VolunteerService().getUpcomingVisits();
-    setState(() {
-      _upcomingVisits = upcomingVisits ?? [];
-    });
   }
 }
 

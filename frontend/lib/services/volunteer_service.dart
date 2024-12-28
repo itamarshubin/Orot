@@ -1,13 +1,10 @@
-
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:orot/models/visit.dart';
 
 class VolunteerService {
   final FirebaseFunctions _functions = FirebaseFunctions.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> createVisit({required DateTime dateTime}) async {
     final callable = _functions.httpsCallable('createVisit');

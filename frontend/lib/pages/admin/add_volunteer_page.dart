@@ -54,7 +54,7 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
         }
       }
 
-      Future<void> initDistricts() async {
+      Future<void> _initDistricts() async {
         try {
           final List<District> districts = await AdminService().getDistricts();
           setState(() {
@@ -102,7 +102,7 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
                 districts: _districts,
                 selectedDistrictId: _selectedDistrictId,
                 onSelectedIdChange: _updateSelectedDistrict,
-                onInit: initDistricts,
+                onInit: _initDistricts,
               )
             else
               _district(userProvider.user?.district),
