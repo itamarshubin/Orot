@@ -73,7 +73,10 @@ class _HomePageState extends State<HomePage> {
                       child: FixedColumn(
                         children: [
                           _addVisitButton(),
-                          VisitsList("פגישות עתידיות נוספות", getFuture()),
+                          VisitsList(
+                              "פגישות עתידיות נוספות",
+                              getResetOfVisits(
+                                  snapshot.data![1] as List<Visit>)),
                           _getTips(),
                         ],
                       ),
@@ -165,14 +168,11 @@ List<VisitCard> getHistory() {
   ];
 }
 
-List<VisitCard> getFuture() {
+List<VisitCard> getResetOfVisits(List<Visit> visits) {
   return [
-    for (int i = 0; i < 2; i++)
+    for (int i = 1; i < visits.length; i++)
       VisitCard(
-        visit: Visit(
-            id: 'id',
-            family: Family(id: 'id', name: 'name', address: 'ddd', contact: ''),
-            visitDate: DateTime.now()),
+        visit: visits[i],
       )
   ];
 }

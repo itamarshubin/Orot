@@ -15,6 +15,10 @@ class VisitsList extends StatefulWidget {
 class _VisitsListState extends State<VisitsList> {
   @override
   Widget build(BuildContext context) {
+    if (widget.visits.isEmpty) {
+      return Text('no visits');
+    }
+
     return Column(
       textDirection: TextDirection.rtl,
       mainAxisAlignment: MainAxisAlignment.start,
