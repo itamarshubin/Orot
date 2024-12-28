@@ -48,27 +48,25 @@ class OrotApp extends StatelessWidget {
     return FutureBuilder(
         future: Provider.of<UserProvider>(context, listen: false).getUserData(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            //TODO: make it look good
-            return Center(
-              child: CircularProgressIndicator(),
+          return Consumer<UserProvider>(
+              builder: (context, userProvider, child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(fontFamily: 'Open Sans'),
+              home: snapshot.connectionState == ConnectionState.waiting
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : snapshot.error != null
+                      ? Center(
+                          child: Text(
+                              'Error: ${snapshot.error}\n${snapshot.stackTrace}'),
+                        )
+                      : snapshot.data == null
+                          ? LoginPage()
+                          : userProvider.user!.getUserStartPage(),
             );
-          } else if (snapshot.error != null) {
-            return Center(
-              child: Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'),
-            );
-          } else {
-            return Consumer<UserProvider>(
-                builder: (context, userProvider, child) {
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                theme: ThemeData(fontFamily: 'Open Sans'),
-                home: userProvider.user == null
-                    ? LoginPage()
-                    : userProvider.user!.getUserStartPage(),
-              );
-            });
-          }
+          });
         });
   }
 }

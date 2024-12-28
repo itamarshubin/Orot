@@ -12,8 +12,10 @@ class District {
     required this.name,
   });
 
-  factory District.fromJson(Map<String, dynamic> json) =>
-      _$DistrictFromJson(json);
+  factory District.fromJson(json) => District(
+        id: json['id'] as String,
+        name: json['name'] as String,
+      );
 
   Map<String, dynamic> toJson() => _$DistrictToJson(this);
 }

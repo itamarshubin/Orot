@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:orot/models/family.dart';
 import 'package:orot/pages/volunteer/navigation.dart';
 
 import '../pages/admin/admin_page.dart';
@@ -15,19 +16,28 @@ enum UserPermission { admin, coordinator, volunteer }
 class User {
   final String uid;
   final UserPermission permission;
-  final String? name;
-  final String? email;
+  final String name;
   final District? district;
+  final Family family;
 
-  User({
-    required this.uid,
-    required this.name,
-    required this.email,
-    required this.permission,
-    this.district,
-  });
+  User(
+      {required this.uid,
+      required this.name,
+      required this.permission,
+      required this.district,
+      required this.family});
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory User.fromJson(Map<String, dynamic> json) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    return User(
+      uid: json['uid'] as String,
+      name: json['name'] ?? auth.currentUser?.displayName,
+      permission: $enumDecode(_$UserPermissionEnumMap, json['permission']),
+      district:
+          json['district'] == null ? null : District.fromJson(json['district']),
+      family: Family.fromJson(json['family']),
+    );
+  }
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
 

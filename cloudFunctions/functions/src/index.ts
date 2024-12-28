@@ -13,6 +13,7 @@ import {
   DocumentReference,
   getFirestore,
   QueryDocumentSnapshot,
+  QuerySnapshot,
   Timestamp,
 } from "firebase-admin/firestore";
 import { CallableRequest, onCall } from "firebase-functions/v2/https";
@@ -61,6 +62,7 @@ interface User {
   uid: string;
   name?: string;
   family?: {
+    id: string;
     name: string;
     address: string;
     contact: string;
@@ -90,16 +92,40 @@ export const getCurrentUser = onCall(async (data, context) => {
       name: (await district.get()).data()?.name,
     };
   } else {
-    const volunteerDocument = await getFirestore()
+    const volunteerRef = getFirestore()
       .collection("volunteers")
-      .doc(data.auth?.uid)
-      .get();
+      .doc(data.auth?.uid);
+
+    const volunteerDocument = await volunteerRef.get();
 
     const familyRef: DocumentReference = volunteerDocument.data()?.family;
 
     user.permission = "volunteer";
-    //@ts-ignore
-    user.family = (await familyRef.get()).data();
+    user.family = {
+      id: familyRef.id,
+      ...(await familyRef.get()).data(),
+    } as User["family"];
+
+    // const fuck = (
+    //   await getFirestore()
+    //     .collection("districtVolunteers")
+    //     .where("district", "==", volunteerRef)
+    //     .get()
+    // ).docs;
+
+    // console.log("fuck", fuck);
+
+    const districtRef: DocumentReference = (
+      (await getFirestore()
+        .collection("districtVolunteers")
+        .where("volunteer", "==", volunteerRef)
+        .get()) as QuerySnapshot
+    ).docs[0].data().district;
+
+    user.district = {
+      id: districtRef.id,
+      ...(await districtRef.get()).data(),
+    } as { id: string; name: string };
   }
 
   return user;
@@ -245,7 +271,6 @@ export const getUpcomingVisits = onCall(async (data, context) => {
     .orderBy("visitDate")
     .get();
 
-  console.log("visitsSnapshot", visitsSnapshot.empty);
   if (visitsSnapshot.empty) {
     return [];
   }

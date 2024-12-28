@@ -11,11 +11,12 @@ class UserProvider with ChangeNotifier {
 
   UserPermission? get userPermission => _user?.permission;
 
-  Future<void> getUserData() async {
+  Future<User?> getUserData() async {
     final response = await AuthService().getCurrentUser();
     if (response != null) {
       _user = User.fromJson(response);
     }
     notifyListeners();
+    return _user;
   }
 }

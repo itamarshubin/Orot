@@ -15,12 +15,14 @@ class Family {
       required this.address,
       required this.contact});
 
-  factory Family.fromJson(json) => Family(
-        id: json['id'] as String,
-        name: json['name'] as String,
-        address: json['address'] as String,
-        contact: json['contact'] as String,
-      );
+  factory Family.fromJson(json) {
+    return Family(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      address: json['address'] as String,
+      contact: json['contact'] as String,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$FamilyToJson(this);
 }

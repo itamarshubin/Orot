@@ -40,10 +40,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Column(
                   spacing: 30,
                   children: [
-                    _name(name: userProvider.userName ?? ''),
-                    _district(),
-                    _familyName(),
-                    _familyContact()
+                    _name(userProvider.userName ?? ''),
+                    _district(userProvider.user?.district?.name ?? ''),
+                    _familyName(userProvider.user?.family.name ?? ''),
+                    _familyContact(userProvider.user?.family.contact ?? '')
                   ],
                 ),
               )
@@ -52,23 +52,21 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  Widget _name({required String name}) {
+  Widget _name(String name) {
     return Field(fieldTitle: "שם", content: name, context: context);
   }
 
-  Widget _district() {
-    return Field(
-        fieldTitle: 'מחוז', content: 'fucking district', context: context);
+  Widget _district(String district) {
+    return Field(fieldTitle: 'מחוז', content: district, context: context);
   }
 
-  Widget _familyName() {
+  Widget _familyName(String familyName) {
     return Field(
-        fieldTitle: 'שם משפחה שכולה', content: 'bluh bluh', context: context);
+        fieldTitle: 'שם משפחה שכולה', content: familyName, context: context);
   }
 
-  Widget _familyContact() {
-    return Field(
-        fieldTitle: 'איש קשר', content: 'bluh ljhdflkjdw', context: context);
+  Widget _familyContact(String contact) {
+    return Field(fieldTitle: 'איש קשר', content: contact, context: context);
   }
 
   Widget _topIcon() {
