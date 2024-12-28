@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:orot/models/family.dart';
-import 'package:orot/pages/admin/components/families_dropdown.dart';
 
 class CoordinatorService {
   final FirebaseFunctions _functions = FirebaseFunctions.instance;

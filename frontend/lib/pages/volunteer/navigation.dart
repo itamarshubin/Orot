@@ -57,7 +57,6 @@ class _VolunteerNavigationState extends State<VolunteerNavigation> {
       case 1:
         setState(() {
           currentIndex = 1;
-          ;
           currentChild = const VisitsHistoryPage();
         });
         break;

@@ -26,6 +26,5 @@ class BackToAdminPage extends StatelessWidget {
         },
       ),
     );
-    ;
   }
 }

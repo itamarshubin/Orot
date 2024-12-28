@@ -13,7 +13,7 @@ import 'package:orot/services/coordinator_service.dart';
 import 'package:provider/provider.dart';
 
 class AddVolunteerPage extends StatefulWidget {
-  AddVolunteerPage({super.key});
+  const AddVolunteerPage({super.key});
 
   @override
   State<AddVolunteerPage> createState() => _AddVolunteerPageState();
@@ -54,7 +54,7 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
         }
       }
 
-      Future<void> _initDistricts() async {
+      Future<void> initDistricts() async {
         try {
           final List<District> districts = await AdminService().getDistricts();
           setState(() {
@@ -102,7 +102,7 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
                 districts: _districts,
                 selectedDistrictId: _selectedDistrictId,
                 onSelectedIdChange: _updateSelectedDistrict,
-                onInit: _initDistricts,
+                onInit: initDistricts,
               )
             else
               _district(userProvider.user?.district),

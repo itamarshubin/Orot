@@ -7,7 +7,7 @@ import 'package:orot/pages/admin/components/districts_dropdown.dart';
 import 'package:orot/services/admin_service.dart';
 
 class AddFamilyPage extends StatefulWidget {
-  AddFamilyPage({super.key});
+  const AddFamilyPage({super.key});
 
   @override
   State<AddFamilyPage> createState() => _AddFamilyPageState();
