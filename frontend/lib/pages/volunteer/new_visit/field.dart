@@ -36,7 +36,7 @@ class _FieldState extends State<Field> {
               widget.fieldTitle,
               style: GoogleFonts.varelaRound(
                 color: Color(0xff205273),
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w700,
                 fontSize: 20,
               ),
             )),
