@@ -50,10 +50,6 @@ class _LoginPageState extends State<LoginPage> {
                     color: Color(0xffF3EDED)),
                 child: loginForm(context, userProvider),
               ),
-              Positioned(
-                  bottom: 0,
-                  left: 10,
-                  child: SvgPicture.asset("assets/img/kids_with_clouds.svg"))
             ],
           ));
     });
@@ -63,40 +59,48 @@ class _LoginPageState extends State<LoginPage> {
     return Form(
       child: Padding(
           padding: const EdgeInsets.only(top: 30, left: 40, right: 40),
-          child: Column(
-            spacing: 10,
+          child: Stack(
             children: [
-              _title(),
-              FieldInput(
-                inputTitle: 'מייל',
-                textEditingController: _emailController,
-                hintText: 'example@gmail.com',
-                onEditingCompleteFunction: () => {
-                  //TODO: validate mail before submit
-                },
-                inputValidation: (text) {
-                  if (text == null || text.isEmpty) {
-                    return 'יש להזין מייל';
-                  }
-                  return null;
-                },
+              Positioned(
+                  bottom: 0,
+                  left: 10,
+                  child: SvgPicture.asset("assets/img/kids_with_clouds.svg")),
+              Column(
+                spacing: 10,
+                children: [
+                  _title(),
+                  FieldInput(
+                    inputTitle: 'מייל',
+                    textEditingController: _emailController,
+                    hintText: 'example@gmail.com',
+                    onEditingCompleteFunction: () => {
+                      //TODO: validate mail before submit
+                    },
+                    inputValidation: (text) {
+                      if (text == null || text.isEmpty) {
+                        return 'יש להזין מייל';
+                      }
+                      return null;
+                    },
+                  ),
+                  FieldInput(
+                    inputTitle: 'סיסמה',
+                    textEditingController: _passwordController,
+                    obscureText: true,
+                    hintText: '•••',
+                    inputValidation: (text) {
+                      if (text == null || text.isEmpty) {
+                        return 'יש להזין סיסמה';
+                      }
+                      return null;
+                    },
+                  ),
+                  _forgotPassword(),
+                  SizedBox(height: 20),
+                  _signInButton(context, userProvider),
+                  _signOutButton(),
+                ],
               ),
-              FieldInput(
-                inputTitle: 'סיסמה',
-                textEditingController: _passwordController,
-                obscureText: true,
-                hintText: '•••',
-                inputValidation: (text) {
-                  if (text == null || text.isEmpty) {
-                    return 'יש להזין סיסמה';
-                  }
-                  return null;
-                },
-              ),
-              _forgotPassword(),
-              SizedBox(height: 20),
-              _signInButton(context, userProvider),
-              _signOutButton(),
             ],
           )),
     );
