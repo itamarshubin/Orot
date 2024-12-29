@@ -106,15 +106,6 @@ export const getCurrentUser = onCall(async (data, context) => {
       ...(await familyRef.get()).data(),
     } as User["family"];
 
-    // const fuck = (
-    //   await getFirestore()
-    //     .collection("districtVolunteers")
-    //     .where("district", "==", volunteerRef)
-    //     .get()
-    // ).docs;
-
-    // console.log("fuck", fuck);
-
     const districtRef: DocumentReference = (
       (await getFirestore()
         .collection("districtVolunteers")
@@ -129,8 +120,6 @@ export const getCurrentUser = onCall(async (data, context) => {
   }
 
   return user;
-
-  //return volunteer data
 });
 
 export const createCoordinator = onCall<CoordinatorData>(
@@ -268,6 +257,45 @@ export const getUpcomingVisits = onCall(async (data, context) => {
     .collection("visits")
     .where("attendees", "array-contains", volunteerRef)
     .where("visitDate", ">", now)
+    .orderBy("visitDate")
+    .get();
+
+  if (visitsSnapshot.empty) {
+    return [];
+  }
+
+  visitsSnapshot.docs.map((doc) => doc.data());
+
+  return Promise.all(
+    visitsSnapshot.docs.map(async (visitDoc) => {
+      const familySnapshot: QueryDocumentSnapshot = await visitDoc
+        .data()
+        .family.get();
+      return {
+        id: visitDoc.id,
+        visitDate: (visitDoc.data().visitDate as Timestamp)
+          .toDate()
+          .toISOString(),
+        family: {
+          id: familySnapshot.id,
+          name: familySnapshot.data().name,
+          address: familySnapshot.data().address,
+          contact: familySnapshot.data().contact,
+        },
+      };
+    })
+  );
+});
+
+export const getVisitsHistory = onCall(async (data, context) => {
+  const volunteerRef = getFirestore().doc(`volunteers/${data.auth?.uid}`);
+
+  const now = Timestamp.now();
+
+  const visitsSnapshot = await getFirestore()
+    .collection("visits")
+    .where("attendees", "array-contains", volunteerRef)
+    .where("visitDate", "<", now)
     .orderBy("visitDate")
     .get();
 

@@ -45,4 +45,18 @@ class VolunteerService {
       return null;
     }
   }
+
+  Future<List<Visit>?> getVisitsHistory() async {
+    final callable = _functions.httpsCallable('getVisitsHistory');
+    try {
+      final result = await callable.call();
+
+      return (result.data as List)
+          .map((visit) => Visit.fromJson(visit))
+          .toList();
+    } catch (e) {
+      print('some fucking error:$e');
+      return null;
+    }
+  }
 }

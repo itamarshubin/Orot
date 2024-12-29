@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orot/models/family.dart';
 import 'package:orot/models/visit.dart';
 import 'package:orot/services/volunteer_service.dart';
 
@@ -14,5 +15,14 @@ class VisitsProvider with ChangeNotifier {
     }
     notifyListeners();
     return upcomingVisits;
+  }
+
+  Future<List<Visit>?> getVisitsHistory() async {
+    List<Visit>? visitsHistory = await VolunteerService().getVisitsHistory();
+    if (visitsHistory != null) {
+      _upcomingVisits = visitsHistory;
+    }
+    notifyListeners();
+    return visitsHistory;
   }
 }
