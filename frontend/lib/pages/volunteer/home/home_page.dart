@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _nearestVisit(List<Visit> visits) {
     if (visits.isEmpty) {
-      //TODO: make Widget for that
+      //TODO: make Widget for that (maybe some image that ofir can give us)
       return Text('no upcoming visits');
     }
 
@@ -114,14 +114,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _addVisitButton() {
-    return MainButton(
-      text: 'קביעת מפגש',
-      onPress: () => {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => const NewVisitPage()))
-      },
+    return Center(
+      child: MainButton(
+        text: 'קביעת מפגש',
+        onPress: () => {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => const NewVisitPage()))
+        },
+      ),
     );
   }
 
