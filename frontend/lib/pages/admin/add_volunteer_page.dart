@@ -83,40 +83,45 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
       }
 
       return Scaffold(
-          body: Container(
-        padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
-        child: Column(
-          //TODO: spacing: , consider using this instead of SizeBox
-          children: [
-            BackToAdminPage(),
-            _title(),
-            const SizedBox(height: 30),
-            _emailAddress(),
-            const SizedBox(height: 30),
-            _password(),
-            const SizedBox(height: 30),
-            _name(),
-            const SizedBox(height: 30),
-            if (userProvider.userPermission == UserPermission.admin)
-              DistrictsDropdown(
-                districts: _districts,
-                selectedDistrictId: _selectedDistrictId,
-                onSelectedIdChange: _updateSelectedDistrict,
-                onInit: _initDistricts,
+          body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
+          child: Column(
+            //TODO: spacing: , consider using this instead of SizeBox
+            children: [
+              BackToAdminPage(),
+              _title(),
+              const SizedBox(height: 30),
+              _emailAddress(),
+              const SizedBox(height: 30),
+              _password(),
+              const SizedBox(height: 30),
+              _name(),
+              const SizedBox(height: 30),
+              if (userProvider.userPermission == UserPermission.admin)
+                DistrictsDropdown(
+                  districts: _districts,
+                  selectedDistrictId: _selectedDistrictId,
+                  onSelectedIdChange: _updateSelectedDistrict,
+                  onInit: _initDistricts,
+                )
+              else
+                _district(userProvider.user?.district),
+              const SizedBox(height: 30),
+              //TODO: fix this shit, its bad.
+              //TODO: add loading stuff until this dropdown shown
+              if (_selectedFamilyId != "1")
+                FamiliesDropdown(
+                  families: _families,
+                  selectedFamilyId: _selectedFamilyId,
+                  onSelectedFamilyChange: _updateSelectedFamily,
+                ),
+              _createVolunteer(),
+              SizedBox(
+                height: 30,
               )
-            else
-              _district(userProvider.user?.district),
-            const SizedBox(height: 30),
-            //TODO: fix this shit, its bad.
-            //TODO: add loading stuff until this dropdown shown
-            if (_selectedFamilyId != "1")
-              FamiliesDropdown(
-                families: _families,
-                selectedFamilyId: _selectedFamilyId,
-                onSelectedFamilyChange: _updateSelectedFamily,
-              ),
-            _createVolunteer(),
-          ],
+            ],
+          ),
         ),
       ));
     });

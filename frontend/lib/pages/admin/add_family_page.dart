@@ -29,28 +29,33 @@ class _AddFamilyPageState extends State<AddFamilyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
-      child: Column(
-        //spacing: , consider using this instead of SizeBox
-        children: [
-          BackToAdminPage(),
-          _title(),
-          const SizedBox(height: 30),
-          _familyName(),
-          const SizedBox(height: 30),
-          _address(),
-          const SizedBox(height: 30),
-          _contact(),
-          const SizedBox(height: 30),
-          DistrictsDropdown(
-            districts: _districts,
-            selectedDistrictId: _selectedDistrictId,
-            onSelectedIdChange: _updateSelectedDistrict,
-            onInit: _initDistricts,
-          ),
-          _createFamily(),
-        ],
+        body: SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
+        child: Column(
+          //spacing: , consider using this instead of SizeBox
+          children: [
+            BackToAdminPage(),
+            _title(),
+            const SizedBox(height: 30),
+            _familyName(),
+            const SizedBox(height: 30),
+            _address(),
+            const SizedBox(height: 30),
+            _contact(),
+            const SizedBox(height: 30),
+            DistrictsDropdown(
+              districts: _districts,
+              selectedDistrictId: _selectedDistrictId,
+              onSelectedIdChange: _updateSelectedDistrict,
+              onInit: _initDistricts,
+            ),
+            _createFamily(),
+            SizedBox(
+              height: 30,
+            )
+          ],
+        ),
       ),
     ));
   }

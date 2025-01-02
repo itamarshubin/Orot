@@ -15,7 +15,7 @@ class AddDistrictPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
+      padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
       child: Column(
         children: [
           BackToAdminPage(),

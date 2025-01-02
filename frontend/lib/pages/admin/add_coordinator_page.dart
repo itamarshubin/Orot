@@ -30,35 +30,40 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
-      child: Column(
-        children: [
-          BackToAdminPage(),
-          _title(),
-          const SizedBox(
-            height: 30,
-          ),
-          _emailAddress(),
-          const SizedBox(
-            height: 30,
-          ),
-          _password(),
-          const SizedBox(
-            height: 30,
-          ),
-          _name(),
-          const SizedBox(
-            height: 30,
-          ),
-          DistrictsDropdown(
-            districts: _districts,
-            selectedDistrictId: _selectedDistrictId,
-            onSelectedIdChange: _updateSelectedDistrict,
-            onInit: _initDistricts,
-          ),
-          _createCoordinator(),
-        ],
+        body: SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
+        child: Column(
+          children: [
+            BackToAdminPage(),
+            _title(),
+            const SizedBox(
+              height: 30,
+            ),
+            _emailAddress(),
+            const SizedBox(
+              height: 30,
+            ),
+            _password(),
+            const SizedBox(
+              height: 30,
+            ),
+            _name(),
+            const SizedBox(
+              height: 30,
+            ),
+            DistrictsDropdown(
+              districts: _districts,
+              selectedDistrictId: _selectedDistrictId,
+              onSelectedIdChange: _updateSelectedDistrict,
+              onInit: _initDistricts,
+            ),
+            _createCoordinator(),
+            SizedBox(
+              height: 30,
+            )
+          ],
+        ),
       ),
     ));
   }
