@@ -330,8 +330,9 @@ export const getVisitsHistory = onCall(async (data, context) => {
 
 export const getCoordinatorVolunteers = onCall(async (data, context) => {
   const coordinatorRef = getFirestore().doc(`coordinators/${data.auth?.uid}`);
-  const districtRef: DocumentReference = (await coordinatorRef.get()).data()
-    ?.district;
+  const districtRef: DocumentReference = data?.data?.id
+    ? getFirestore().doc(`districts/${data.data.id}`)
+    : (await coordinatorRef.get()).data()?.district;
 
   const districtVolunteers = await getFirestore()
     .collection("districtVolunteers")
@@ -365,13 +366,17 @@ export const getVisitsData = onCall(async (data, context) => {
   const visits = await getFirestore()
     .collection("visits")
     .where("attendees", "array-contains", volunteerRef)
+    .orderBy("visitDate")
     .get();
 
   return Promise.all(
     visits.docs.map(async (visit) => ({
       id: visit.id,
-      date: visit.data().visitDate.toDate().toISOString(),
-      family: { ...(await visit.data().family.get()).data() },
+      visitDate: visit.data().visitDate.toDate().toISOString(),
+      family: {
+        id: visit.data().family.id,
+        ...(await visit.data().family.get()).data(),
+      },
     }))
   );
 });
