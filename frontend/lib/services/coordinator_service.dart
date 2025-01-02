@@ -1,8 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:orot/models/family.dart';
+import 'package:orot/models/user.dart';
 
 class CoordinatorService {
   final FirebaseFunctions _functions = FirebaseFunctions.instance;
@@ -76,6 +77,45 @@ class CoordinatorService {
         fontSize: 14.0,
       );
       return [];
+    }
+  }
+
+  Future<List<User>> getVolunteers() async {
+    try {
+      final callable = _functions.httpsCallable('getCoordinatorVolunteers');
+      final results = await callable.call();
+
+      return (results.data as List).map((item) => User.fromJson(item)).toList();
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: Colors.black54,
+        textColor: Colors.white,
+        fontSize: 14.0,
+      );
+      return [];
+    }
+  }
+
+  Future<void> getVisitData(String volunteerId) async {
+    try {
+      final callable = _functions.httpsCallable('getVisitsData');
+      final results = await callable.call({'volunteerId': volunteerId});
+      print('got res:${results.data}');
+
+      // return (results.data as List).map((item) => User.fromJson(item)).toList();
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: Colors.black54,
+        textColor: Colors.white,
+        fontSize: 14.0,
+      );
+      // return [];
     }
   }
 }

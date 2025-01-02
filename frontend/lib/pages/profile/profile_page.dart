@@ -74,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _topIcon() {
-    final double height = MediaQuery.of(context).size.height;
+    final double pageHeight = MediaQuery.of(context).size.height;
     return Stack(
       children: [
         Container(
@@ -96,13 +96,13 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         Container(
-          height: height * 0.2,
+          height: pageHeight * 0.2,
           // color: Colors.yellow,
           alignment: Alignment.center,
-          margin: EdgeInsets.fromLTRB(0, height * 0.05, 0, 0),
+          margin: EdgeInsets.fromLTRB(0, pageHeight * 0.05, 0, 0),
           child: Image.asset('assets/img/blue_hug.png',
               width: MediaQuery.of(context).size.width * 0.3,
-              height: height * 0.3),
+              height: pageHeight * 0.3),
         )
       ],
     );

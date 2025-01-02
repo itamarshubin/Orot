@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:orot/pages/admin/admin_page.dart';
+import 'package:orot/pages/coordinator/navigation.dart';
 
 class BackToAdminPage extends StatelessWidget {
   const BackToAdminPage({super.key});
@@ -21,8 +22,10 @@ class BackToAdminPage extends StatelessWidget {
           ),
         ),
         onTap: () => {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (BuildContext context) => AdminPage()))
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => CoordinatorNavigation()))
         },
       ),
     );

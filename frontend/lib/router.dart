@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:orot/pages/admin/admin_page.dart';
-import 'package:orot/pages/coordinator/show_volunteers/volunteers_page.dart';
+import 'package:orot/pages/coordinator/navigation.dart';
+import 'package:orot/pages/coordinator/volunteers_list/volunteers_list.dart';
 import 'package:orot/pages/login/login_page.dart';
 import 'package:orot/pages/profile/profile_page.dart';
 import 'package:orot/pages/volunteer/home/home_page.dart';
@@ -11,6 +12,7 @@ import 'package:orot/pages/volunteer/visits_history/visits_history_page.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
+//TODO: remove this
 class TestPage extends StatefulWidget {
   const TestPage({super.key});
 
@@ -106,7 +108,7 @@ GoRoute coordinatorRoutes() {
     routes: [
       GoRoute(
         path: 'home',
-        builder: (context, state) => const VolunteersPage(),
+        builder: (context, state) => const CoordinatorNavigation(),
       )
     ],
   );
