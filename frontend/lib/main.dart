@@ -53,9 +53,7 @@ class OrotApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 theme: ThemeData(fontFamily: 'Open Sans'),
                 home: snapshot.connectionState == ConnectionState.waiting
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
+                    ? Center(child: CircularProgressIndicator())
                     : snapshot.error != null
                         ? Center(
                             child: Text(

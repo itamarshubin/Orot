@@ -15,6 +15,7 @@ import 'package:orot/pages/volunteer/new_visit/new_visit_page.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/volunteer_service.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -52,22 +53,11 @@ class _HomePageState extends State<HomePage> {
               body: SingleChildScrollView(
                 child: FixedColumn(
                   children: [
-                    Stack(
-                      clipBehavior: Clip.none,
-                      alignment: Alignment.bottomCenter,
-                      children: <Widget>[
-                        Positioned(
-                          child:
-                              HomePageTitle(displayName: userProvider.userName),
-                        ),
-                        Positioned(
-                          bottom: -65,
-                          child:
-                              _nearestVisit(snapshot.data![1] as List<Visit>),
-                        )
-                      ],
+                    HomePageTitle(displayName: userProvider.userName),
+                    Transform.translate(
+                      offset: Offset(0, -10.sh),
+                      child: _nearestVisit(snapshot.data![1] as List<Visit>),
                     ),
-                    SizedBox(height: 70),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: FixedColumn(
@@ -98,7 +88,8 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Container(
-        alignment: Alignment.topRight,
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(horizontal: 4.w),
         child: FixedColumn(
           children: [
             Transform.translate(
