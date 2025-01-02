@@ -64,7 +64,10 @@ class _LoginPageState extends State<LoginPage> {
               Positioned(
                   bottom: 0,
                   left: 10,
-                  child: SvgPicture.asset("assets/img/kids_with_clouds.svg")),
+                  child: SvgPicture.asset(
+                    "assets/img/kids_with_clouds.svg",
+                    // fit: BoxFit.contain,
+                  )),
               Column(
                 spacing: 10,
                 children: [
@@ -96,9 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   _forgotPassword(),
-                  SizedBox(height: 20),
                   _signInButton(context, userProvider),
-                  _signOutButton(),
+                  // _signOutButton(),
                 ],
               ),
             ],

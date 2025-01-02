@@ -7,19 +7,25 @@ class MainButton extends StatelessWidget {
   final String text;
   final VoidCallback onPress;
   final MainButtonSize size;
+  final bool disabled;
 
   const MainButton({
     super.key,
     required this.text,
     required this.onPress,
     this.size = MainButtonSize.big,
+    this.disabled = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.sizeOf(context).height;
     return Container(
-      width: 350,
-      height: size == MainButtonSize.big ? 53 : 43,
+      alignment: Alignment.center,
+      width: MediaQuery.sizeOf(context).width * 0.75,
+      height: size == MainButtonSize.big
+          ? screenHeight * 0.07
+          : screenHeight * 0.06,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [
@@ -33,14 +39,13 @@ class MainButton extends StatelessWidget {
         boxShadow: const [
           BoxShadow(
             color: Colors.black26,
-            offset: Offset(1, 6),
-            blurRadius: 14,
-            spreadRadius: 0,
+            offset: Offset(0, 2),
+            blurRadius: 6,
           ),
         ],
       ),
       child: ElevatedButton(
-        onPressed: onPress,
+        onPressed: disabled ? null : onPress,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
@@ -53,11 +58,10 @@ class MainButton extends StatelessWidget {
         child: Text(
           text,
           style: GoogleFonts.openSans(
-              textStyle: const TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 24,
             color: Colors.white,
-          )),
+          ),
         ),
       ),
     );
