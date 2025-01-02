@@ -25,31 +25,33 @@ class _ProfilePageState extends State<ProfilePage> {
       return Scaffold(
           backgroundColor: Color.fromRGBO(237, 237, 237, 1),
           resizeToAvoidBottomInset: false,
-          body: Column(
-            children: [
-              _topIcon(),
-              Text(
-                userProvider.userName ?? '',
-                style: GoogleFonts.openSans(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 24,
-                    color: Color(0xFFB22759)),
-              ),
-              SizedBox(height: 20),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  spacing: 30,
-                  children: [
-                    _name(userProvider.userName ?? ''),
-                    _district(userProvider.user?.district?.name ?? ''),
-                    _familyName(userProvider.user?.family?.name ?? ''),
-                    _familyContact(userProvider.user?.family?.contact ?? ''),
-                    _signOutButton()
-                  ],
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                _topIcon(),
+                Text(
+                  userProvider.userName ?? '',
+                  style: GoogleFonts.openSans(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 24,
+                      color: Color(0xFFB22759)),
                 ),
-              )
-            ],
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    spacing: 30,
+                    children: [
+                      _name(userProvider.userName ?? ''),
+                      _district(userProvider.user?.district?.name ?? ''),
+                      _familyName(userProvider.user?.family?.name ?? ''),
+                      _familyContact(userProvider.user?.family?.contact ?? ''),
+                      _signOutButton()
+                    ],
+                  ),
+                )
+              ],
+            ),
           ));
     });
   }
@@ -72,11 +74,12 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _topIcon() {
+    final double height = MediaQuery.of(context).size.height;
     return Stack(
       children: [
         Container(
           width: double.infinity,
-          height: 130,
+          height: MediaQuery.of(context).size.height * 0.13,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -93,19 +96,24 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         Container(
+          height: height * 0.2,
+          // color: Colors.yellow,
           alignment: Alignment.center,
-          margin: const EdgeInsets.fromLTRB(0, 70, 0, 0),
-          child:
-              Image.asset('assets/img/blue_hug.png', width: 150, height: 150),
+          margin: EdgeInsets.fromLTRB(0, height * 0.05, 0, 0),
+          child: Image.asset('assets/img/blue_hug.png',
+              width: MediaQuery.of(context).size.width * 0.3,
+              height: height * 0.3),
         )
       ],
     );
   }
 
   Widget _signOutButton() {
-    return ElevatedButton(
-        onPressed: () => AuthService().signout(context: context),
-        child: const Text('signOUt'));
+    return Container(
+        margin: EdgeInsets.only(bottom: 20),
+        child: ElevatedButton(
+            onPressed: () => AuthService().signout(context: context),
+            child: const Text('התנתקות')));
   }
 
   Widget _username() {
