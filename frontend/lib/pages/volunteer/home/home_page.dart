@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/src/intl/date_format.dart';
 import 'package:orot/components/fixed_column.dart';
-import 'package:orot/components/main_button.dart';
 import 'package:orot/components/visit_card.dart';
 import 'package:orot/models/family.dart';
 import 'package:orot/models/visit.dart';
@@ -15,6 +14,8 @@ import 'package:orot/pages/volunteer/new_visit/new_visit_page.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/volunteer_service.dart';
 import 'package:provider/provider.dart';
+
+import '../../../components/main_button_v2.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -115,7 +116,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _addVisitButton() {
     return Center(
-      child: MainButton(
+      child: MainButton2(
         text: 'קביעת מפגש',
         onPress: () => {
           Navigator.pushReplacement(
