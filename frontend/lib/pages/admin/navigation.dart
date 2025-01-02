@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:orot/pages/admin/admin_page.dart';
+import 'package:orot/pages/admin/district_list.dart';
 import 'package:orot/pages/coordinator/volunteers_list/volunteers_list.dart';
 import 'package:orot/pages/profile/profile_page.dart';
 import 'package:orot/pages/volunteer/home/home_page.dart';
 import 'package:orot/pages/volunteer/visits_history/visits_history_page.dart';
 
-class CoordinatorNavigation extends StatefulWidget {
-  const CoordinatorNavigation({super.key});
+class AdminNavigation extends StatefulWidget {
+  const AdminNavigation({super.key});
 
   @override
-  State<CoordinatorNavigation> createState() => _CoordinatorNavigationState();
+  State<AdminNavigation> createState() => _AdminNavigationState();
 }
 
-class _CoordinatorNavigationState extends State<CoordinatorNavigation> {
-  Widget currentChild = VolunteersList();
+class _AdminNavigationState extends State<AdminNavigation> {
+  Widget currentChild = DistrictList();
   int currentIndex = 2;
 
   @override
@@ -25,17 +26,15 @@ class _CoordinatorNavigationState extends State<CoordinatorNavigation> {
           iconSize: 25,
           currentIndex: currentIndex,
           selectedItemColor: Color(0xFF205273),
-          // selectedItemColor: Colors.blue,
           unselectedItemColor: Colors.grey,
           items: const [
             BottomNavigationBarItem(
-              // backgroundColor: Colors.black,
               tooltip: 'פרופיל',
               icon: Icon(Icons.person),
               label: '',
             ),
             BottomNavigationBarItem(
-              tooltip: 'עריכת מתנדבות',
+              tooltip: 'עריכה',
               icon: Icon(Icons.edit),
               label: '',
             ),
@@ -65,7 +64,7 @@ class _CoordinatorNavigationState extends State<CoordinatorNavigation> {
       case 2:
         setState(() {
           currentIndex = 2;
-          currentChild = VolunteersList();
+          currentChild = DistrictList();
         });
         break;
     }

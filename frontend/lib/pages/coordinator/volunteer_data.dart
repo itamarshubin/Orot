@@ -8,8 +8,9 @@ import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/services/coordinator_service.dart';
 
 class VolunteerData extends StatefulWidget {
-  User volunteer;
-  VolunteerData(this.volunteer, {super.key});
+  final bool isAdmin;
+  final User volunteer;
+  const VolunteerData(this.volunteer, {super.key, this.isAdmin = false});
 
   @override
   State<VolunteerData> createState() => _VolunteerDataState();
@@ -18,6 +19,7 @@ class VolunteerData extends StatefulWidget {
 class _VolunteerDataState extends State<VolunteerData> {
   @override
   Widget build(BuildContext context) {
+    print('nigga is admin:${widget.isAdmin}');
     return FutureBuilder(
       future: CoordinatorService().getVisitData(widget.volunteer.uid),
       builder: (context, snapshot) {
@@ -296,14 +298,15 @@ class _VolunteerDataState extends State<VolunteerData> {
         ),
         Container(
           height: pageHeight * 0.2,
-          // color: Colors.yellow,
           alignment: Alignment.center,
           margin: EdgeInsets.fromLTRB(0, pageHeight * 0.05, 0, 0),
           child: Image.asset('assets/img/blue_hug.png',
               width: MediaQuery.of(context).size.width * 0.3,
               height: pageHeight * 0.3),
         ),
-        BackToAdminPage(),
+        BackToAdminPage(
+          isAdmin: widget.isAdmin,
+        ),
       ],
     );
   }

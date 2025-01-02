@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:orot/models/family.dart';
+import 'package:orot/pages/admin/navigation.dart';
 import 'package:orot/pages/coordinator/navigation.dart';
 import 'package:orot/pages/volunteer/navigation.dart';
 
@@ -28,7 +29,7 @@ class User {
       required this.district,
       required this.family});
 
-  factory User.fromJson(Map<String, dynamic> json) {
+  factory User.fromJson(json) {
     final FirebaseAuth auth = FirebaseAuth.instance;
     return User(
       uid: json['uid'] as String,
@@ -46,7 +47,7 @@ class User {
 
   Widget getUserStartPage() {
     if (permission == UserPermission.admin) {
-      return const AdminPage();
+      return const AdminNavigation();
       // return '/management';
     } else if (permission == UserPermission.coordinator) {
       return const CoordinatorNavigation();

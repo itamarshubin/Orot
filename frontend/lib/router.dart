@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:orot/pages/admin/admin_page.dart';
+import 'package:orot/pages/admin/navigation.dart';
 import 'package:orot/pages/coordinator/navigation.dart';
 import 'package:orot/pages/coordinator/volunteers_list/volunteers_list.dart';
 import 'package:orot/pages/login/login_page.dart';
@@ -95,7 +96,7 @@ GoRoute adminRoutes() {
     routes: [
       GoRoute(
         path: 'home',
-        builder: (context, state) => const AdminPage(),
+        builder: (context, state) => const AdminNavigation(),
       )
     ],
   );
