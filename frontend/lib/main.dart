@@ -45,7 +45,7 @@ class OrotApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: Provider.of<UserProvider>(context, listen: false).getUserData(),
-        builder: (context, snapshot) {
+        builder: (context , snapshot) {
           return Consumer<UserProvider>(
               builder: (context, userProvider, child) {
             return Sizer(builder: (context, orientation, screenType) {

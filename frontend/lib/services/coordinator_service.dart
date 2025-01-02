@@ -63,7 +63,6 @@ class CoordinatorService {
     try {
       final callable = _functions.httpsCallable('getFamilies');
       final results = await callable.call({'districtId': districtId});
-      print('this what we fucking got:${results.data}');
 
       return (results.data as List)
           .map((item) => Family.fromJson(item))
@@ -81,10 +80,11 @@ class CoordinatorService {
     }
   }
 
-  Future<List<User>> getVolunteers() async {
+  Future<List<User>> getVolunteers({String? id}) async {
     try {
       final callable = _functions.httpsCallable('getCoordinatorVolunteers');
-      final results = await callable.call();
+      final results =
+          id == null ? await callable.call() : await callable.call({'id': id});
 
       return (results.data as List).map((item) => User.fromJson(item)).toList();
     } catch (e) {
@@ -104,7 +104,6 @@ class CoordinatorService {
     try {
       final callable = _functions.httpsCallable('getVisitsData');
       final results = await callable.call({'volunteerId': volunteerId});
-      print('got res:${results.data}');
 
       return (results.data as List)
           .map((item) => Visit.fromJson(item))

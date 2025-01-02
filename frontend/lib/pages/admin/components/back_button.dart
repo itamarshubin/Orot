@@ -2,16 +2,18 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:orot/pages/admin/admin_page.dart';
+import 'package:orot/pages/admin/navigation.dart';
 import 'package:orot/pages/coordinator/navigation.dart';
 
 class BackToAdminPage extends StatelessWidget {
-  const BackToAdminPage({super.key});
+  final bool isAdmin;
+  const BackToAdminPage({super.key, this.isAdmin = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.topRight,
-      margin: EdgeInsets.only(bottom: 20),
+      margin: EdgeInsets.symmetric(vertical: 50),
       child: InkWell(
         customBorder: const CircleBorder(),
         child: Transform.rotate(
@@ -25,7 +27,8 @@ class BackToAdminPage extends StatelessWidget {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (BuildContext context) => CoordinatorNavigation()))
+                  builder: (BuildContext context) =>
+                      isAdmin ? AdminNavigation() : CoordinatorNavigation()))
         },
       ),
     );

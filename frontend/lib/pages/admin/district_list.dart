@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/models/user.dart';
-import 'package:orot/pages/admin/components/back_button.dart';
+import 'package:orot/pages/admin/components/district_cube.dart';
 import 'package:orot/pages/coordinator/volunteer_data.dart';
+import 'package:orot/services/admin_service.dart';
 import 'package:orot/services/coordinator_service.dart';
 
-class VolunteersList extends StatefulWidget {
-  final String? id;
-  const VolunteersList({super.key, this.id});
+class DistrictList extends StatefulWidget {
+  const DistrictList({super.key});
 
   @override
-  State<VolunteersList> createState() => _VolunteersListState();
+  State<DistrictList> createState() => _DistrictListState();
 }
 
-class _VolunteersListState extends State<VolunteersList> {
+class _DistrictListState extends State<DistrictList> {
   final TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: CoordinatorService().getVolunteers(id: widget.id),
+      future: AdminService().getDistricts(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -33,8 +33,7 @@ class _VolunteersListState extends State<VolunteersList> {
           return Scaffold(
               body: Container(
             child: Column(children: [
-              if (snapshot.data?.isNotEmpty ?? false)
-                _title(context, snapshot.data?[0], id: widget.id),
+              _title(context),
               SizedBox(
                 height: 20,
               ),
@@ -55,14 +54,13 @@ class _VolunteersListState extends State<VolunteersList> {
               //         ))),
               Expanded(
                   child: (snapshot.data?.isEmpty ?? true)
-                      ? Text('no data - volunteers')
+                      ? Text('no data - districts')
                       : ListView.builder(
                           padding: const EdgeInsets.only(top: 10),
                           itemCount: snapshot.data?.length ?? 0,
                           itemBuilder: (context, index) {
-                            return VolunteerCube(
-                              volunteer: snapshot.data![index],
-                              id: widget.id,
+                            return DistrictCube(
+                              district: snapshot.data![index],
                             );
                           }))
             ]),
@@ -73,8 +71,9 @@ class _VolunteersListState extends State<VolunteersList> {
   }
 }
 
-Widget _title(BuildContext context, User? volunteer, {String? id}) {
+Widget _title(BuildContext context) {
   final double pageHeight = MediaQuery.of(context).size.height;
+
   return Stack(
     children: [
       Container(
@@ -99,57 +98,12 @@ Widget _title(BuildContext context, User? volunteer, {String? id}) {
         height: pageHeight * 0.1,
         alignment: Alignment.center,
         //TODO: get the real district
-        child: Text("מתנדבות מחוז ${volunteer?.district?.name ?? 'לא ידוע'}",
+        child: Text("מחוזות",
             style: GoogleFonts.openSans(
                 fontSize: 37,
                 fontWeight: FontWeight.w700,
                 color: Color(0xFF205273))),
-      ),
-      if (id != null)
-        BackToAdminPage(
-          isAdmin: true,
-        ),
+      )
     ],
   );
-}
-
-class VolunteerCube extends StatelessWidget {
-  final User volunteer;
-  final String? id;
-  const VolunteerCube({super.key, required this.volunteer, this.id});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => VolunteerData(
-                      volunteer,
-                      isAdmin: id != null,
-                    )));
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        alignment: Alignment.center,
-        color: Colors.white,
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _CubeText(volunteer.family?.name ?? 'משפחה לא ידועה'),
-            _CubeText(volunteer.district?.name ?? "מחוז לא ידוע"),
-            _CubeText(volunteer.name),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _CubeText(String text) {
-    return Text(text,
-        style:
-            GoogleFonts.varelaRound(fontSize: 18, fontWeight: FontWeight.w400));
-  }
 }
