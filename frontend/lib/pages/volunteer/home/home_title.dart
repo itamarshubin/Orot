@@ -47,7 +47,7 @@ class _HomePageTitleState extends State<HomePageTitle> {
               'שלום ${widget.displayName}',
               style: GoogleFonts.assistant(
                 fontWeight: FontWeight.w700,
-                fontSize: 32,
+                fontSize: MediaQuery.sizeOf(context).width * 0.07,
                 color: Color.fromRGBO(178, 39, 89, 1),
               ),
             ),
