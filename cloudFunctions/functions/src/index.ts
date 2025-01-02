@@ -16,6 +16,7 @@ import {
   QuerySnapshot,
   Timestamp,
 } from "firebase-admin/firestore";
+import { logger } from "firebase-functions";
 import { CallableRequest, onCall } from "firebase-functions/v2/https";
 
 // Start writing functions
@@ -261,6 +262,7 @@ export const getUpcomingVisits = onCall(async (data, context) => {
     .get();
 
   if (visitsSnapshot.empty) {
+    logger.debug("no visits for user", { uid: data.auth?.uid });
     return [];
   }
 
@@ -323,5 +325,53 @@ export const getVisitsHistory = onCall(async (data, context) => {
         },
       };
     })
+  );
+});
+
+export const getCoordinatorVolunteers = onCall(async (data, context) => {
+  const coordinatorRef = getFirestore().doc(`coordinators/${data.auth?.uid}`);
+  const districtRef: DocumentReference = (await coordinatorRef.get()).data()
+    ?.district;
+
+  const districtVolunteers = await getFirestore()
+    .collection("districtVolunteers")
+    .where("district", "==", districtRef)
+    .get();
+
+  return Promise.all(
+    districtVolunteers.docs.map(async (doc) => {
+      const volunteer = (await doc.data().volunteer.get()).data();
+
+      return {
+        uid: doc.data().volunteer.id,
+        name: volunteer.displayName,
+        district: {
+          id: doc.data().district.id,
+          ...(await doc.data().district.get()).data(),
+        },
+        family: {
+          id: volunteer.family.id,
+          ...(await volunteer.family.get()).data(),
+        },
+      };
+    })
+  );
+});
+
+export const getVisitsData = onCall(async (data, context) => {
+  const volunteerRef = getFirestore().doc(
+    `volunteers/${data.data.volunteerId}`
+  );
+  const visits = await getFirestore()
+    .collection("visits")
+    .where("attendees", "array-contains", volunteerRef)
+    .get();
+
+  return Promise.all(
+    visits.docs.map(async (visit) => ({
+      id: visit.id,
+      date: visit.data().visitDate.toDate().toISOString(),
+      family: { ...(await visit.data().family.get()).data() },
+    }))
   );
 });
