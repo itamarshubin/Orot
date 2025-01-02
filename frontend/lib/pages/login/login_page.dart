@@ -8,6 +8,7 @@ import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -48,8 +49,8 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius:
                         BorderRadiusDirectional.all(Radius.circular(30)),
                     color: Color(0xffF3EDED)),
-                child: loginForm(context, userProvider),
               ),
+              loginForm(context, userProvider),
             ],
           ));
     });
@@ -62,12 +63,14 @@ class _LoginPageState extends State<LoginPage> {
           child: Stack(
             children: [
               Positioned(
-                  bottom: 0,
-                  left: 10,
-                  child: SvgPicture.asset(
-                    "assets/img/kids_with_clouds.svg",
-                    // fit: BoxFit.contain,
-                  )),
+                bottom: 0,
+                left: Adaptive.sw(1),
+                child: SvgPicture.asset(
+                  "assets/img/kids_with_clouds.svg",
+                  height: Adaptive.sh(30),
+                  width: Adaptive.sw(90),
+                ),
+              ),
               Column(
                 spacing: 10,
                 children: [

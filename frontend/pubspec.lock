@@ -359,10 +359,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_native_splash
-      sha256: "1152ab0067ca5a2ebeb862fe0a762057202cceb22b7e62692dcbabf6483891bb"
+      sha256: "7062602e0dbd29141fb8eb19220b5871ca650be5197ab9c1f193a28b17537bc7"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.3"
+    version: "2.4.4"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -813,6 +813,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  sizer:
+    dependency: "direct main"
+    description:
+      name: sizer
+      sha256: "6f68f574b6dd052e87c4abf67fe4feb316651fab02430ef7e53e991c15acfcb7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.5"
   sky_engine:
     dependency: transitive
     description: flutter

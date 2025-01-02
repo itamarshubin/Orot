@@ -6,12 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
 import 'package:orot/pages/login/login_page.dart';
-import 'package:orot/pages/volunteer/navigation.dart';
-import 'package:orot/pages/volunteer/home/home_page.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:orot/providers/visits_provider.dart';
-import 'package:orot/services/auth_service.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -50,22 +48,24 @@ class OrotApp extends StatelessWidget {
         builder: (context, snapshot) {
           return Consumer<UserProvider>(
               builder: (context, userProvider, child) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(fontFamily: 'Open Sans'),
-              home: snapshot.connectionState == ConnectionState.waiting
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : snapshot.error != null
-                      ? Center(
-                          child: Text(
-                              'Error: ${snapshot.error}\n${snapshot.stackTrace}'),
-                        )
-                      : snapshot.data == null
-                          ? LoginPage()
-                          : userProvider.user!.getUserStartPage(),
-            );
+            return Sizer(builder: (context, orientation, screenType) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                theme: ThemeData(fontFamily: 'Open Sans'),
+                home: snapshot.connectionState == ConnectionState.waiting
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : snapshot.error != null
+                        ? Center(
+                            child: Text(
+                                'Error: ${snapshot.error}\n${snapshot.stackTrace}'),
+                          )
+                        : snapshot.data == null
+                            ? LoginPage()
+                            : userProvider.user!.getUserStartPage(),
+              );
+            });
           });
         });
   }

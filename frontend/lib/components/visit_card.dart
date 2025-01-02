@@ -28,8 +28,8 @@ class _VisitCardState extends State<VisitCard> {
       color: Colors.white,
       shadowColor: Color.fromRGBO(255, 195, 195, 0.37),
       child: Container(
-        width: 330,
-        height: 110,
+        width: MediaQuery.sizeOf(context).width * 0.80,
+        height: MediaQuery.sizeOf(context).height * 0.11,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -109,12 +109,15 @@ class TextWithIcon extends StatelessWidget {
       Text(text,
           textDirection: TextDirection.rtl,
           style: GoogleFonts.openSans(
-              textStyle: const TextStyle(
+              textStyle: TextStyle(
             color: Color(0xff205273),
             fontWeight: FontWeight.w600,
-            fontSize: 20,
+            fontSize: MediaQuery.sizeOf(context).height * 0.020,
           ))),
-      SvgPicture.asset(iconPath, width: 22, height: 22),
+      SvgPicture.asset(
+        iconPath,
+        height: MediaQuery.sizeOf(context).height * 0.025,
+      ),
     ]);
   }
 }
