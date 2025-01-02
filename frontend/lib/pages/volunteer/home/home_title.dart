@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
 
 class HomePageTitle extends StatefulWidget {
   const HomePageTitle({super.key, this.displayName});
@@ -16,7 +17,7 @@ class _HomePageTitleState extends State<HomePageTitle> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 220,
+      height: 20.sh,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.centerRight,
@@ -47,12 +48,12 @@ class _HomePageTitleState extends State<HomePageTitle> {
               'שלום ${widget.displayName}',
               style: GoogleFonts.assistant(
                 fontWeight: FontWeight.w700,
-                fontSize: MediaQuery.sizeOf(context).width * 0.07,
+                fontSize: 5.sw,
                 color: Color.fromRGBO(178, 39, 89, 1),
               ),
             ),
             SvgPicture.asset(
-              height: MediaQuery.sizeOf(context).height * 0.08,
+              height: 5.sh,
               'assets/img/hand.svg',
             ),
           ],
