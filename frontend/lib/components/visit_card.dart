@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/models/visit.dart';
 import 'package:orot/pages/volunteer/home/home_page.dart';
+import 'package:sizer/sizer.dart';
 
 class VisitCard extends StatefulWidget {
   final bool showEditButton;
@@ -30,8 +31,8 @@ class _VisitCardState extends State<VisitCard> {
       color: Colors.white,
       shadowColor: Color.fromRGBO(255, 195, 195, 0.37),
       child: Container(
-        width: MediaQuery.sizeOf(context).width * 0.80,
-        height: MediaQuery.sizeOf(context).height * 0.13,
+        width: 100.sw,
+        height: 12.sh,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -153,11 +154,11 @@ class TextWithIcon extends StatelessWidget {
               textStyle: TextStyle(
             color: Color(0xff205273),
             fontWeight: FontWeight.w600,
-            fontSize: MediaQuery.sizeOf(context).height * 0.020,
+            fontSize: 22,
           ))),
       SvgPicture.asset(
         iconPath,
-        height: MediaQuery.sizeOf(context).height * 0.025,
+        height: 2.7.sh,
       ),
     ]);
   }
