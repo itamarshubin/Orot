@@ -51,7 +51,10 @@ class _HomePageTitleState extends State<HomePageTitle> {
                 color: Color.fromRGBO(178, 39, 89, 1),
               ),
             ),
-            SvgPicture.asset('assets/img/hand.svg'),
+            SvgPicture.asset(
+              height: MediaQuery.sizeOf(context).height * 0.08,
+              'assets/img/hand.svg',
+            ),
           ],
         ));
   }
