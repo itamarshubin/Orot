@@ -14,7 +14,7 @@ class MainButton2 extends StatelessWidget {
     required this.text,
     required this.onPress,
     this.size = MainButtonSize.big,
-    this.disabled = true,
+    this.disabled = false,
   });
 
   @override
