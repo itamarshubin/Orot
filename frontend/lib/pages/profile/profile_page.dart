@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/pages/volunteer/new_visit/field.dart';
 import 'package:orot/providers/user_provider.dart';
+import 'package:orot/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
 //TODO: this page is waiting for ui-ux decision.
@@ -42,8 +43,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     _name(userProvider.userName ?? ''),
                     _district(userProvider.user?.district?.name ?? ''),
-                    _familyName(userProvider.user?.family.name ?? ''),
-                    _familyContact(userProvider.user?.family.contact ?? '')
+                    _familyName(userProvider.user?.family?.name ?? ''),
+                    _familyContact(userProvider.user?.family?.contact ?? ''),
+                    _signOutButton()
                   ],
                 ),
               )
@@ -98,6 +100,12 @@ class _ProfilePageState extends State<ProfilePage> {
         )
       ],
     );
+  }
+
+  Widget _signOutButton() {
+    return ElevatedButton(
+        onPressed: () => AuthService().signout(context: context),
+        child: const Text('signOUt'));
   }
 
   Widget _username() {

@@ -18,7 +18,7 @@ class User {
   final UserPermission permission;
   final String name;
   final District? district;
-  final Family family;
+  final Family? family;
 
   User(
       {required this.uid,
@@ -35,7 +35,7 @@ class User {
       permission: $enumDecode(_$UserPermissionEnumMap, json['permission']),
       district:
           json['district'] == null ? null : District.fromJson(json['district']),
-      family: Family.fromJson(json['family']),
+      family: json['family'] == null ? null : Family.fromJson(json['family']),
     );
   }
 

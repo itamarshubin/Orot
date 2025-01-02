@@ -32,7 +32,7 @@ class VolunteerService {
     }
   }
 
-  Future<List<Visit>?> getUpcomingVisits() async {
+  Future<List<Visit>> getUpcomingVisits() async {
     final callable = _functions.httpsCallable('getUpcomingVisits');
     try {
       final result = await callable.call();
@@ -42,7 +42,7 @@ class VolunteerService {
           .toList();
     } catch (e) {
       print('some fucking error:$e');
-      return null;
+      return [];
     }
   }
 
