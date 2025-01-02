@@ -6,6 +6,7 @@ import 'package:orot/pages/volunteer/home/home_page.dart';
 
 class VisitCard extends StatefulWidget {
   final bool showEditButton;
+  final bool showCountdown;
   final bool? hasVisited;
   final Visit visit;
 
@@ -14,6 +15,7 @@ class VisitCard extends StatefulWidget {
   const VisitCard(
       {super.key,
       this.showEditButton = false,
+      this.showCountdown = false,
       this.hasVisited,
       required this.visit});
 
@@ -29,7 +31,7 @@ class _VisitCardState extends State<VisitCard> {
       shadowColor: Color.fromRGBO(255, 195, 195, 0.37),
       child: Container(
         width: MediaQuery.sizeOf(context).width * 0.80,
-        height: MediaQuery.sizeOf(context).height * 0.11,
+        height: MediaQuery.sizeOf(context).height * 0.13,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -56,7 +58,7 @@ class _VisitCardState extends State<VisitCard> {
                 Transform.translate(
                   offset: const Offset(-5, -10),
                   // Moves 5 to the left and 10 higher
-                  child: _editButton(),
+                  child: _extraData(),
                 ),
               ],
             ),
@@ -85,7 +87,7 @@ class _VisitCardState extends State<VisitCard> {
     return Colors.white;
   }
 
-  Widget _editButton() {
+  Widget _extraData() {
     if (widget.showEditButton == true) {
       return CustomGradientButton(
           text: 'שינוי פרטים',
@@ -93,7 +95,46 @@ class _VisitCardState extends State<VisitCard> {
             //TODO: implement the button functunality
           });
     }
+    if (widget.showCountdown == true) {
+      return _countDown();
+    }
     return SizedBox.shrink();
+  }
+
+  Widget _countDown() {
+    Color color;
+    if (widget.visit.visitDate.difference(DateTime.now()).inDays > 8) {
+      color = Color.fromARGB(255, 255, 255, 255);
+    } else if (widget.visit.visitDate.difference(DateTime.now()).inDays < 15) {
+      color = Color.fromRGBO(255, 229, 99, 0.34);
+    } else {
+      color = Color.fromARGB(255, 255, 79, 79);
+    }
+
+    int daysDifference =
+        DateTime.now().difference(widget.visit.visitDate).inDays;
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: color,
+      ),
+      margin: EdgeInsets.only(top: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: daysDifference == 0
+          ? Text(
+              'לפני פחות מיום',
+              style: GoogleFonts.assistant(
+                  color: Color(0xffC47F19),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600),
+            )
+          : Text("לפני $daysDifference ימים",
+              style: GoogleFonts.assistant(
+                  color: Color(0xffC47F19),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600)),
+    );
   }
 }
 

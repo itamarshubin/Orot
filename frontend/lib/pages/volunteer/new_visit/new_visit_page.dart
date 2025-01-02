@@ -28,27 +28,32 @@ class _NewVisitPageState extends State<NewVisitPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffF3EDED),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
-        child: Column(
-          children: [
-            _xRedButton(),
-            SizedBox(
-              height: 50,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                spacing: 20,
-                children: [_title(), _from()],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
+          child: Column(
+            children: [
+              _xRedButton(),
+              SizedBox(
+                height: 50,
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Image.asset('assets/img/calendar_people.webp'),
-            _sendButton()
-          ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  spacing: 20,
+                  children: [_title(), _from()],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Image.asset('assets/img/calendar_people.webp'),
+              _sendButton(),
+              SizedBox(
+                height: 30,
+              )
+            ],
+          ),
         ),
       ),
     );

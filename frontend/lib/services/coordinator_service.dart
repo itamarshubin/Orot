@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:orot/models/family.dart';
 import 'package:orot/models/user.dart';
+import 'package:orot/models/visit.dart';
 
 class CoordinatorService {
   final FirebaseFunctions _functions = FirebaseFunctions.instance;
@@ -99,13 +100,15 @@ class CoordinatorService {
     }
   }
 
-  Future<void> getVisitData(String volunteerId) async {
+  Future<List<Visit>> getVisitData(String volunteerId) async {
     try {
       final callable = _functions.httpsCallable('getVisitsData');
       final results = await callable.call({'volunteerId': volunteerId});
       print('got res:${results.data}');
 
-      // return (results.data as List).map((item) => User.fromJson(item)).toList();
+      return (results.data as List)
+          .map((item) => Visit.fromJson(item))
+          .toList();
     } catch (e) {
       Fluttertoast.showToast(
         msg: e.toString(),
@@ -115,7 +118,7 @@ class CoordinatorService {
         textColor: Colors.white,
         fontSize: 14.0,
       );
-      // return [];
+      return [];
     }
   }
 }
