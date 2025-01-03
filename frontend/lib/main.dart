@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
-import 'package:orot/pages/volunteer/navigation.dart';
+import 'package:orot/pages/login/login_page.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:orot/providers/visits_provider.dart';
 import 'package:provider/provider.dart';
@@ -60,8 +60,8 @@ class OrotApp extends StatelessWidget {
                                 'Error: ${snapshot.error}\n${snapshot.stackTrace}'),
                           )
                         : snapshot.data == null
-                            ? VolunteerNavigation()
-                            : VolunteerNavigation(),
+                            ? LoginPage()
+                            : userProvider.user!.getUserStartPage(),
               );
             });
           });
