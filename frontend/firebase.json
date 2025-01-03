@@ -1,0 +1,36 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "orot-prp",
+          "appId": "1:515694934829:android:46976a1d454c183bdff1a4",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "orot-prp",
+          "configurations": {
+            "android": "1:515694934829:android:46976a1d454c183bdff1a4",
+            "ios": "1:515694934829:ios:2c647c61a8fc6283dff1a4",
+            "macos": "1:515694934829:ios:2c647c61a8fc6283dff1a4",
+            "web": "1:515694934829:web:aa5a8dfdad3c630fdff1a4",
+            "windows": "1:515694934829:web:c5d40756986e85ecdff1a4"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "europe-west1"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+   function isAdmin() {
+      return false;
+    }
+    
+    function isCoordinator(){
+    	return false;
+    }
+    
+     match /admins/{adminId} {
+       allow read: if request.auth.uid;
+       allow write: if false;
+     }
+     
+     match /volunteers/{volunteerId} {
+       allow create, delete: if (isAdmin() || isCoordinator());
+			 allow read, write: if(isAdmin() || request.auth.uid == volunteerId);
+     }
+     
+     match /coordinators/{coordinatorId}{
+     	 allow create, delete, write: if(isAdmin());
+       allow read: if(isAdmin() || request.auth.uid == coordinatorId);
+     }
+     
+  }
+}

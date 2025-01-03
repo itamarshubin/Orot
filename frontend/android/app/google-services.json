@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "515694934829",
+    "project_id": "orot-prp",
+    "storage_bucket": "orot-prp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515694934829:android:46976a1d454c183bdff1a4",
+        "android_client_info": {
+          "package_name": "com.example.orot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsNKYq3qzn6x3N70sQvfQu35tHFY7gqRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
