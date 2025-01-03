@@ -10,6 +10,7 @@ import 'package:orot/services/coordinator_service.dart';
 class VolunteerData extends StatefulWidget {
   final bool isAdmin;
   final User volunteer;
+
   const VolunteerData(this.volunteer, {super.key, this.isAdmin = false});
 
   @override
@@ -19,7 +20,6 @@ class VolunteerData extends StatefulWidget {
 class _VolunteerDataState extends State<VolunteerData> {
   @override
   Widget build(BuildContext context) {
-    print('nigga is admin:${widget.isAdmin}');
     return FutureBuilder(
       future: CoordinatorService().getVisitData(widget.volunteer.uid),
       builder: (context, snapshot) {
