@@ -9,12 +9,13 @@ import 'package:orot/models/visit.dart';
 class CoordinatorService {
   final FirebaseFunctions _functions = FirebaseFunctions.instance;
 
-  Future<void> createVolunteer(
-      {required String email,
-      required String password,
-      required String displayName,
-      required String districtId,
-      required String familyId}) async {
+  Future<void> createVolunteer({
+    required String email,
+    required String password,
+    required String displayName,
+    required String districtId,
+    required String familyId,
+  }) async {
     if (email.isEmpty ||
         password.isEmpty ||
         displayName.isEmpty ||
