@@ -11,12 +11,13 @@ class VisitCard extends StatefulWidget {
   final bool? hasVisited;
   final Visit visit;
 
-  const VisitCard(
-      {super.key,
-      this.showEditButton = false,
-      this.showCountdown = false,
-      this.hasVisited,
-      required this.visit});
+  const VisitCard({
+    super.key,
+    this.showEditButton = false,
+    this.showCountdown = false,
+    this.hasVisited,
+    required this.visit,
+  });
 
   @override
   State<VisitCard> createState() => _VisitCardState();
