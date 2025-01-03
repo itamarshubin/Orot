@@ -11,15 +11,20 @@ class CoordinatorNavigation extends StatefulWidget {
 }
 
 class _CoordinatorNavigationState extends State<CoordinatorNavigation> {
-  Widget currentChild = VolunteersList();
+  late Widget currentChild;
   int currentIndex = 2;
+  List<Widget> pages = [
+    const ProfilePage(),
+    const AdminPage(),
+    const VolunteersList(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: currentChild,
+        body: pages[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
-          onTap: (index) => _onItemTapped(context, index),
+          onTap: (index) => setState(() => currentIndex = index),
           iconSize: 25,
           currentIndex: currentIndex,
           selectedItemColor: Color(0xFF205273),
@@ -33,28 +38,5 @@ class _CoordinatorNavigationState extends State<CoordinatorNavigation> {
                 tooltip: 'מסך ראשי', icon: Icon(Icons.home), label: ''),
           ],
         ));
-  }
-
-  void _onItemTapped(BuildContext context, int index) {
-    switch (index) {
-      case 0:
-        setState(() {
-          currentIndex = 0;
-          currentChild = const ProfilePage();
-        });
-        break;
-      case 1:
-        setState(() {
-          currentIndex = 1;
-          currentChild = const AdminPage();
-        });
-        break;
-      case 2:
-        setState(() {
-          currentIndex = 2;
-          currentChild = VolunteersList();
-        });
-        break;
-    }
   }
 }
