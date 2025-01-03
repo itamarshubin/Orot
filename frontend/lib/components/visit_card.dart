@@ -32,7 +32,7 @@ class _VisitCardState extends State<VisitCard> {
       shadowColor: Color.fromRGBO(255, 195, 195, 0.37),
       child: Container(
         width: 100.sw,
-        height: 12.sh,
+        height: 15.sh,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
