@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:orot/components/main_button.dart';
+import 'package:orot/components/main_button_v2.dart';
 import 'package:orot/models/calendar/event.dart';
 import 'package:orot/models/calendar/event_time.dart';
 import 'package:orot/pages/volunteer/navigation.dart';
@@ -167,7 +167,7 @@ class _NewVisitPageState extends State<NewVisitPage> {
   Widget _sendButton() {
     return Padding(
         padding: const EdgeInsets.only(bottom: 20.0, left: 60, right: 60),
-        child: MainButton(
+        child: MainButton2(
           text: 'שליחה',
           onPress: () {
             VolunteerService().createVisit(dateTime: getUpdatedDateTime());

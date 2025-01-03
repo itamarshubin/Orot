@@ -20,6 +20,7 @@ class MainButton2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.sizeOf(context).height;
+    debugPrint('$disabled');
     return InkWell(
       onTap: disabled ? null : onPress,
       child: Container(

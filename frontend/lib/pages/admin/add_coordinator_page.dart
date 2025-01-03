@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orot/components/main_button.dart';
+import 'package:orot/components/main_button_v2.dart';
 import 'package:orot/models/district.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/pages/admin/components/districts_dropdown.dart';
@@ -196,7 +196,7 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
   }
 
   Widget _createCoordinator() {
-    return MainButton(
+    return MainButton2(
         text: 'יצירת רכזת',
         onPress: () async {
           await AdminService().createCoordinator(

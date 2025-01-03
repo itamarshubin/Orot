@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/field_input.dart';
-import 'package:orot/components/main_button.dart';
+import 'package:orot/components/main_button_v2.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/auth_service.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _auth = AuthService();
+  bool isSignInButtonDisabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -150,23 +151,27 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _signInButton(BuildContext context, UserProvider userProvider) {
-    return MainButton(
-        text: 'כניסה למערכת',
-        onPress: () async {
-          await _auth.signin(
-            email: _emailController.text,
-            password: _passwordController.text,
-          );
-          await userProvider.getUserData();
-          if (userProvider.user != null) {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      userProvider.user!.getUserStartPage(),
-                ));
-          }
+    return MainButton2(
+      text: 'כניסה למערכת',
+      disabled: isSignInButtonDisabled,
+      onPress: () async {
+        setState(() {
+          isSignInButtonDisabled = true;
         });
+        await _auth.signin(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+        await userProvider.getUserData();
+        if (userProvider.user != null && context.mounted) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => userProvider.user!.getUserStartPage()));
+        }
+        setState(() => isSignInButtonDisabled = false);
+      },
+    );
   }
 
   //TODO: delete

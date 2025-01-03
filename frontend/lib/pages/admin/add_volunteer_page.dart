@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orot/components/main_button.dart';
+import 'package:orot/components/main_button_v2.dart';
 import 'package:orot/models/district.dart';
 import 'package:orot/models/family.dart';
 import 'package:orot/models/user.dart';
@@ -281,7 +281,7 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
   }
 
   Widget _createVolunteer() {
-    return MainButton(
+    return MainButton2(
         text: 'יצירת משתמש',
         onPress: () async {
           await CoordinatorService().createVolunteer(
