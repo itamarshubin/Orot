@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:orot/firebase_options.dart';
-import 'package:orot/pages/login/login_page.dart';
+import 'package:orot/pages/volunteer/navigation.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:orot/providers/visits_provider.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +45,7 @@ class OrotApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: Provider.of<UserProvider>(context, listen: false).getUserData(),
-        builder: (context , snapshot) {
+        builder: (context, snapshot) {
           return Consumer<UserProvider>(
               builder: (context, userProvider, child) {
             return Sizer(builder: (context, orientation, screenType) {
@@ -60,8 +60,8 @@ class OrotApp extends StatelessWidget {
                                 'Error: ${snapshot.error}\n${snapshot.stackTrace}'),
                           )
                         : snapshot.data == null
-                            ? LoginPage()
-                            : userProvider.user!.getUserStartPage(),
+                            ? VolunteerNavigation()
+                            : VolunteerNavigation(),
               );
             });
           });

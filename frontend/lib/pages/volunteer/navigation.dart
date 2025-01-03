@@ -11,23 +11,26 @@ class VolunteerNavigation extends StatefulWidget {
 }
 
 class _VolunteerNavigationState extends State<VolunteerNavigation> {
-  Widget currentChild = const HomePage();
+  late Widget currentChild;
   int currentIndex = 2;
+  List<Widget> pages = [
+    const ProfilePage(),
+    const VisitsHistoryPage(),
+    const HomePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: currentChild,
+        body: pages[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
-          onTap: (index) => _onItemTapped(context, index),
+          onTap: (index) => setState(() => currentIndex = index),
           iconSize: 25,
           currentIndex: currentIndex,
           selectedItemColor: Color(0xFF205273),
-          // selectedItemColor: Colors.blue,
           unselectedItemColor: Colors.grey,
           items: const [
             BottomNavigationBarItem(
-              // backgroundColor: Colors.black,
               tooltip: 'פרופיל',
               icon: Icon(Icons.person),
               label: '',
@@ -44,28 +47,5 @@ class _VolunteerNavigationState extends State<VolunteerNavigation> {
             ),
           ],
         ));
-  }
-
-  void _onItemTapped(BuildContext context, int index) {
-    switch (index) {
-      case 0:
-        setState(() {
-          currentIndex = 0;
-          currentChild = const ProfilePage();
-        });
-        break;
-      case 1:
-        setState(() {
-          currentIndex = 1;
-          currentChild = const VisitsHistoryPage();
-        });
-        break;
-      case 2:
-        setState(() {
-          currentIndex = 2;
-          currentChild = const HomePage();
-        });
-        break;
-    }
   }
 }
