@@ -11,8 +11,6 @@ class VisitCard extends StatefulWidget {
   final bool? hasVisited;
   final Visit visit;
 
-  //TODO: get an actual datetime and parse it to this
-  //TODO: pass object that has all visit info
   const VisitCard(
       {super.key,
       this.showEditButton = false,
