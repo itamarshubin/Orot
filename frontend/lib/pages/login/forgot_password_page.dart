@@ -5,7 +5,8 @@ import 'package:orot/components/app_top_style.dart';
 import 'package:orot/components/field_input.dart';
 import 'package:orot/components/fixed_column.dart';
 import 'package:orot/components/main_button_v2.dart';
-import 'package:orot/services/auth_service.dart';
+import 'package:orot/pages/login/sent_mail_page.dart';
+import 'package:orot/utils/validate_email.dart';
 import 'package:sizer/sizer.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
@@ -18,7 +19,6 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  final _auth = AuthService();
   final emailController = TextEditingController();
 
   @override
@@ -45,11 +45,29 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
                 ),
+                inputValidation: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'יש להזין מייל';
+                  } else if (!isEmailValid(text)) {
+                    return "מייל לא בפורמט הנכון";
+                  }
+                  return null;
+                },
               ),
               SizedBox(),
               MainButton2(
                 text: "יצירת סיסמה חדשה",
-                onPress: () => {},
+                onPress: () async {
+                  final String email = emailController.text;
+                  if (email.isNotEmpty && isEmailValid(email)) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SentMailPage(email)));
+                  } else {
+                    Fluttertoast.showToast(msg: "אנא כתבי את המייל בשדה למעלה");
+                  }
+                },
               ),
               Spacer(),
               Container(
@@ -79,14 +97,5 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         color: Color.fromRGBO(178, 39, 89, 1),
       ),
     );
-  }
-
-  Future<void> _forgotPassword() async {
-    String email = "test";
-    if (email.isNotEmpty) {
-      Fluttertoast.showToast(msg: await _auth.resetPasswordWithEmail(email));
-    } else {
-      Fluttertoast.showToast(msg: "אנא כתבי את המייל בשדה למעלה");
-    }
   }
 }
