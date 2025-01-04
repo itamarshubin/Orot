@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/field_input.dart';
 import 'package:orot/components/main_button_v2.dart';
@@ -9,6 +8,8 @@ import 'package:orot/services/auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 import 'package:sizer/sizer.dart';
+
+import 'forgot_password.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -127,17 +128,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _forgotPassword() {
-    String email;
     return Container(
         alignment: Alignment.topRight,
         child: InkWell(
-          onTap: () async => {
-            email = _emailController.text.trim(),
-            if (email.isNotEmpty)
-              Fluttertoast.showToast(
-                  msg: await _auth.resetPasswordWithEmail(email))
-            else
-              Fluttertoast.showToast(msg: "אנא כתבי את המייל בשדה למעלה")
+          onTap: () => {
+            if (context.mounted)
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => ForgotPasswordPage()))
           },
           child: Text(
             "שכחתי סיסמה",
