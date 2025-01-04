@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
           appBar: AppBar(
-            toolbarHeight: 100,
+            toolbarHeight: 15.sh,
             centerTitle: true,
             title: Image.asset('assets/img/logo.png'),
             backgroundColor: Colors.transparent,
@@ -48,9 +48,10 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 margin: const EdgeInsets.only(top: 20, bottom: 20),
                 decoration: const BoxDecoration(
-                    borderRadius:
-                        BorderRadiusDirectional.all(Radius.circular(30)),
-                    color: Color(0xffF3EDED)),
+                  borderRadius:
+                      BorderRadiusDirectional.all(Radius.circular(30)),
+                  color: Color(0xffF3EDED),
+                ),
               ),
               loginForm(context, userProvider),
             ],
@@ -79,6 +80,11 @@ class _LoginPageState extends State<LoginPage> {
                   _title(),
                   FieldInput(
                     inputTitle: 'מייל',
+                    inputTitleStyle: GoogleFonts.varelaRound(
+                      color: Color(0xff2B2B2B),
+                      fontWeight: FontWeight.w400,
+                      fontSize: 17,
+                    ),
                     textEditingController: _emailController,
                     hintText: 'example@gmail.com',
                     onEditingCompleteFunction: () => {
@@ -93,6 +99,11 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   FieldInput(
                     inputTitle: 'סיסמה',
+                    inputTitleStyle: GoogleFonts.varelaRound(
+                      color: Color(0xff2B2B2B),
+                      fontWeight: FontWeight.w400,
+                      fontSize: 17,
+                    ),
                     textEditingController: _passwordController,
                     obscureText: true,
                     hintText: '•••',

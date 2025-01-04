@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
 
 enum MainButtonSize { big, small }
 
@@ -26,7 +27,7 @@ class MainButton2 extends StatelessWidget {
       child: Container(
           alignment: Alignment.center,
           width: MediaQuery.sizeOf(context).width * 0.75,
-          height: screenHeight * (size == MainButtonSize.big ? 0.07 : 0.06),
+          height: screenHeight * (size == MainButtonSize.big ? 0.06 : 0.05),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: disabled
@@ -35,7 +36,7 @@ class MainButton2 extends StatelessWidget {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
             ),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(30.sh),
             boxShadow: disabled
                 ? null
                 : [
