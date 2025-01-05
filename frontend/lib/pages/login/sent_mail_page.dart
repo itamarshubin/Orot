@@ -35,19 +35,20 @@ class _SentMailPageState extends State<SentMailPage> {
           ),
           body: Container(
             color: Color.fromRGBO(243, 243, 243, 1),
-            padding: EdgeInsets.symmetric(vertical: 5.sh, horizontal: 10.sw),
+            padding: EdgeInsets.only(top: 5.sh, left: 10.sw, right: 10.sw),
             child: SizedBox.expand(
               child: FixedColumn(
-                spacing: 5.sh,
+                spacing: 3.sh,
                 children: [
                   title(),
                   content(),
                   note(),
-                  Spacer(),
-                  SvgPicture.asset(
-                    'assets/img/sent_mail.svg',
+                  Container(
                     alignment: Alignment.center,
-                    fit: BoxFit.fill,
+                    child: SvgPicture.asset(
+                      'assets/img/sent_mail.svg',
+                      height: 25.sh,
+                    ),
                   ),
                   Container(
                     width: 100.sw,
