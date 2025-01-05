@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class FieldInput extends StatefulWidget {
   final TextEditingController textEditingController;
   final String inputTitle;
+  final TextStyle? inputTitleStyle;
   final String? hintText;
   final VoidCallback? onEditingCompleteFunction;
   final bool obscureText;
@@ -16,6 +17,7 @@ class FieldInput extends StatefulWidget {
     this.onEditingCompleteFunction,
     this.inputValidation,
     this.obscureText = false,
+    this.inputTitleStyle,
     super.key,
   });
 
@@ -31,16 +33,12 @@ class _FieldInputState extends State<FieldInput> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-            alignment: Alignment.centerRight,
-            child: Text(
-              widget.inputTitle,
-              style: GoogleFonts.varelaRound(
-                  textStyle: const TextStyle(
-                color: Color(0xff2B2B2B),
-                fontWeight: FontWeight.w400,
-                fontSize: 17,
-              )),
-            )),
+          alignment: Alignment.centerRight,
+          child: Text(
+            widget.inputTitle,
+            style: widget.inputTitleStyle,
+          ),
+        ),
         Directionality(
           textDirection: TextDirection.rtl,
           child: TextFormField(
@@ -61,7 +59,7 @@ class _FieldInputState extends State<FieldInput> {
                 color: Color(0xffB7B4B4),
                 fontSize: 20,
               ),
-              fillColor: const Color(0xffF5F5F5),
+              fillColor: Colors.white,
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(30),

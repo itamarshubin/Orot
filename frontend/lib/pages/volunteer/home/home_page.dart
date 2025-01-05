@@ -32,54 +32,53 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.wait([
-        Provider.of<UserProvider>(context, listen: false).getUserData(),
-        _upcomingVisits
-      ]),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.error != null) {
-          return Center(
-            child: Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'),
-          );
-        } else {
-          return Consumer<UserProvider>(
-              builder: (context, userProvider, child) {
-            return Scaffold(
-              resizeToAvoidBottomInset: false,
-              backgroundColor: Color.fromRGBO(237, 237, 237, 1),
-              body: SingleChildScrollView(
-                child: FixedColumn(
-                  children: [
-                    HomePageTitle(displayName: userProvider.userName),
-                    Transform.translate(
-                      offset: Offset(0, -10.sh),
-                      child: _nearestVisit(snapshot.data![1] as List<Visit>),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: FixedColumn(
-                        children: [
-                          _addVisitButton(),
-                          VisitsList(
-                              "פגישות עתידיות נוספות",
-                              getResetOfVisits(
-                                  snapshot.data![1] as List<Visit>)),
-                          _getTips(),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+        future: Future.wait([
+          Provider.of<UserProvider>(context, listen: false).getUserData(),
+          _upcomingVisits
+        ]),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
             );
-          });
-        }
-      },
-    );
+          } else if (snapshot.error != null) {
+            return Center(
+              child: Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'),
+            );
+          } else {
+            return Consumer<UserProvider>(
+                builder: (context, userProvider, child) {
+              return Scaffold(
+                resizeToAvoidBottomInset: false,
+                backgroundColor: Color.fromRGBO(237, 237, 237, 1),
+                body: SingleChildScrollView(
+                  child: FixedColumn(
+                    children: [
+                      HomePageTitle(displayName: userProvider.userName),
+                      Transform.translate(
+                        offset: Offset(0, -10.sh),
+                        child: _nearestVisit(snapshot.data![1] as List<Visit>),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: FixedColumn(
+                          children: [
+                            _addVisitButton(),
+                            VisitsList(
+                                "פגישות עתידיות נוספות",
+                                getResetOfVisits(
+                                    snapshot.data![1] as List<Visit>)),
+                            _getTips(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            });
+          }
+        });
   }
 
   Widget _nearestVisit(List<Visit> visits) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/field_input.dart';
 import 'package:orot/components/main_button_v2.dart';
@@ -9,6 +8,8 @@ import 'package:orot/services/auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 import 'package:sizer/sizer.dart';
+
+import 'forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -37,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
           appBar: AppBar(
-            toolbarHeight: 100,
+            toolbarHeight: 15.sh,
             centerTitle: true,
             title: Image.asset('assets/img/logo.png'),
             backgroundColor: Colors.transparent,
@@ -47,9 +48,10 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 margin: const EdgeInsets.only(top: 20, bottom: 20),
                 decoration: const BoxDecoration(
-                    borderRadius:
-                        BorderRadiusDirectional.all(Radius.circular(30)),
-                    color: Color(0xffF3EDED)),
+                  borderRadius:
+                      BorderRadiusDirectional.all(Radius.circular(30)),
+                  color: Color(0xffF3EDED),
+                ),
               ),
               loginForm(context, userProvider),
             ],
@@ -78,6 +80,11 @@ class _LoginPageState extends State<LoginPage> {
                   _title(),
                   FieldInput(
                     inputTitle: 'מייל',
+                    inputTitleStyle: GoogleFonts.varelaRound(
+                      color: Color(0xff2B2B2B),
+                      fontWeight: FontWeight.w400,
+                      fontSize: 17,
+                    ),
                     textEditingController: _emailController,
                     hintText: 'example@gmail.com',
                     onEditingCompleteFunction: () => {
@@ -92,6 +99,11 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   FieldInput(
                     inputTitle: 'סיסמה',
+                    inputTitleStyle: GoogleFonts.varelaRound(
+                      color: Color(0xff2B2B2B),
+                      fontWeight: FontWeight.w400,
+                      fontSize: 17,
+                    ),
                     textEditingController: _passwordController,
                     obscureText: true,
                     hintText: '•••',
@@ -127,17 +139,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _forgotPassword() {
-    String email;
     return Container(
         alignment: Alignment.topRight,
         child: InkWell(
-          onTap: () async => {
-            email = _emailController.text.trim(),
-            if (email.isNotEmpty)
-              Fluttertoast.showToast(
-                  msg: await _auth.resetPasswordWithEmail(email))
-            else
-              Fluttertoast.showToast(msg: "אנא כתבי את המייל בשדה למעלה")
+          onTap: () => {
+            if (context.mounted)
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => ForgotPasswordPage()))
           },
           child: Text(
             "שכחתי סיסמה",
