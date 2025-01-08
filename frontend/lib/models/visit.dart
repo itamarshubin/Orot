@@ -9,6 +9,8 @@ class Visit {
   final Family family;
   final DateTime visitDate;
 
+  // TODO: should have parameter has visited (default to false)
+
   Visit({required this.id, required this.family, required this.visitDate});
 
   factory Visit.fromJson(json) => Visit(

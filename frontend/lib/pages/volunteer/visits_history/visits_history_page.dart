@@ -58,6 +58,7 @@ class _VisitsHistoryPageState extends State<VisitsHistoryPage> {
   }
 
   List<VisitCard> _getVisitsHistory(List<Visit> visits) {
+    Visit.fromJson(json)
     return visits.map((visit) => VisitCard(visit: visit)).toList();
   }
 }
