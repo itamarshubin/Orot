@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:orot/components/fixed_column.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/visit_card.dart';
 import 'package:orot/models/visit.dart';
 import 'package:orot/pages/volunteer/visits_history/visits_history_app_bar.dart';
 import 'package:orot/providers/visits_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../components/fixed_column.dart';
 
 class VisitsHistoryPage extends StatefulWidget {
   const VisitsHistoryPage({super.key});
@@ -37,19 +39,39 @@ class _VisitsHistoryPageState extends State<VisitsHistoryPage> {
               appBar: VisitsHistoryAppBar(),
               body: Container(
                 alignment: Alignment.bottomCenter,
-                child: Container(
-                  alignment: Alignment.topCenter,
-                  height: double.infinity,
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(top: 15, left: 30, right: 30),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(233, 229, 243, 1),
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(30))),
-                  child: SingleChildScrollView(
-                    child: FixedColumn(children: _getVisitsHistory(visits)),
-                  ),
+                margin: const EdgeInsets.only(top: 40, left: 30, right: 30),
+                child: Stack(
+                  textDirection: TextDirection.rtl,
+                  alignment: Alignment.topRight,
+                  clipBehavior: Clip.none,
+                  children: [
+                    Positioned(
+                      top: -30,
+                      right: 10,
+                      child: Text(
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.right,
+                        " ${visits.length} מפגשים ",
+                        style: GoogleFonts.openSans(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          color: Color.fromRGBO(32, 82, 115, 1),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(233, 229, 243, 1),
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(30))),
+                      child: SingleChildScrollView(
+                        child: FixedColumn(children: _getVisitsHistory(visits)),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );
