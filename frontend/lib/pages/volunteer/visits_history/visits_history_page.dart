@@ -31,6 +31,7 @@ class _VisitsHistoryPageState extends State<VisitsHistoryPage> {
               child: Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'),
             );
           } else {
+            final visits = snapshot.data as List<Visit>;
             return Scaffold(
               backgroundColor: Color.fromRGBO(237, 237, 237, 1),
               appBar: VisitsHistoryAppBar(),
@@ -47,9 +48,7 @@ class _VisitsHistoryPageState extends State<VisitsHistoryPage> {
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(30))),
                   child: SingleChildScrollView(
-                    child: FixedColumn(
-                      children: _getVisitsHistory(snapshot.data as List<Visit>),
-                    ),
+                    child: FixedColumn(children: _getVisitsHistory(visits)),
                   ),
                 ),
               ),
@@ -59,12 +58,6 @@ class _VisitsHistoryPageState extends State<VisitsHistoryPage> {
   }
 
   List<VisitCard> _getVisitsHistory(List<Visit> visits) {
-    return [
-      for (int i = 0; i < visits.length; i++)
-        VisitCard(
-          // hasVisited: Random().nextDouble() <= 0.3,
-          visit: visits[i],
-        )
-    ];
+    return visits.map((visit) => VisitCard(visit: visit)).toList();
   }
 }
