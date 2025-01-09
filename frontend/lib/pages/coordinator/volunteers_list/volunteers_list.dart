@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/models/user.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
-import 'package:orot/pages/coordinator/volunteer_data.dart';
+import 'package:orot/pages/coordinator/volunteers_list/volunteer_row.dart';
 import 'package:orot/services/coordinator_service.dart';
 
 class VolunteersList extends StatefulWidget {
@@ -32,42 +32,38 @@ class _VolunteersListState extends State<VolunteersList> {
           );
         } else {
           return Scaffold(
-              body: Container(
-            child: Column(children: [
-              if (snapshot.data?.isNotEmpty ?? false)
-                _title(context, snapshot.data?[0], id: widget.id),
-              SizedBox(
-                height: 20,
-              ),
+              body: Column(children: [
+            if (snapshot.data?.isNotEmpty ?? false)
+              _title(context, snapshot.data?[0], id: widget.id),
+            SizedBox(
+              height: 20,
+            ),
 
-              //TODO: add search bar
-              // Container(
-              //     margin: const EdgeInsets.only(left: 100),
-              //     width: 250,
-              //     child: TextField(
-              //         controller: controller,
-              //         textDirection: TextDirection.rtl,
-              //         decoration: InputDecoration(
-              //           hintTextDirection: TextDirection.rtl,
-              //           hintText: "חיפוש שם",
-              //           border: OutlineInputBorder(
-              //             borderRadius: BorderRadius.circular(30.0),
-              //           ),
-              //         ))),
-              Expanded(
-                  child: (snapshot.data?.isEmpty ?? true)
-                      ? Text('no data - volunteers')
-                      : ListView.builder(
-                          padding: const EdgeInsets.only(top: 10),
-                          itemCount: snapshot.data?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            return VolunteerCube(
-                              volunteer: snapshot.data![index],
-                              id: widget.id,
-                            );
-                          }))
-            ]),
-          ));
+            //TODO: add search bar
+            // Container(
+            //     margin: const EdgeInsets.only(left: 100),
+            //     width: 250,
+            //     child: TextField(
+            //         controller: controller,
+            //         textDirection: TextDirection.rtl,
+            //         decoration: InputDecoration(
+            //           hintTextDirection: TextDirection.rtl,
+            //           hintText: "חיפוש שם",
+            //           border: OutlineInputBorder(
+            //             borderRadius: BorderRadius.circular(30.0),
+            //           ),
+            //         ))),
+            Expanded(
+                child: (snapshot.data?.isEmpty ?? true)
+                    ? Text('no data - volunteers')
+                    : ListView.builder(
+                        padding: const EdgeInsets.only(top: 10),
+                        itemCount: snapshot.data?.length ?? 0,
+                        itemBuilder: (_, index) {
+                          return VolunteerCube(
+                              volunteer: snapshot.data![index], id: widget.id);
+                        }))
+          ]));
         }
       },
     );
@@ -106,52 +102,7 @@ Widget _title(BuildContext context, User? volunteer, {String? id}) {
               color: Color(0xFF205273),
             )),
       ),
-      if (id != null)
-        BackToAdminPage(
-          isAdmin: true,
-        ),
+      if (id != null) BackToAdminPage(isAdmin: true),
     ],
   );
-}
-
-class VolunteerCube extends StatelessWidget {
-  final User volunteer;
-  final String? id;
-
-  const VolunteerCube({super.key, required this.volunteer, this.id});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => VolunteerData(
-                      volunteer,
-                      isAdmin: id != null,
-                    )));
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        alignment: Alignment.center,
-        color: Colors.white,
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _CubeText(volunteer.family?.name ?? 'משפחה לא ידועה'),
-            _CubeText(volunteer.district?.name ?? "מחוז לא ידוע"),
-            _CubeText(volunteer.name),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _CubeText(String text) {
-    return Text(text,
-        style:
-            GoogleFonts.varelaRound(fontSize: 18, fontWeight: FontWeight.w400));
-  }
 }
