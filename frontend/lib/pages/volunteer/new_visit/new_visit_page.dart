@@ -21,6 +21,7 @@ class NewVisitPage extends StatefulWidget {
 class _NewVisitPageState extends State<NewVisitPage> {
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
+  bool isSendButtonDisabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -169,8 +170,12 @@ class _NewVisitPageState extends State<NewVisitPage> {
         padding: const EdgeInsets.only(bottom: 20.0, left: 60, right: 60),
         child: MainButton2(
           text: 'שליחה',
-          onPress: () {
-            VolunteerService().createVisit(dateTime: getUpdatedDateTime());
+          disabled: isSendButtonDisabled,
+          onPress: () async {
+            setState(() => isSendButtonDisabled = true);
+            await VolunteerService()
+                .createVisit(dateTime: getUpdatedDateTime());
+            setState(() => isSendButtonDisabled = false);
           },
           size: MainButtonSize.small,
         ));

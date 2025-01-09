@@ -163,9 +163,7 @@ class _LoginPageState extends State<LoginPage> {
       text: 'כניסה למערכת',
       disabled: isSignInButtonDisabled,
       onPress: () async {
-        setState(() {
-          isSignInButtonDisabled = true;
-        });
+        setState(() => isSignInButtonDisabled = true);
         await _auth.signin(
           email: _emailController.text,
           password: _passwordController.text,
