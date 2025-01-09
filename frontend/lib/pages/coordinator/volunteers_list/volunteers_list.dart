@@ -7,6 +7,7 @@ import 'package:orot/services/coordinator_service.dart';
 
 class VolunteersList extends StatefulWidget {
   final String? id;
+
   const VolunteersList({super.key, this.id});
 
   @override
@@ -98,12 +99,12 @@ Widget _title(BuildContext context, User? volunteer, {String? id}) {
       Container(
         height: pageHeight * 0.1,
         alignment: Alignment.center,
-        //TODO: get the real district
         child: Text("מתנדבות מחוז ${volunteer?.district?.name ?? 'לא ידוע'}",
             style: GoogleFonts.openSans(
-                fontSize: 37,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF205273))),
+              fontSize: 37,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF205273),
+            )),
       ),
       if (id != null)
         BackToAdminPage(
@@ -116,6 +117,7 @@ Widget _title(BuildContext context, User? volunteer, {String? id}) {
 class VolunteerCube extends StatelessWidget {
   final User volunteer;
   final String? id;
+
   const VolunteerCube({super.key, required this.volunteer, this.id});
 
   @override
