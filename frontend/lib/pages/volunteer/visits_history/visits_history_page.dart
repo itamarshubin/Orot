@@ -64,9 +64,10 @@ class _VisitsHistoryPageState extends State<VisitsHistoryPage> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          color: Color.fromRGBO(233, 229, 243, 1),
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(30))),
+                        color: Color.fromRGBO(233, 229, 243, 1),
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(30)),
+                      ),
                       child: SingleChildScrollView(
                         child: FixedColumn(children: _getVisitsHistory(visits)),
                       ),
