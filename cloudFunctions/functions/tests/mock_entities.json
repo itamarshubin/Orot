@@ -1,0 +1,76 @@
+{
+  "admins": [
+    {
+      "email": "a1@gmail.com",
+      "password": "123456",
+      "displayName": "מנהל 1"
+    },
+    {
+      "email": "a2@gmail.com",
+      "password": "123456",
+      "displayName": "מנהל 2"
+    }
+  ],
+  "districts": [
+    {
+      "name": "תל אביב"
+    },
+    {
+      "name": "חולון"
+    },
+    {
+      "name": "כרמיאל"
+    }
+  ],
+  "families": [
+    {
+      "name": "ישראלי",
+      "address": "חנה רובינא 12",
+      "contact": "0527134790"
+    },
+    {
+      "name": "כהן",
+      "address": "ז'בוטינסקי 78",
+      "contact": "0527134457"
+    },
+    {
+      "name": "לוי",
+      "address": "איבן עזרא 45",
+      "contact": "0527458790"
+    }
+  ],
+  "coordinators": [
+    {
+      "email": "c1@gmail.com",
+      "password": "123456",
+      "displayName": "רכזת 1"
+    },
+    {
+      "email": "c2@gmail.com",
+      "password": "123456",
+      "displayName": "רכזת 2"
+    },
+    {
+      "email": "c3@gmail.com",
+      "password": "123456",
+      "displayName": "רכזת 3"
+    }
+  ],
+  "volunteers": [
+    {
+      "email": "v2@gmail.com",
+      "password": "123456",
+      "displayName": "מתנדבת 1"
+    },
+    {
+      "email": "v3@gmail.com",
+      "password": "123456",
+      "displayName": "מתנדבת 2"
+    },
+    {
+      "email": "v3@gmail.com",
+      "password": "123456",
+      "displayName": "מתנדבת 3"
+    }
+  ]
+}
