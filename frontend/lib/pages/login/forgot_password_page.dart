@@ -70,13 +70,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 },
               ),
               Spacer(),
-              Container(
-                width: 100.sw,
-                margin: EdgeInsets.only(bottom: 10),
-                child: Image.asset(
-                  'assets/img/logo.png',
-                  scale: 2,
-                  alignment: Alignment.bottomCenter,
+              Center(
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Image.asset(
+                    'assets/img/logo.png',
+                    scale: 2,
+                    alignment: Alignment.bottomCenter,
+                  ),
                 ),
               )
             ],
