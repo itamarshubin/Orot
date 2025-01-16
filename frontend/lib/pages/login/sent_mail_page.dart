@@ -50,13 +50,14 @@ class _SentMailPageState extends State<SentMailPage> {
                       height: 25.sh,
                     ),
                   ),
-                  Container(
-                    width: 100.sw,
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: Image.asset(
-                      'assets/img/logo.png',
-                      scale: 2,
-                      alignment: Alignment.bottomCenter,
+                  Center(
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 10.sh),
+                      child: Image.asset(
+                        'assets/img/logo.png',
+                        scale: 2,
+                        alignment: Alignment.bottomCenter,
+                      ),
                     ),
                   )
                 ],

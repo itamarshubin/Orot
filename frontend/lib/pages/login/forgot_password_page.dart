@@ -40,19 +40,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               FieldInput(
                 textEditingController: emailController,
                 inputTitle: 'מייל',
+                autofocus: true,
                 inputTitleStyle: GoogleFonts.assistant(
                   color: Color.fromRGBO(52, 105, 139, 1),
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
                 ),
-                inputValidation: (text) {
-                  if (text == null || text.isEmpty) {
-                    return 'יש להזין מייל';
-                  } else if (!isEmailValid(text)) {
-                    return "מייל לא בפורמט הנכון";
-                  }
-                  return null;
-                },
+                inputValidation: (text) => validateEmailInput(text),
               ),
               SizedBox(),
               MainButton2(
@@ -72,7 +66,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               Spacer(),
               Center(
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 10),
+                  margin: EdgeInsets.only(bottom: 10.sh),
                   child: Image.asset(
                     'assets/img/logo.png',
                     scale: 2,
@@ -98,5 +92,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         color: Color.fromRGBO(178, 39, 89, 1),
       ),
     );
+  }
+
+  String? validateEmailInput(String? email) {
+    if (email == null || email.isEmpty) {
+      return 'יש להזין מייל';
+    } else if (!isEmailValid(email)) {
+      return "מייל לא בפורמט הנכון";
+    }
+    return null;
   }
 }
