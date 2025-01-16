@@ -66,7 +66,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               Spacer(),
               Center(
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 10.sh),
+                  margin: EdgeInsets.only(bottom: 5.sh),
                   child: Image.asset(
                     'assets/img/logo.png',
                     scale: 2,
