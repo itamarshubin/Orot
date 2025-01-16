@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/main_button_v2.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/services/admin_service.dart';
+import 'package:sizer/sizer.dart';
 
-class AddDistrictPage extends StatelessWidget {
-  AddDistrictPage({super.key});
+import '../../components/field_input.dart';
 
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+class AddDistrictPage extends StatefulWidget {
+  const AddDistrictPage({super.key});
+
+  @override
+  State<AddDistrictPage> createState() => _AddDistrictPageState();
+}
+
+class _AddDistrictPageState extends State<AddDistrictPage> {
   final _nameController = TextEditingController();
+  bool _distinctDisablementStatus = false;
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +25,26 @@ class AddDistrictPage extends StatelessWidget {
         body: Container(
       padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
       child: Column(
+        spacing: 5.sh,
         children: [
           BackToAdminPage(),
           _title(),
-          const SizedBox(height: 30),
-          _name(),
-          const SizedBox(height: 30),
+          FieldInput(
+            textEditingController: _nameController,
+            inputTitle: 'שם מחוז',
+            autofocus: true,
+            inputTitleStyle: GoogleFonts.openSans(
+              color: Colors.black,
+              fontWeight: FontWeight.w400,
+              fontSize: 20,
+            ),
+            inputValidation: (text) {
+              if (text == null || text.isEmpty) {
+                return "אנא הוסיפי מחוז.";
+              }
+              return null;
+            },
+          ),
           _createDistrict(),
         ],
       ),
@@ -35,51 +57,27 @@ class AddDistrictPage extends StatelessWidget {
       child: Text(
         'הוספת מחוז',
         style: GoogleFonts.openSans(
-            textStyle: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w400,
-                fontSize: 40)),
+          color: Colors.black,
+          fontWeight: FontWeight.w400,
+          fontSize: 40,
+        ),
       ),
-    );
-  }
-
-  Widget _name() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          alignment: Alignment.centerRight,
-          child: Text(
-            'שם המחוז',
-            style: GoogleFonts.openSans(
-                textStyle: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20)),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        TextField(
-          controller: _nameController,
-          decoration: InputDecoration(
-              filled: true,
-              fillColor: const Color(0xffF7F7F9),
-              border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(24))),
-        )
-      ],
     );
   }
 
   Widget _createDistrict() {
     return MainButton2(
+        disabled: _distinctDisablementStatus,
         text: 'יצירת מחוז',
         onPress: () async {
-          await AdminService().createDistrict(name: _nameController.text);
+          setState(() => _distinctDisablementStatus = true);
+          final district = _nameController.text;
+          if (district.isEmpty) {
+            Fluttertoast.showToast(msg: "אנא הוסיפי מחוז.");
+          } else {
+            await AdminService().createDistrict(name: district);
+          }
+          setState(() => _distinctDisablementStatus = false);
         });
   }
 }
