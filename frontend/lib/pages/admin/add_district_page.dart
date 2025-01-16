@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/components/field_input.dart';
 import 'package:orot/components/main_button_v2.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/services/admin_service.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../components/field_input.dart';
 
 class AddDistrictPage extends StatefulWidget {
   const AddDistrictPage({super.key});
@@ -22,8 +21,11 @@ class _AddDistrictPageState extends State<AddDistrictPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
+        body: Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.sw,
+        vertical: 10.sh,
+      ),
       child: Column(
         spacing: 5.sh,
         children: [
@@ -56,10 +58,11 @@ class _AddDistrictPageState extends State<AddDistrictPage> {
       alignment: Alignment.center,
       child: Text(
         'הוספת מחוז',
+        textAlign: TextAlign.center,
         style: GoogleFonts.openSans(
           color: Colors.black,
           fontWeight: FontWeight.w400,
-          fontSize: 40,
+          fontSize: 30,
         ),
       ),
     );
