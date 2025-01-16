@@ -46,32 +46,39 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
                 ),
-                inputValidation: (text) => validateEmailInput(text),
+                inputValidation: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'יש להזין מייל';
+                  } else if (!isEmailValid(text)) {
+                    return "מייל לא בפורמט הנכון";
+                  }
+                  return null;
+                },
               ),
               SizedBox(),
-              MainButton2(
-                text: "יצירת סיסמה חדשה",
-                onPress: () async {
-                  final String email = emailController.text;
-                  if (email.isNotEmpty && isEmailValid(email)) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SentMailPage(email)));
-                  } else {
-                    Fluttertoast.showToast(msg: "אנא כתבי את המייל בשדה למעלה");
-                  }
-                },
+              Center(
+                child: MainButton2(
+                  text: "יצירת סיסמה חדשה",
+                  onPress: () async {
+                    final String email = emailController.text;
+                    if (email.isNotEmpty && isEmailValid(email)) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SentMailPage(email)));
+                    } else {
+                      Fluttertoast.showToast(
+                          msg: "אנא כתבי את המייל בשדה למעלה");
+                    }
+                  },
+                ),
               ),
               Spacer(),
               Center(
-                child: Container(
-                  margin: EdgeInsets.only(bottom: 5.sh),
-                  child: Image.asset(
-                    'assets/img/logo.png',
-                    scale: 2,
-                    alignment: Alignment.bottomCenter,
-                  ),
+                child: Image.asset(
+                  'assets/img/logo.png',
+                  scale: 2,
+                  alignment: Alignment.bottomCenter,
                 ),
               )
             ],
@@ -92,14 +99,5 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         color: Color.fromRGBO(178, 39, 89, 1),
       ),
     );
-  }
-
-  String? validateEmailInput(String? email) {
-    if (email == null || email.isEmpty) {
-      return 'יש להזין מייל';
-    } else if (!isEmailValid(email)) {
-      return "מייל לא בפורמט הנכון";
-    }
-    return null;
   }
 }
