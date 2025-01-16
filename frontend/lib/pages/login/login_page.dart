@@ -179,10 +179,4 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
-
-  //TODO: delete
-  Widget _signOutButton() {
-    return ElevatedButton(
-        onPressed: () => _auth.quickSignout(), child: const Text('signOUt'));
-  }
 }
