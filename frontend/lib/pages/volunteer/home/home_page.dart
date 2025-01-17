@@ -55,12 +55,17 @@ class _HomePageState extends State<HomePage> {
                   child: FixedColumn(
                     children: [
                       HomePageTitle(displayName: userProvider.userName),
-                      Transform.translate(
-                        offset: Offset(0, -10.sh),
-                        child: _nearestVisit(snapshot.data![1] as List<Visit>),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10.sw),
+                        alignment: Alignment.center,
+                        child: Transform.translate(
+                          offset: Offset(0, -10.sh),
+                          child:
+                              _nearestVisit(snapshot.data![1] as List<Visit>),
+                        ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        padding: EdgeInsets.symmetric(horizontal: 10.sw),
                         child: FixedColumn(
                           children: [
                             _addVisitButton(),
@@ -87,21 +92,18 @@ class _HomePageState extends State<HomePage> {
       return Text('no upcoming visits');
     }
 
-    return Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 4.w),
-        child: FixedColumn(
-          children: [
-            Transform.translate(
-              offset: const Offset(10, 0),
-              child: HomeLabelText(text: 'הביקור הקרוב'),
-            ),
-            VisitCard(
-              showEditButton: false,
-              visit: visits[0],
-            )
-          ],
-        ));
+    return FixedColumn(
+      children: [
+        Transform.translate(
+          offset: const Offset(10, 0),
+          child: HomeLabelText(text: 'הביקור הקרוב'),
+        ),
+        VisitCard(
+          showEditButton: false,
+          visit: visits[0],
+        )
+      ],
+    );
   }
 
   Widget _addVisitButton() {

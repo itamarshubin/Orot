@@ -28,40 +28,38 @@ class _DistrictListState extends State<DistrictList> {
           );
         } else {
           return Scaffold(
-              body: Container(
-            child: Column(children: [
-              _title(context),
-              SizedBox(
-                height: 20,
-              ),
+              body: Column(children: [
+            _title(context),
+            SizedBox(
+              height: 20,
+            ),
 
-              //TODO: add search bar
-              // Container(
-              //     margin: const EdgeInsets.only(left: 100),
-              //     width: 250,
-              //     child: TextField(
-              //         controller: controller,
-              //         textDirection: TextDirection.rtl,
-              //         decoration: InputDecoration(
-              //           hintTextDirection: TextDirection.rtl,
-              //           hintText: "חיפוש שם",
-              //           border: OutlineInputBorder(
-              //             borderRadius: BorderRadius.circular(30.0),
-              //           ),
-              //         ))),
-              Expanded(
-                  child: (snapshot.data?.isEmpty ?? true)
-                      ? Text('no data - districts')
-                      : ListView.builder(
-                          padding: const EdgeInsets.only(top: 10),
-                          itemCount: snapshot.data?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            return DistrictCube(
-                              district: snapshot.data![index],
-                            );
-                          }))
-            ]),
-          ));
+            //TODO: add search bar
+            // Container(
+            //     margin: const EdgeInsets.only(left: 100),
+            //     width: 250,
+            //     child: TextField(
+            //         controller: controller,
+            //         textDirection: TextDirection.rtl,
+            //         decoration: InputDecoration(
+            //           hintTextDirection: TextDirection.rtl,
+            //           hintText: "חיפוש שם",
+            //           border: OutlineInputBorder(
+            //             borderRadius: BorderRadius.circular(30.0),
+            //           ),
+            //         ))),
+            Expanded(
+                child: (snapshot.data?.isEmpty ?? true)
+                    ? Text('no data - districts')
+                    : ListView.builder(
+                        padding: const EdgeInsets.only(top: 10),
+                        itemCount: snapshot.data?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return DistrictCube(
+                            district: snapshot.data![index],
+                          );
+                        }))
+          ]));
         }
       },
     );
@@ -94,12 +92,12 @@ Widget _title(BuildContext context) {
       Container(
         height: pageHeight * 0.1,
         alignment: Alignment.center,
-        //TODO: get the real district
         child: Text("מחוזות",
             style: GoogleFonts.openSans(
-                fontSize: 37,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF205273))),
+              fontSize: 37,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF205273),
+            )),
       )
     ],
   );
