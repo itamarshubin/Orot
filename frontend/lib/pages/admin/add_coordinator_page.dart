@@ -19,7 +19,7 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
-  bool createCoordinatorFamilyDisablementStatus = false;
+  bool createCoordinatorDisablementStatus = false;
 
   List<District> _districts = [District(id: '0', name: 'loading...')];
   String _selectedDistrictId = '0';
@@ -95,13 +95,13 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
     return MainButton2(
         text: 'יצירת רכזת',
         onPress: () async {
-          setState(() => createCoordinatorFamilyDisablementStatus = true);
+          setState(() => createCoordinatorDisablementStatus = true);
           await AdminService().createCoordinator(
               email: _emailController.text,
               password: _passwordController.text,
               name: _nameController.text,
               districtId: _selectedDistrictId);
-          setState(() => createCoordinatorFamilyDisablementStatus = false);
+          setState(() => createCoordinatorDisablementStatus = false);
         });
   }
 }
