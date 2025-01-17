@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/components/centered_title.dart';
 import 'package:orot/components/field_input.dart';
 import 'package:orot/components/fixed_column.dart';
 import 'package:orot/components/main_button_v2.dart';
@@ -33,64 +33,51 @@ class _AddFamilyPageState extends State<AddFamilyPage> {
     final titleStyle = const TextStyle(
       color: Colors.black,
       fontWeight: FontWeight.w400,
-      fontSize: 20,
+      fontSize: 18,
     );
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20.sw,
-          vertical: 10.sh,
-        ),
-        child: FixedColumn(
-          spacing: 5.sh,
-          children: [
-            BackToAdminPage(),
-            _title(),
-            FieldInput(
-              textEditingController: _familyNameController,
-              inputTitle: "שם",
-              inputTitleStyle: titleStyle,
-            ),
-            FieldInput(
-              textEditingController: _addressController,
-              inputTitle: "כתובת",
-              inputTitleStyle: titleStyle,
-            ),
-            FieldInput(
-              textEditingController: _contactController,
-              inputTitle: 'איש קשר  (מס טלפון)',
-              inputTitleStyle: titleStyle,
-            ),
-            DistrictsDropdown(
-              districts: _districts,
-              selectedDistrictId: _selectedDistrictId,
-              onSelectedIdChange: _updateSelectedDistrict,
-              onInit: _initDistricts,
-            ),
-            _createFamily(),
-          ],
-        ),
-      ),
-    ));
-  }
-
-  Widget _title() {
-    return Container(
-      alignment: Alignment.center,
-      child: Text(
-        'הוספת משפחה',
-        style: GoogleFonts.openSans(
-          color: Colors.black,
-          fontWeight: FontWeight.w400,
-          fontSize: 40,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.sw,
+            vertical: 10.sh,
+          ),
+          child: FixedColumn(
+            spacing: 5.sh,
+            children: [
+              BackToAdminPage(),
+              CenteredTitle(text: 'הוספת משפחה'),
+              FieldInput(
+                textEditingController: _familyNameController,
+                inputTitle: "שם",
+                inputTitleStyle: titleStyle,
+              ),
+              FieldInput(
+                textEditingController: _addressController,
+                inputTitle: "כתובת",
+                inputTitleStyle: titleStyle,
+              ),
+              FieldInput(
+                textEditingController: _contactController,
+                inputTitle: 'איש קשר  (מס טלפון)',
+                inputTitleStyle: titleStyle,
+              ),
+              DistrictsDropdown(
+                districts: _districts,
+                selectedDistrictId: _selectedDistrictId,
+                onSelectedIdChange: _updateSelectedDistrict,
+                onInit: _initDistricts,
+              ),
+              _createFamily(),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Future<void> _initDistricts() async {
-    // use future builder to reduce wait
+    // todo: use future builder to reduce wait
     try {
       final List<District> districts = await AdminService().getDistricts();
       setState(() {

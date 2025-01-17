@@ -38,7 +38,7 @@ class _AddDistrictPageState extends State<AddDistrictPage> {
             inputTitleStyle: GoogleFonts.openSans(
               color: Colors.black,
               fontWeight: FontWeight.w400,
-              fontSize: 20,
+              fontSize: 18,
             ),
             inputValidation: (text) {
               if (text == null || text.isEmpty) {

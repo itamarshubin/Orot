@@ -6,6 +6,7 @@ import 'package:orot/pages/admin/add_family_page.dart';
 import 'package:orot/pages/admin/add_volunteer_page.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class AdminPage extends StatelessWidget {
   const AdminPage({super.key});
@@ -18,7 +19,7 @@ class AdminPage extends StatelessWidget {
           margin: EdgeInsets.only(top: 50),
           padding: EdgeInsets.symmetric(horizontal: 30),
           child: Column(
-            spacing: 20,
+            spacing: 5.sh,
             children: [
               if (userProvider.userPermission == UserPermission.admin)
                 _addEntityButton(context, 'הוספת משפחה', AddFamilyPage()),

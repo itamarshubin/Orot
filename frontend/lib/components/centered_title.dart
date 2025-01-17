@@ -20,7 +20,7 @@ class CenteredTitle extends StatelessWidget {
         style: GoogleFonts.openSans(
           color: Colors.black,
           fontWeight: FontWeight.w400,
-          fontSize: 40,
+          fontSize: 30,
         ),
       ),
     );
