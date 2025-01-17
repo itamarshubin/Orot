@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:orot/models/family.dart';
 import 'package:orot/models/visit.dart';
 import 'package:orot/services/volunteer_service.dart';
 

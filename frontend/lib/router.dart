@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:orot/pages/admin/admin_page.dart';
 import 'package:orot/pages/admin/navigation.dart';
 import 'package:orot/pages/coordinator/navigation.dart';
-import 'package:orot/pages/coordinator/volunteers_list/volunteers_list.dart';
 import 'package:orot/pages/login/login_page.dart';
 import 'package:orot/pages/profile/profile_page.dart';
 import 'package:orot/pages/volunteer/home/home_page.dart';

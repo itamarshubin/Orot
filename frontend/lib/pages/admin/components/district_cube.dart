@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/models/district.dart';
-import 'package:orot/models/user.dart';
 import 'package:orot/pages/coordinator/volunteers_list/volunteers_list.dart';
 
 class DistrictCube extends StatelessWidget {
   final District district;
+
   const DistrictCube({super.key, required this.district});
 
   @override

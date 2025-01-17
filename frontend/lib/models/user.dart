@@ -6,8 +6,6 @@ import 'package:orot/pages/admin/navigation.dart';
 import 'package:orot/pages/coordinator/navigation.dart';
 import 'package:orot/pages/volunteer/navigation.dart';
 
-import '../pages/admin/admin_page.dart';
-import '../pages/coordinator/volunteers_list/volunteers_list.dart';
 import 'district.dart';
 
 part 'user.g.dart';

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orot/models/user.dart';
 import 'package:orot/pages/admin/components/district_cube.dart';
-import 'package:orot/pages/coordinator/volunteer_data.dart';
 import 'package:orot/services/admin_service.dart';
-import 'package:orot/services/coordinator_service.dart';
 
 class DistrictList extends StatefulWidget {
   const DistrictList({super.key});
