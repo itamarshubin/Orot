@@ -11,6 +11,7 @@ import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/admin_service.dart';
 import 'package:orot/services/coordinator_service.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class AddVolunteerPage extends StatefulWidget {
   const AddVolunteerPage({super.key});
@@ -68,10 +69,11 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
             setState(() {
               _families = [
                 Family(
-                    id: '0',
-                    name: 'error loading families',
-                    address: "add",
-                    contact: "con")
+                  id: '0',
+                  name: 'error loading families',
+                  address: "add",
+                  contact: "con",
+                )
               ];
             });
           }
@@ -87,17 +89,13 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
         child: Container(
           padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
           child: Column(
-            //TODO: spacing: , consider using this instead of SizeBox
+            spacing: 5.sh,
             children: [
               BackToAdminPage(),
               _title(),
-              const SizedBox(height: 30),
               _emailAddress(),
-              const SizedBox(height: 30),
               _password(),
-              const SizedBox(height: 30),
               _name(),
-              const SizedBox(height: 30),
               if (userProvider.userPermission == UserPermission.admin)
                 DistrictsDropdown(
                   districts: _districts,
@@ -107,8 +105,6 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
                 )
               else
                 _district(userProvider.user?.district),
-              const SizedBox(height: 30),
-              //TODO: fix this shit, its bad.
               //TODO: add loading stuff until this dropdown shown
               if (_selectedFamilyId != "1")
                 FamiliesDropdown(
@@ -117,9 +113,6 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
                   onSelectedFamilyChange: _updateSelectedFamily,
                 ),
               _createVolunteer(),
-              SizedBox(
-                height: 30,
-              )
             ],
           ),
         ),
@@ -133,10 +126,10 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
       child: Text(
           'מחוז: ${district?.name ?? 'שגיאה - יש לנסות לרענן את האפליקצייה'}',
           style: GoogleFonts.openSans(
-              textStyle: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 20))),
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+            fontSize: 20,
+          )),
     );
   }
 
