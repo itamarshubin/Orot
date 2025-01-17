@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
   Widget _nearestVisit(List<Visit> visits) {
     if (visits.isEmpty) {
       //TODO: make Widget for that (maybe some image that ofir can give us)
-      return Text('no upcoming visits');
+      return Text('No upcoming visits 🥺');
     }
 
     return FixedColumn(
