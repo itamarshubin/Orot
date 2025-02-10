@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/pages/profile/update_password.dart';
 import 'package:orot/pages/volunteer/new_visit/field.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/auth_service.dart';
@@ -46,6 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       _district(userProvider.user?.district?.name ?? ''),
                       _familyName(userProvider.user?.family?.name ?? ''),
                       _familyContact(userProvider.user?.family?.contact ?? ''),
+                      _changePasswordButton(),
                       _signOutButton()
                     ],
                   ),
@@ -114,6 +116,15 @@ class _ProfilePageState extends State<ProfilePage> {
             onPressed: () => AuthService().signout(context: context),
             child: const Text('התנתקות')));
   }
+
+  Widget _changePasswordButton() {
+    return Container(
+        margin: EdgeInsets.only(bottom: 20),
+        child: ElevatedButton(
+            onPressed: () => Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => UpdatePassword())),
+            child: const Text('שינוי סיסמה')));
+  } 
 
   Widget _username() {
     return Container(

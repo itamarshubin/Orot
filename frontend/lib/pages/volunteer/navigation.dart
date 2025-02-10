@@ -4,20 +4,27 @@ import 'package:orot/pages/volunteer/home/home_page.dart';
 import 'package:orot/pages/volunteer/visits_history/visits_history_page.dart';
 
 class VolunteerNavigation extends StatefulWidget {
-  const VolunteerNavigation({super.key});
+  final int initialIndex;
+  const VolunteerNavigation({super.key, this.initialIndex = 2});
 
   @override
   State<VolunteerNavigation> createState() => _VolunteerNavigationState();
 }
 
 class _VolunteerNavigationState extends State<VolunteerNavigation> {
+  late int currentIndex;
   late Widget currentChild;
-  int currentIndex = 2;
   List<Widget> pages = [
     const ProfilePage(),
     const VisitsHistoryPage(),
     const HomePage(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.initialIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
