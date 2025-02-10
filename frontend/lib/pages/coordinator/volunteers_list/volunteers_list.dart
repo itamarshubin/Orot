@@ -79,7 +79,6 @@ class _VolunteersListState extends State<VolunteersList> {
 }
 
 Widget _title(BuildContext context, User? volunteer, {String? districtId}) {
-  print('volunteer: ${volunteer?.permission}');
   final double pageHeight = MediaQuery.of(context).size.height;
   return Stack(
     children: [

@@ -44,19 +44,22 @@ class _VolunteerDataState extends State<VolunteerData> {
                   SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _nextVisitDate(snapshot.data?.last.visitDate != null
-                            ? DateFormat('dd.MM').format(
-                                snapshot.data?.last.visitDate as DateTime)
-                            : "something"),
-                        _visitsCount(snapshot.data?.length ?? 0)
-                      ],
-                    ),
-                  ),
+                  snapshot.data?.isNotEmpty ?? false
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _nextVisitDate(snapshot.data?.last.visitDate !=
+                                      null
+                                  ? DateFormat('dd.MM').format(
+                                      snapshot.data?.last.visitDate as DateTime)
+                                  : "something"),
+                              _visitsCount(snapshot.data?.length ?? 0)
+                            ],
+                          ),
+                        )
+                      : Text('אין ביקורים עתידיים'),
                   SizedBox(
                     height: 20,
                   ),
@@ -304,7 +307,10 @@ class _VolunteerDataState extends State<VolunteerData> {
               width: MediaQuery.of(context).size.width * 0.3,
               height: pageHeight * 0.3),
         ),
-        BackToMainPage(userPermission: widget.volunteer.permission),
+        BackToMainPage(
+            userPermission: widget.isAdmin
+                ? UserPermission.admin
+                : UserPermission.coordinator),
       ],
     );
   }
