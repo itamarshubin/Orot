@@ -29,7 +29,7 @@ class _AddDistrictPageState extends State<AddDistrictPage> {
       child: Column(
         spacing: 5.sh,
         children: [
-          BackToAdminPage(),
+          BackToMainPage(),
           _title(),
           FieldInput(
             textEditingController: _nameController,

@@ -45,7 +45,7 @@ class _AddFamilyPageState extends State<AddFamilyPage> {
           child: FixedColumn(
             spacing: 5.sh,
             children: [
-              BackToAdminPage(),
+              BackToMainPage(),
               CenteredTitle(text: 'הוספת משפחה'),
               FieldInput(
                 textEditingController: _familyNameController,

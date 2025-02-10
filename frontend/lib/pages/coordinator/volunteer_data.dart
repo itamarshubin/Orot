@@ -304,7 +304,7 @@ class _VolunteerDataState extends State<VolunteerData> {
               width: MediaQuery.of(context).size.width * 0.3,
               height: pageHeight * 0.3),
         ),
-        BackToAdminPage(
+        BackToMainPage(
           isAdmin: widget.isAdmin,
         ),
       ],

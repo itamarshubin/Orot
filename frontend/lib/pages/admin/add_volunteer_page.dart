@@ -105,7 +105,7 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
           child: FixedColumn(
             spacing: 5.sh,
             children: [
-              BackToAdminPage(),
+              BackToMainPage(),
               CenteredTitle(text: "הוספת מתנדבת"),
               FieldInput(
                 inputTitle: 'מייל',

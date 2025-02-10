@@ -5,10 +5,10 @@ import 'package:orot/pages/admin/navigation.dart';
 import 'package:orot/pages/coordinator/navigation.dart';
 import 'package:sizer/sizer.dart';
 
-class BackToAdminPage extends StatelessWidget {
+class BackToMainPage extends StatelessWidget {
   final bool isAdmin;
 
-  const BackToAdminPage({super.key, this.isAdmin = false});
+  const BackToMainPage({super.key, this.isAdmin = false});
 
   @override
   Widget build(BuildContext context) {

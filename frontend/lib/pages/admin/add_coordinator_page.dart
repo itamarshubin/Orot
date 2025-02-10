@@ -47,7 +47,7 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
         child: Column(
           spacing: 5.sh,
           children: [
-            BackToAdminPage(),
+            BackToMainPage(),
             CenteredTitle(text: 'הוספת רכזת'),
             FieldInput(
               textEditingController: _emailController,

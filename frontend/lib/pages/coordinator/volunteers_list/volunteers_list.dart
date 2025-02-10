@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/components/fixed_column.dart';
 import 'package:orot/models/user.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/pages/coordinator/volunteers_list/volunteer_row.dart';
@@ -36,12 +37,10 @@ class _VolunteersListState extends State<VolunteersList> {
             );
           } else {
             return Scaffold(
-                body: Column(children: [
+                body: FixedColumn(children: [
               if (snapshot.data?.isNotEmpty ?? false)
                 _title(context, snapshot.data?[0], id: widget.id),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
 
               //TODO: add search bar
               // Container(
@@ -101,14 +100,16 @@ Widget _title(BuildContext context, User? volunteer, {String? id}) {
       Container(
         height: pageHeight * 0.1,
         alignment: Alignment.center,
-        child: Text("מתנדבות מחוז ${volunteer?.district?.name ?? 'לא ידוע'}",
-            style: GoogleFonts.openSans(
-              fontSize: 37,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF205273),
-            )),
+        child: Text(
+          "מתנדבות מחוז ${volunteer?.district?.name ?? 'לא ידוע'}",
+          style: GoogleFonts.openSans(
+            fontSize: 37,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFF205273),
+          ),
+        ),
       ),
-      if (id != null) BackToAdminPage(isAdmin: true),
+      if (id != null) BackToMainPage(isAdmin: true),
     ],
   );
 }
