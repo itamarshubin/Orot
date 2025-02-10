@@ -68,6 +68,21 @@ class AuthService {
     await FirebaseAuth.instance.signOut();
   }
 
+  Future<void> updatePassword(String password) async {
+    try {
+      await FirebaseAuth.instance.currentUser!.updatePassword(password);
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(
+        msg: e.message ?? 'An error occurred',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: Colors.black54,
+        textColor: Colors.white,
+        fontSize: 14.0,
+      );
+    }
+  }
+
   Future<String> resetPasswordWithEmail(String email) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
