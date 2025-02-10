@@ -4,11 +4,14 @@ import 'package:orot/models/user.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/pages/coordinator/volunteers_list/volunteer_row.dart';
 import 'package:orot/services/coordinator_service.dart';
+import 'package:provider/provider.dart';
+
+import '../../../providers/user_provider.dart';
 
 class VolunteersList extends StatefulWidget {
   final String? id;
 
-  const VolunteersList({super.key, required this.id});
+  const VolunteersList({super.key, this.id});
 
   @override
   State<VolunteersList> createState() => _VolunteersListState();
@@ -19,55 +22,58 @@ class _VolunteersListState extends State<VolunteersList> {
 
   @override
   Widget build(BuildContext context) {
-    print('widgetId ${widget.id}');
-    return FutureBuilder(
-      future: CoordinatorService().getVolunteers(id: widget.id),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.error != null) {
-          return Center(
-            child: Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'),
-          );
-        } else {
-          return Scaffold(
-              body: Column(children: [
-            if (snapshot.data?.isNotEmpty ?? false)
-              _title(context, snapshot.data?[0], id: widget.id),
-            SizedBox(
-              height: 20,
-            ),
+    return Consumer<UserProvider>(builder: (context, userProvider, child) {
+      var districtId = userProvider.user?.district?.id;
+      return FutureBuilder(
+        future: CoordinatorService().getVolunteers(id: widget.id ?? districtId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.error != null) {
+            return Center(
+              child: Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'),
+            );
+          } else {
+            return Scaffold(
+                body: Column(children: [
+              if (snapshot.data?.isNotEmpty ?? false)
+                _title(context, snapshot.data?[0], id: widget.id),
+              SizedBox(
+                height: 20,
+              ),
 
-            //TODO: add search bar
-            // Container(
-            //     margin: const EdgeInsets.only(left: 100),
-            //     width: 250,
-            //     child: TextField(
-            //         controller: controller,
-            //         textDirection: TextDirection.rtl,
-            //         decoration: InputDecoration(
-            //           hintTextDirection: TextDirection.rtl,
-            //           hintText: "חיפוש שם",
-            //           border: OutlineInputBorder(
-            //             borderRadius: BorderRadius.circular(30.0),
-            //           ),
-            //         ))),
-            Expanded(
-                child: (snapshot.data?.isEmpty ?? true)
-                    ? Text('no data - volunteers')
-                    : ListView.builder(
-                        padding: const EdgeInsets.only(top: 10),
-                        itemCount: snapshot.data?.length ?? 0,
-                        itemBuilder: (_, index) {
-                          return VolunteerCube(
-                              volunteer: snapshot.data![index], id: widget.id);
-                        }))
-          ]));
-        }
-      },
-    );
+              //TODO: add search bar
+              // Container(
+              //     margin: const EdgeInsets.only(left: 100),
+              //     width: 250,
+              //     child: TextField(
+              //         controller: controller,
+              //         textDirection: TextDirection.rtl,
+              //         decoration: InputDecoration(
+              //           hintTextDirection: TextDirection.rtl,
+              //           hintText: "חיפוש שם",
+              //           border: OutlineInputBorder(
+              //             borderRadius: BorderRadius.circular(30.0),
+              //           ),
+              //         ))),
+              Expanded(
+                  child: (snapshot.data?.isEmpty ?? true)
+                      ? Text('no data - volunteers')
+                      : ListView.builder(
+                          padding: const EdgeInsets.only(top: 10),
+                          itemCount: snapshot.data?.length ?? 0,
+                          itemBuilder: (_, index) {
+                            return VolunteerCube(
+                                volunteer: snapshot.data![index],
+                                id: widget.id);
+                          }))
+            ]));
+          }
+        },
+      );
+    });
   }
 }
 
