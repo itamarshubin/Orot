@@ -16,7 +16,7 @@ class DistrictCube extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (BuildContext context) => VolunteersList(
-                      id: district.id,
+                      districtId: district.id,
                     )));
       },
       child: Container(

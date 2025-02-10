@@ -9,9 +9,9 @@ import 'package:orot/services/coordinator_service.dart';
 import 'package:provider/provider.dart';
 
 class VolunteersList extends StatefulWidget {
-  final String? id;
+  final String? districtId;
 
-  const VolunteersList({super.key, this.id});
+  const VolunteersList({super.key, this.districtId});
 
   @override
   State<VolunteersList> createState() => _VolunteersListState();
@@ -25,7 +25,8 @@ class _VolunteersListState extends State<VolunteersList> {
     return Consumer<UserProvider>(builder: (context, userProvider, child) {
       var districtId = userProvider.user?.district?.id;
       return FutureBuilder(
-        future: CoordinatorService().getVolunteers(id: widget.id ?? districtId),
+        future: CoordinatorService()
+            .getVolunteers(id: widget.districtId ?? districtId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -39,7 +40,8 @@ class _VolunteersListState extends State<VolunteersList> {
             return Scaffold(
                 body: FixedColumn(children: [
               if (snapshot.data?.isNotEmpty ?? false)
-                _title(context, snapshot.data?[0], id: widget.id),
+                _title(context, snapshot.data?[0],
+                    districtId: widget.districtId),
               SizedBox(height: 20),
 
               //TODO: add search bar
@@ -64,7 +66,8 @@ class _VolunteersListState extends State<VolunteersList> {
                         itemCount: snapshot.data?.length ?? 0,
                         itemBuilder: (_, index) {
                           return VolunteerCube(
-                              volunteer: snapshot.data![index], id: widget.id);
+                              volunteer: snapshot.data![index],
+                              id: widget.districtId);
                         }),
               )
             ]));
@@ -75,7 +78,8 @@ class _VolunteersListState extends State<VolunteersList> {
   }
 }
 
-Widget _title(BuildContext context, User? volunteer, {String? id}) {
+Widget _title(BuildContext context, User? volunteer, {String? districtId}) {
+  print('volunteer: ${volunteer?.permission}');
   final double pageHeight = MediaQuery.of(context).size.height;
   return Stack(
     children: [
@@ -109,7 +113,8 @@ Widget _title(BuildContext context, User? volunteer, {String? id}) {
           ),
         ),
       ),
-      if (id != null) BackToMainPage(userPermission: volunteer?.permission),
+      if (districtId != null)
+        BackToMainPage(userPermission: UserPermission.admin),
     ],
   );
 }
