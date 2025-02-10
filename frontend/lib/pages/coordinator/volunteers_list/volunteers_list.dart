@@ -41,7 +41,9 @@ class _VolunteersListState extends State<VolunteersList> {
                 body: FixedColumn(children: [
               if (snapshot.data?.isNotEmpty ?? false)
                 _title(context, snapshot.data?[0],
-                    districtId: widget.districtId),
+                    districtId: widget.districtId)
+              else
+                BackToMainPage(userPermission: UserPermission.admin),
               SizedBox(height: 20),
 
               //TODO: add search bar
@@ -60,7 +62,7 @@ class _VolunteersListState extends State<VolunteersList> {
               //         ))),
               Expanded(
                 child: (snapshot.data?.isEmpty ?? true)
-                    ? Text('no data - volunteers')
+                    ? Text('אין מתנדבות במחוז זה')
                     : ListView.builder(
                         padding: const EdgeInsets.only(top: 10),
                         itemCount: snapshot.data?.length ?? 0,
@@ -113,7 +115,7 @@ Widget _title(BuildContext context, User? volunteer, {String? districtId}) {
         ),
       ),
       if (districtId != null)
-        BackToMainPage(userPermission: UserPermission.admin),
+        BackToMainPage(userPermission: UserPermission.admin)
     ],
   );
 }

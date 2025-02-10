@@ -36,7 +36,7 @@ Future<void> main() async {
     ],
     child: OrotApp(),
   ));
-}                                                                                                                                   
+}
 
 class OrotApp extends StatelessWidget {
   const OrotApp({super.key});
