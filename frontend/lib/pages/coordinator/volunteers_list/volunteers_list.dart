@@ -3,10 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/models/user.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/pages/coordinator/volunteers_list/volunteer_row.dart';
+import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/coordinator_service.dart';
 import 'package:provider/provider.dart';
-
-import '../../../providers/user_provider.dart';
 
 class VolunteersList extends StatefulWidget {
   final String? id;
