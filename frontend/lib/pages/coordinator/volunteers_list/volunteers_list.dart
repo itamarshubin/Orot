@@ -8,7 +8,7 @@ import 'package:orot/services/coordinator_service.dart';
 class VolunteersList extends StatefulWidget {
   final String? id;
 
-  const VolunteersList({super.key, this.id});
+  const VolunteersList({super.key, required this.id});
 
   @override
   State<VolunteersList> createState() => _VolunteersListState();
