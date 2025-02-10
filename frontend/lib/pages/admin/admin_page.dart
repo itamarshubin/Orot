@@ -31,7 +31,7 @@ class AdminPage extends StatelessWidget {
                 _addEntityButton(
                     context, 'הוספת מחוז', AddDistrictPage(userProvider)),
               _addEntityButton(
-                  context, 'הוספת משתמש', AddVolunteerPage(userProvider)),
+                  context, 'הוספת מתנדבת', AddVolunteerPage(userProvider)),
             ],
           ),
         ),
