@@ -58,16 +58,16 @@ class _VolunteersListState extends State<VolunteersList> {
               //           ),
               //         ))),
               Expanded(
-                  child: (snapshot.data?.isEmpty ?? true)
-                      ? Text('no data - volunteers')
-                      : ListView.builder(
-                          padding: const EdgeInsets.only(top: 10),
-                          itemCount: snapshot.data?.length ?? 0,
-                          itemBuilder: (_, index) {
-                            return VolunteerCube(
-                                volunteer: snapshot.data![index],
-                                id: widget.id);
-                          }))
+                child: (snapshot.data?.isEmpty ?? true)
+                    ? Text('no data - volunteers')
+                    : ListView.builder(
+                        padding: const EdgeInsets.only(top: 10),
+                        itemCount: snapshot.data?.length ?? 0,
+                        itemBuilder: (_, index) {
+                          return VolunteerCube(
+                              volunteer: snapshot.data![index], id: widget.id);
+                        }),
+              )
             ]));
           }
         },
@@ -88,8 +88,8 @@ Widget _title(BuildContext context, User? volunteer, {String? id}) {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFFFFC3C3), // Corrected first color
-              Color(0xFFFECED6), // Corrected second color
+              Color(0xFFFFC3C3),
+              Color(0xFFFECED6),
             ],
           ),
           borderRadius: BorderRadius.only(
