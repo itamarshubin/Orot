@@ -18,7 +18,9 @@ import 'package:sizer/sizer.dart';
 import '../../components/field_input.dart';
 
 class AddVolunteerPage extends StatefulWidget {
-  const AddVolunteerPage({super.key});
+  final UserProvider userProvider;
+
+  const AddVolunteerPage(this.userProvider, {super.key});
 
   @override
   State<AddVolunteerPage> createState() => _AddVolunteerPageState();
@@ -105,7 +107,8 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
           child: FixedColumn(
             spacing: 5.sh,
             children: [
-              BackToMainPage(),
+              BackToMainPage(
+                  userPermission: widget.userProvider.userPermission),
               CenteredTitle(text: "הוספת מתנדבת"),
               FieldInput(
                 inputTitle: 'מייל',

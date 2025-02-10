@@ -4,11 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/field_input.dart';
 import 'package:orot/components/main_button_v2.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
+import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/admin_service.dart';
 import 'package:sizer/sizer.dart';
 
 class AddDistrictPage extends StatefulWidget {
-  const AddDistrictPage({super.key});
+  final UserProvider userProvider;
+
+  const AddDistrictPage(this.userProvider, {super.key});
 
   @override
   State<AddDistrictPage> createState() => _AddDistrictPageState();
@@ -29,7 +32,7 @@ class _AddDistrictPageState extends State<AddDistrictPage> {
       child: Column(
         spacing: 5.sh,
         children: [
-          BackToMainPage(),
+          BackToMainPage(userPermission: widget.userProvider.userPermission),
           _title(),
           FieldInput(
             textEditingController: _nameController,

@@ -22,12 +22,16 @@ class AdminPage extends StatelessWidget {
             spacing: 5.sh,
             children: [
               if (userProvider.userPermission == UserPermission.admin)
-                _addEntityButton(context, 'הוספת משפחה', AddFamilyPage()),
+                _addEntityButton(
+                    context, 'הוספת משפחה', AddFamilyPage(userProvider)),
               if (userProvider.userPermission == UserPermission.admin)
-                _addEntityButton(context, 'הוספת רכזת', AddCoordinatorPage()),
+                _addEntityButton(
+                    context, 'הוספת רכזת', AddCoordinatorPage(userProvider)),
               if (userProvider.userPermission == UserPermission.admin)
-                _addEntityButton(context, 'הוספת מחוז', AddDistrictPage()),
-              _addEntityButton(context, 'הוספת משתמש', AddVolunteerPage()),
+                _addEntityButton(
+                    context, 'הוספת מחוז', AddDistrictPage(userProvider)),
+              _addEntityButton(
+                  context, 'הוספת משתמש', AddVolunteerPage(userProvider)),
             ],
           ),
         ),

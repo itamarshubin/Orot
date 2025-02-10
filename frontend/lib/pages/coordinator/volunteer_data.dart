@@ -60,7 +60,7 @@ class _VolunteerDataState extends State<VolunteerData> {
                   SizedBox(
                     height: 20,
                   ),
-                  _moreDetails(widget.volunteer),
+                  _moreDetails(),
                 ],
               ),
             ),
@@ -136,7 +136,7 @@ class _VolunteerDataState extends State<VolunteerData> {
     );
   }
 
-  Widget _moreDetails(User volunteer) {
+  Widget _moreDetails() {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -179,7 +179,7 @@ class _VolunteerDataState extends State<VolunteerData> {
                         fontSize: 18),
                   ),
                   Text(
-                    '${volunteer.family?.name}',
+                    '${widget.volunteer.family?.name}',
                     style: GoogleFonts.openSans(
                         color: Color(0xff001228),
                         fontWeight: FontWeight.w400,
@@ -198,7 +198,7 @@ class _VolunteerDataState extends State<VolunteerData> {
                         fontSize: 18),
                   ),
                   Text(
-                    '${volunteer.district?.name}',
+                    '${widget.volunteer.district?.name}',
                     style: GoogleFonts.openSans(
                         color: Color(0xff001228),
                         fontWeight: FontWeight.w400,
@@ -224,7 +224,7 @@ class _VolunteerDataState extends State<VolunteerData> {
                       fontSize: 18),
                 ),
                 Text(
-                  '${volunteer.family?.contact}',
+                  '${widget.volunteer.family?.contact}',
                   style: GoogleFonts.openSans(
                       color: Color(0xff001228),
                       fontWeight: FontWeight.w400,
@@ -304,9 +304,7 @@ class _VolunteerDataState extends State<VolunteerData> {
               width: MediaQuery.of(context).size.width * 0.3,
               height: pageHeight * 0.3),
         ),
-        BackToMainPage(
-          isAdmin: widget.isAdmin,
-        ),
+        BackToMainPage(userPermission: widget.volunteer.permission),
       ],
     );
   }

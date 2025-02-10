@@ -6,11 +6,14 @@ import 'package:orot/components/main_button_v2.dart';
 import 'package:orot/models/district.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/pages/admin/components/districts_dropdown.dart';
+import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/admin_service.dart';
 import 'package:sizer/sizer.dart';
 
 class AddFamilyPage extends StatefulWidget {
-  const AddFamilyPage({super.key});
+  final UserProvider userProvider;
+
+  const AddFamilyPage(this.userProvider, {super.key});
 
   @override
   State<AddFamilyPage> createState() => _AddFamilyPageState();
@@ -45,7 +48,8 @@ class _AddFamilyPageState extends State<AddFamilyPage> {
           child: FixedColumn(
             spacing: 5.sh,
             children: [
-              BackToMainPage(),
+              BackToMainPage(
+                  userPermission: widget.userProvider.userPermission),
               CenteredTitle(text: 'הוספת משפחה'),
               FieldInput(
                 textEditingController: _familyNameController,

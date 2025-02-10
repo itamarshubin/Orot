@@ -5,11 +5,14 @@ import 'package:orot/components/main_button_v2.dart';
 import 'package:orot/models/district.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/pages/admin/components/districts_dropdown.dart';
+import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/admin_service.dart';
 import 'package:sizer/sizer.dart';
 
 class AddCoordinatorPage extends StatefulWidget {
-  const AddCoordinatorPage({super.key});
+  final UserProvider userProvider;
+
+  const AddCoordinatorPage(this.userProvider, {super.key});
 
   @override
   State<AddCoordinatorPage> createState() => _AddCoordinatorPageState();
@@ -47,7 +50,7 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
         child: Column(
           spacing: 5.sh,
           children: [
-            BackToMainPage(),
+            BackToMainPage(userPermission: widget.userProvider.userPermission),
             CenteredTitle(text: 'הוספת רכזת'),
             FieldInput(
               textEditingController: _emailController,

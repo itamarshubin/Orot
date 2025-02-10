@@ -109,7 +109,7 @@ Widget _title(BuildContext context, User? volunteer, {String? id}) {
           ),
         ),
       ),
-      if (id != null) BackToMainPage(isAdmin: true),
+      if (id != null) BackToMainPage(userPermission: volunteer?.permission),
     ],
   );
 }
