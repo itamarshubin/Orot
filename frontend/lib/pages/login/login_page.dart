@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/field_input.dart';
-import 'package:orot/components/main_button_v2.dart';
+import 'package:orot/components/main_button.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/auth_service.dart';
 import 'package:provider/provider.dart';
@@ -159,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _signInButton(BuildContext context, UserProvider userProvider) {
-    return MainButton2(
+    return MainButton(
       text: 'כניסה למערכת',
       disabled: isSignInButtonDisabled,
       onPress: () async {

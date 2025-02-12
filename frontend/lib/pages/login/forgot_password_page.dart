@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/app_top_style.dart';
 import 'package:orot/components/field_input.dart';
 import 'package:orot/components/fixed_column.dart';
-import 'package:orot/components/main_button_v2.dart';
+import 'package:orot/components/main_button.dart';
 import 'package:orot/pages/login/sent_mail_page.dart';
 import 'package:orot/utils/validate_email.dart';
 import 'package:sizer/sizer.dart';
@@ -57,7 +57,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ),
               SizedBox(),
               Center(
-                child: MainButton2(
+                child: MainButton(
                   text: "יצירת סיסמה חדשה",
                   onPress: () async {
                     final String email = emailController.text;

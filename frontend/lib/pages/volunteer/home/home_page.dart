@@ -16,7 +16,7 @@ import 'package:orot/services/volunteer_service.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../components/main_button_v2.dart';
+import '../../../components/main_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _addVisitButton() {
     return Center(
-      child: MainButton2(
+      child: MainButton(
         text: 'קביעת מפגש',
         onPress: () => {
           Navigator.pushReplacement(

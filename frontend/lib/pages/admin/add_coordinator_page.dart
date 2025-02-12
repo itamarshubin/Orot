@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orot/components/centered_title.dart';
 import 'package:orot/components/field_input.dart';
-import 'package:orot/components/main_button_v2.dart';
+import 'package:orot/components/main_button.dart';
 import 'package:orot/models/district.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/pages/admin/components/districts_dropdown.dart';
@@ -96,7 +96,7 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
   }
 
   Widget _createCoordinator() {
-    return MainButton2(
+    return MainButton(
         text: 'יצירת רכזת',
         onPress: () async {
           setState(() => createCoordinatorDisablementStatus = true);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/centered_title.dart';
 import 'package:orot/components/fixed_column.dart';
-import 'package:orot/components/main_button_v2.dart';
+import 'package:orot/components/main_button.dart';
 import 'package:orot/models/district.dart';
 import 'package:orot/models/family.dart';
 import 'package:orot/models/user.dart';
@@ -187,7 +187,7 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
   }
 
   Widget _createVolunteer() {
-    return MainButton2(
+    return MainButton(
         text: 'יצירת משתמש',
         disabled: createVolunteerDisablementStatus,
         onPress: () async {
