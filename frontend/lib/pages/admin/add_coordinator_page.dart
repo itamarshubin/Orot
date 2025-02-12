@@ -98,6 +98,7 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
   Widget _createCoordinator() {
     return MainButton(
         text: 'יצירת רכזת',
+        disabled: createCoordinatorDisablementStatus,
         onPress: () async {
           setState(() => createCoordinatorDisablementStatus = true);
           await AdminService().createCoordinator(
