@@ -61,6 +61,7 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
             FieldInput(
               textEditingController: _nameController,
               inputTitle: "שם",
+              textDirection: TextDirection.rtl,
               inputTitleStyle: titleStyle,
             ),
             FieldInput(

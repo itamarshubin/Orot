@@ -53,16 +53,19 @@ class _AddFamilyPageState extends State<AddFamilyPage> {
               CenteredTitle(text: 'הוספת משפחה'),
               FieldInput(
                 textEditingController: _familyNameController,
+                textDirection: TextDirection.rtl,
                 inputTitle: "שם",
                 inputTitleStyle: titleStyle,
               ),
               FieldInput(
                 textEditingController: _addressController,
+                textDirection: TextDirection.rtl,
                 inputTitle: "כתובת",
                 inputTitleStyle: titleStyle,
               ),
               FieldInput(
                 textEditingController: _contactController,
+                textDirection: TextDirection.rtl,
                 inputTitle: 'איש קשר  (מס טלפון)',
                 inputTitleStyle: titleStyle,
               ),

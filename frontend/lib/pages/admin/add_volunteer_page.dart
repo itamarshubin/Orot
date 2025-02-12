@@ -118,6 +118,7 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
               ),
               FieldInput(
                 inputTitle: 'שם',
+                textDirection: TextDirection.rtl,
                 textEditingController: _nameController,
                 inputTitleStyle: titleStyle,
               ),
