@@ -171,9 +171,13 @@ class _LoginPageState extends State<LoginPage> {
         await userProvider.getUserData();
         if (userProvider.user != null && context.mounted) {
           Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => userProvider.user!.getUserStartPage()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => userProvider.user!.getUserStartPage()),
+          ).whenComplete(() {
+            _emailController.clear();
+            _passwordController.clear();
+          });
         }
         setState(() => isSignInButtonDisabled = false);
       },
