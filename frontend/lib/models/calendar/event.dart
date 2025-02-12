@@ -13,7 +13,7 @@ class Event {
   String location; // location in string we will write the family's address
   List<EventAttended>? attendees; // list of visitors and family.
   String transparency; // can be changed to "transparent" as well
-  String visibility;
+  String visibility; // cab be changed to public, private, confidential
 
   Event({
     required this.start,
@@ -24,7 +24,7 @@ class Event {
     this.location = "בבית המשפחה",
     this.transparency = "opaque",
     this.visibility = "default",
-  }); // cab be changed to public, private, confidential
+  });
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
 
