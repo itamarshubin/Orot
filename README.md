@@ -1,7 +1,5 @@
 # Orot
 
-# orot
-
 A new Flutter project.
 
 ## Getting Started - Developer
