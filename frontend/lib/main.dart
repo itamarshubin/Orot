@@ -52,19 +52,23 @@ class OrotApp extends StatelessWidget {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 theme: ThemeData(fontFamily: 'Open Sans'),
-                home: snapshot.connectionState == ConnectionState.waiting
-                    ? Center(child: CircularProgressIndicator())
-                    : snapshot.error != null
-                        ? Center(
-                            child: Text(
-                                'Error: ${snapshot.error}\n${snapshot.stackTrace}'),
-                          )
-                        : snapshot.data == null
-                            ? LoginPage()
-                            : userProvider.user!.getUserStartPage(),
+                home: _displayPage(snapshot, userProvider),
               );
             });
           });
         });
+  }
+
+  Widget _displayPage(snapshot, userProvider) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return Center(child: CircularProgressIndicator());
+    } else if (snapshot.error != null) {
+      return Center(
+          child: Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'));
+    } else if (snapshot.data == null) {
+      return LoginPage();
+    } else {
+      return userProvider.user!.getUserStartPage();
+    }
   }
 }
