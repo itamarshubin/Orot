@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/components/centered_title.dart';
 import 'package:orot/components/field_input.dart';
 import 'package:orot/components/main_button_v2.dart';
 import 'package:orot/pages/admin/components/back_button.dart';
@@ -33,7 +34,7 @@ class _AddDistrictPageState extends State<AddDistrictPage> {
         spacing: 5.sh,
         children: [
           BackToMainPage(userPermission: widget.userProvider.userPermission),
-          _title(),
+          CenteredTitle(text: 'הוספת מחוז'),
           FieldInput(
             textEditingController: _nameController,
             inputTitle: 'שם מחוז',
@@ -55,21 +56,6 @@ class _AddDistrictPageState extends State<AddDistrictPage> {
         ],
       ),
     ));
-  }
-
-  Widget _title() {
-    return Container(
-      alignment: Alignment.center,
-      child: Text(
-        'הוספת מחוז',
-        textAlign: TextAlign.center,
-        style: GoogleFonts.openSans(
-          color: Colors.black,
-          fontWeight: FontWeight.w400,
-          fontSize: 30,
-        ),
-      ),
-    );
   }
 
   Widget _createDistrict() {
