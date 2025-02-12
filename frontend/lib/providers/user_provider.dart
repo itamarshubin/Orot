@@ -11,6 +11,7 @@ class UserProvider with ChangeNotifier {
   String? get userName => _user?.name;
 
   UserPermission? get userPermission => _user?.permission;
+
   final _auth = firebase_auth.FirebaseAuth.instance;
 
   Future<User?> getUserData() async {

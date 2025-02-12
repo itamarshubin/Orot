@@ -9,6 +9,7 @@ import 'package:sizer/sizer.dart';
 
 class UpdatePassword extends StatelessWidget {
   UpdatePassword({super.key});
+
   final _passwordController = TextEditingController();
 
   @override
@@ -35,7 +36,7 @@ class UpdatePassword extends StatelessWidget {
     return FieldInput(
         inputValidation: (text) {
           if (text != null && text.length < 6) {
-            return "סיסמה לא תקינה";
+            return "הסיסמה לא תקינה";
           }
           return null;
         },
