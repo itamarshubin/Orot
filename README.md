@@ -1,8 +1,10 @@
 <div align="center">
   <img src="frontend/assets/img/logo.png" alt="Orot Logo">
-</div>
-<div style="text-align: center;">This app project used for managing Orot project.
-You can find more about Orot project here.</div>
+</div>  
+
+
+<center>This app project used for managing Orot project.
+You can find more about Orot project here.</center>
 
 - [Orot Meuchadim](https://meuchadim.org.il/pages/project.php?id=8)
 - [Orot Facebook](https://www.facebook.com/people/%D7%90%D7%95%D7%A8%D7%95%D7%AA-%D7%A0%D7%A2%D7%A8%D7%95%D7%AA-%D7%9C%D7%9E%D7%A2%D7%9F-%D7%90%D7%9C%D7%9E%D7%A0%D7%95%D7%AA/61563429077737/?_rdr)
