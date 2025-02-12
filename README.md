@@ -1,4 +1,6 @@
-![](frontend/assets/img/logo.png)
+<div align="center">
+  <img src="frontend/assets/img/logo.png" alt="Orot Logo">
+</div>
 
 This app project used for managing Orot project.
 You can find more about Orot project here.
