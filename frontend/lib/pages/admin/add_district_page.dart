@@ -38,6 +38,7 @@ class _AddDistrictPageState extends State<AddDistrictPage> {
             textEditingController: _nameController,
             inputTitle: 'שם מחוז',
             autofocus: true,
+            textDirection: TextDirection.rtl,
             inputTitleStyle: GoogleFonts.openSans(
               color: Colors.black,
               fontWeight: FontWeight.w400,

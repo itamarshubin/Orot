@@ -10,6 +10,7 @@ class FieldInput extends StatefulWidget {
   final bool obscureText;
   final FormFieldValidator<String>? inputValidation;
   final bool autofocus;
+  final TextDirection textDirection;
 
   const FieldInput({
     required this.textEditingController,
@@ -20,6 +21,7 @@ class FieldInput extends StatefulWidget {
     this.obscureText = false,
     this.inputTitleStyle,
     this.autofocus = false,
+    this.textDirection = TextDirection.ltr,
     super.key,
   });
 
@@ -46,7 +48,7 @@ class _FieldInputState extends State<FieldInput> {
           child: TextFormField(
             autofocus: widget.autofocus,
             maxLines: 1,
-            textDirection: TextDirection.ltr,
+            textDirection: widget.textDirection,
             controller: widget.textEditingController,
             onEditingComplete: widget.onEditingCompleteFunction,
             textAlignVertical: TextAlignVertical.center,
