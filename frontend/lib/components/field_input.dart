@@ -6,11 +6,11 @@ class FieldInput extends StatefulWidget {
   final String inputTitle;
   final TextStyle? inputTitleStyle;
   final String? hintText;
-  final VoidCallback? onEditingCompleteFunction;
-  final bool obscureText;
-  final FormFieldValidator<String>? inputValidation;
   final bool autofocus;
-  final TextDirection textDirection;
+  final bool obscureText;
+  final VoidCallback? onEditingCompleteFunction;
+  final FormFieldValidator<String>? inputValidation;
+  final TextDirection? textDirection;
 
   const FieldInput({
     required this.textEditingController,
