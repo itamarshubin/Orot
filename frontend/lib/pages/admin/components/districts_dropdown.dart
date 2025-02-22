@@ -4,9 +4,9 @@ import 'package:orot/models/district.dart';
 
 class DistrictsDropdown extends StatefulWidget {
   ValueChanged<String?> onSelectedIdChange;
-  Function onInit;
   List<District> districts;
   String selectedDistrictId;
+  Function onInit;
 
   DistrictsDropdown(
       {super.key,

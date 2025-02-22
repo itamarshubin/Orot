@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/models/family.dart';
 
 class FamiliesDropdown extends StatefulWidget {
+  ValueChanged<String?> onSelectedFamilyChange;
   List<Family> families;
   String selectedFamilyId;
-  ValueChanged<String?> onSelectedFamilyChange;
 
   FamiliesDropdown(
       {super.key,
@@ -43,11 +43,11 @@ class _FamiliesDropdownState extends State<FamiliesDropdown> {
             onChanged: (Family? newValue) {
               widget.onSelectedFamilyChange(newValue?.id);
             },
-            items: widget.families
-                .map<DropdownMenuItem<Family>>((Family district) {
+            items:
+                widget.families.map<DropdownMenuItem<Family>>((Family family) {
               return DropdownMenuItem<Family>(
-                value: district,
-                child: Text(district.name),
+                value: family,
+                child: Text(family.name),
               );
             }).toList(),
           ),
