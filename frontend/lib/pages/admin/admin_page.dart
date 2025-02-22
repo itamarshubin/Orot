@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:orot/models/user.dart';
-import 'package:orot/pages/admin/add_coordinator_page.dart';
-import 'package:orot/pages/admin/add_district_page.dart';
-import 'package:orot/pages/admin/add_family_page.dart';
-import 'package:orot/pages/admin/add_volunteer_page.dart';
+import 'package:orot/pages/add_entities/add_coordinator_page.dart';
+import 'package:orot/pages/add_entities/add_district_page.dart';
+import 'package:orot/pages/add_entities/add_family_page.dart';
+import 'package:orot/pages/add_entities/add_volunteer_page.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
