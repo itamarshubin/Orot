@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orot/components/back_to_main_page_button.dart';
 import 'package:orot/components/fixed_column.dart';
 import 'package:orot/models/user.dart';
-import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/pages/coordinator/volunteers_list/volunteer_row.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/coordinator_service.dart';

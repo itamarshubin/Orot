@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:orot/components/back_to_main_page_button.dart';
 import 'package:orot/components/visit_card.dart';
 import 'package:orot/models/user.dart';
 import 'package:orot/models/visit.dart';
-import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/services/coordinator_service.dart';
 
 class VolunteerData extends StatefulWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:orot/components/back_to_main_page_button.dart';
 import 'package:orot/components/centered_title.dart';
 import 'package:orot/components/field_input.dart';
 import 'package:orot/components/fixed_column.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/models/district.dart';
-import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/pages/admin/components/districts_dropdown.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/admin_service.dart';
