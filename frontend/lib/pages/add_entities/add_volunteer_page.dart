@@ -5,11 +5,11 @@ import 'package:orot/components/centered_title.dart';
 import 'package:orot/components/dropdown.dart';
 import 'package:orot/components/field_input.dart';
 import 'package:orot/components/fixed_column.dart';
+import 'package:orot/components/future_handler.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/models/district.dart';
 import 'package:orot/models/family.dart';
 import 'package:orot/models/user.dart';
-import 'package:orot/pages/admin/components/families_dropdown.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/admin_service.dart';
 import 'package:orot/services/coordinator_service.dart';
@@ -29,176 +29,145 @@ class _AddVolunteerPageState extends State<AddVolunteerPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
-  bool createVolunteerDisablementStatus = false;
 
-  List<District> _districts = [District(id: '0', name: 'loading...')];
-  List<Family> _families = [
-    Family(id: '0', name: 'loading...', address: "add", contact: "con")
-  ];
-  String _selectedDistrictId = '0';
-  String _selectedFamilyId = '0';
+  late Future<List<District>> _districtsFuture;
+  Future<List<Family>>? _familiesFuture;
 
-  void _updateSelectedDistrict(String? districtId) {
-    setState(() {
-      _selectedDistrictId = districtId ?? "0";
-    });
-    _getFamilies(_selectedDistrictId);
+  List<District> _districts = [];
+  List<Family> _families = [];
+
+  String _selectedDistrictId = '';
+  String _selectedFamilyId = '';
+  bool _disableCreateVolunteer = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _districtsFuture = AdminService().getDistricts();
   }
 
-  void _updateSelectedFamily(String? familyId) {
-    setState(() {
-      _selectedFamilyId = familyId ?? "0";
-    });
+  void _updateFamilies(String districtId) {
+    _selectedDistrictId = districtId;
+    _familiesFuture = CoordinatorService().getFamilies(districtId);
   }
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = const TextStyle(
-      color: Colors.black,
-      fontWeight: FontWeight.w400,
-      fontSize: 18,
-    );
-    return Consumer<UserProvider>(builder: (context, userProvider, child) {
-      if (userProvider.userPermission == UserPermission.coordinator) {
-        if (_selectedFamilyId == "0") {
-          _selectedFamilyId = "1";
-          _getFamilies(userProvider.user?.district?.id);
+    return FutureHandler<List<District>>(
+      future: _districtsFuture,
+      onSuccess: (context, districts) {
+        _districts = districts;
+        if (_districts.isNotEmpty && _selectedDistrictId.isEmpty) {
+          _selectedDistrictId = _districts.first.id;
+          _updateFamilies(_selectedDistrictId);
         }
-      }
 
-      Future<void> _initDistricts() async {
-        // todo: create future builder to get this
-        try {
-          final List<District> districts = await AdminService().getDistricts();
-          setState(() {
-            _districts = districts;
-            _selectedDistrictId = districts.first.id;
-          });
-
-          try {
-            await _getFamilies(_selectedDistrictId);
-          } catch (e) {
-            setState(() {
-              _families = [
-                Family(
-                  id: '0',
-                  name: 'error loading families',
-                  address: "add",
-                  contact: "con",
-                )
-              ];
-            });
-          }
-        } catch (e) {
-          setState(() {
-            _districts = [District(id: '0', name: 'error loading districts')];
-          });
-        }
-      }
-
-      return Scaffold(
-          body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 20.sw,
-            vertical: 10.sh,
-          ),
-          child: FixedColumn(
-            spacing: 5.sh,
-            children: [
-              BackToMainPage(
-                  userPermission: widget.userProvider.userPermission),
-              CenteredTitle(text: "הוספת מתנדבת"),
-              FieldInput(
-                inputTitle: 'מייל',
-                textEditingController: _emailController,
-                autofocus: true,
-                inputTitleStyle: titleStyle,
-              ),
-              FieldInput(
-                inputTitle: 'שם',
-                textDirection: TextDirection.rtl,
-                textEditingController: _nameController,
-                inputTitleStyle: titleStyle,
-              ),
-              FieldInput(
-                inputTitle: 'סיסמה',
-                textEditingController: _passwordController,
-                obscureText: true,
-                inputTitleStyle: titleStyle,
-              ),
-              if (userProvider.userPermission == UserPermission.admin)
-                Dropdown<District>(
-                  title: 'מחוז',
-                  items: _districts,
-                  selectedItemId: _selectedDistrictId,
-                  onSelectedIdChange: _updateSelectedDistrict,
-                  onInit: _initDistricts,
-                )
-              else
-                _district(userProvider.user?.district),
-              if (_selectedFamilyId != "1")
-                FamiliesDropdown(
-                  families: _families,
-                  selectedFamilyId: _selectedFamilyId,
-                  onSelectedFamilyChange: _updateSelectedFamily,
+        return Consumer<UserProvider>(
+          builder: (context, userProvider, child) {
+            return Scaffold(
+              body: SingleChildScrollView(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 20.sw, vertical: 10.sh),
+                child: FixedColumn(
+                  spacing: 5.sh,
+                  children: [
+                    BackToMainPage(userPermission: userProvider.userPermission),
+                    const CenteredTitle(text: "הוספת מתנדבת"),
+                    _buildInputFields(),
+                    _buildDistrictDropdown(userProvider),
+                    _buildFamilyDropdown(),
+                    _buildCreateVolunteerButton(),
+                  ],
                 ),
-              _createVolunteer(),
-            ],
-          ),
-        ),
-      ));
-    });
-  }
-
-  Widget _district(District? district) {
-    return Container(
-      alignment: Alignment.topRight,
-      child: Text(
-          'מחוז: ${district?.name ?? 'שגיאה - יש לנסות לרענן את האפליקצייה'}',
-          style: GoogleFonts.openSans(
-            color: Colors.black,
-            fontWeight: FontWeight.w400,
-            fontSize: 20,
-          )),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
-  Future<void> _getFamilies(String? districtId) async {
-    try {
-      final List<Family> families =
-          await CoordinatorService().getFamilies(districtId);
-      setState(() {
-        _families = families;
-        _selectedFamilyId = families.first.id;
-      });
-    } catch (e) {
-      setState(() {
-        _families = [
-          Family(
-            id: '0',
-            name: 'error loading families',
-            address: "add",
-            contact: "con",
-          )
-        ];
-      });
-    }
+  Widget _buildInputFields() {
+    return Column(
+      children: [
+        FieldInput(
+          inputTitle: 'מייל',
+          textEditingController: _emailController,
+          autofocus: true,
+        ),
+        FieldInput(
+          inputTitle: 'שם',
+          textDirection: TextDirection.rtl,
+          textEditingController: _nameController,
+        ),
+        FieldInput(
+          inputTitle: 'סיסמה',
+          textEditingController: _passwordController,
+          obscureText: true,
+        ),
+      ],
+    );
   }
 
-  Widget _createVolunteer() {
+  Widget _buildDistrictDropdown(UserProvider userProvider) {
+    if (userProvider.userPermission == UserPermission.coordinator) {
+      return _districtDisplay(userProvider.user?.district);
+    }
+    return Dropdown<District>(
+      title: 'מחוז',
+      items: _districts,
+      selectedItemId: _selectedDistrictId,
+      onSelectedIdChange: (id) => setState(() => _updateFamilies(id ?? '')),
+    );
+  }
+
+  Widget _buildFamilyDropdown() {
+    return FutureHandler<List<Family>>(
+      future: _familiesFuture ?? Future.value([]),
+      onSuccess: (context, families) {
+        _families = families;
+        if (_families.isEmpty) {
+          return const Text('לא נמצאו משפחות למחוז שנבחר');
+        }
+        if (!_families.any((family) => family.id == _selectedFamilyId)) {
+          _selectedFamilyId = _families.first.id;
+        }
+
+        return Dropdown<Family>(
+          title: 'משפחה',
+          items: _families,
+          selectedItemId: _selectedFamilyId,
+          onSelectedIdChange: (id) =>
+              setState(() => _selectedFamilyId = id ?? ''),
+        );
+      },
+    );
+  }
+
+  Widget _districtDisplay(District? district) {
+    return Text(
+      'מחוז: ${district?.name ?? 'שגיאה - יש לנסות לרענן את האפליקציה'}',
+      style: GoogleFonts.openSans(fontSize: 20, fontWeight: FontWeight.w400),
+    );
+  }
+
+  Widget _buildCreateVolunteerButton() {
     return MainButton(
-        text: 'יצירת משתמש',
-        disabled: createVolunteerDisablementStatus,
-        onPress: () async {
-          setState(() => createVolunteerDisablementStatus = true);
-          await CoordinatorService().createVolunteer(
-              email: _emailController.text,
-              password: _passwordController.text,
-              displayName: _nameController.text,
-              districtId: _selectedDistrictId,
-              familyId: _selectedFamilyId);
-          setState(() => createVolunteerDisablementStatus = false);
-        });
+      text: 'יצירת משתמש',
+      disabled: _disableCreateVolunteer,
+      onPress: _createVolunteer,
+    );
+  }
+
+  Future<void> _createVolunteer() async {
+    setState(() => _disableCreateVolunteer = true);
+    await CoordinatorService().createVolunteer(
+      email: _emailController.text,
+      password: _passwordController.text,
+      displayName: _nameController.text,
+      districtId: _selectedDistrictId,
+      familyId: _selectedFamilyId,
+    );
+    setState(() => _disableCreateVolunteer = false);
   }
 }
