@@ -41,10 +41,8 @@ class _VolunteersListState extends State<VolunteersList> {
         onSuccess: (context, volunteers) {
           return Scaffold(
               body: FixedColumn(
-            spacing: 10.sh,
+            spacing: 2.sh,
             children: [
-              if (userProvider.userPermission == UserPermission.admin)
-                BackToMainPage(userPermission: UserPermission.admin),
               (volunteers.isEmpty)
                   ? Text('אין מתנדבות במחוז זה')
                   : _buildListTitle(
@@ -74,29 +72,27 @@ Widget _buildListTitle({
   String? districtName,
   String? districtId,
 }) {
-  return Stack(
-    children: [
-      Container(
-        width: double.infinity,
-        height: 20.sh,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFFFC3C3),
-              Color(0xFFFECED6),
-            ],
-          ),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.elliptical(300, 40),
-            bottomRight: Radius.elliptical(300, 40),
-          ),
-        ),
+  return Container(
+    width: double.infinity,
+    height: 20.sh,
+    decoration: const BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Color(0xFFFFC3C3),
+          Color(0xFFFECED6),
+        ],
       ),
-      Container(
-        height: 25.sh,
-        alignment: Alignment.center,
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.elliptical(300, 40),
+        bottomRight: Radius.elliptical(300, 40),
+      ),
+    ),
+    child: FixedColumn(children: [
+      if (userProvider.userPermission == UserPermission.admin)
+        BackToMainPage(userPermission: userProvider.userPermission),
+      Center(
         child: Text(
           "מתנדבות מחוז ${districtName ?? 'לא ידוע'}",
           style: GoogleFonts.openSans(
@@ -105,7 +101,7 @@ Widget _buildListTitle({
             color: Color(0xFF205273),
           ),
         ),
-      ),
-    ],
+      )
+    ]),
   );
 }

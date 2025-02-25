@@ -25,12 +25,19 @@ class FutureHandler<T> extends StatelessWidget {
         } else if (snapshot.hasError) {
           return onError?.call(context, snapshot.error) ??
               Center(
-                  child:
-                      Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'));
+                child: Text(
+                  'Error: ${snapshot.error}\n${snapshot.stackTrace}',
+                  textDirection: TextDirection.ltr,
+                ),
+              );
         } else if (snapshot.hasData) {
           return onSuccess(context, snapshot.data as T);
         } else {
-          return Center(child: Text('No data available'));
+          return Center(
+              child: Text(
+            'אירעה שגיאה, נסו לרענן את הדף.',
+            textDirection: TextDirection.rtl,
+          ));
         }
       },
     );
