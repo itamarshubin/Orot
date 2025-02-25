@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/back_to_main_page_button.dart';
 import 'package:orot/components/fixed_column.dart';
 import 'package:orot/components/future_handler.dart';
+import 'package:orot/components/top_banner.dart';
 import 'package:orot/models/user.dart';
 import 'package:orot/pages/coordinator/volunteers_list/volunteer_row.dart';
 import 'package:orot/providers/user_provider.dart';
@@ -45,10 +45,14 @@ class _VolunteersListState extends State<VolunteersList> {
             children: [
               (volunteers.isEmpty)
                   ? Text('אין מתנדבות במחוז זה')
-                  : _buildListTitle(
-                      userProvider: userProvider,
-                      districtName: volunteers.first.district?.name,
-                      districtId: widget.districtId,
+                  : TopBanner(
+                      childBefore:
+                          userProvider.userPermission == UserPermission.admin
+                              ? BackToMainPage(
+                                  userPermission: userProvider.userPermission)
+                              : null,
+                      title:
+                          "מתנדבות מחוז ${volunteers.first.district?.name ?? 'לא ידוע'}",
                     ),
               Expanded(
                 child: ListView.builder(
@@ -65,43 +69,4 @@ class _VolunteersListState extends State<VolunteersList> {
       );
     });
   }
-}
-
-Widget _buildListTitle({
-  required UserProvider userProvider,
-  String? districtName,
-  String? districtId,
-}) {
-  return Container(
-    width: double.infinity,
-    height: 20.sh,
-    decoration: const BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Color(0xFFFFC3C3),
-          Color(0xFFFECED6),
-        ],
-      ),
-      borderRadius: BorderRadius.only(
-        bottomLeft: Radius.elliptical(300, 40),
-        bottomRight: Radius.elliptical(300, 40),
-      ),
-    ),
-    child: FixedColumn(children: [
-      if (userProvider.userPermission == UserPermission.admin)
-        BackToMainPage(userPermission: userProvider.userPermission),
-      Center(
-        child: Text(
-          "מתנדבות מחוז ${districtName ?? 'לא ידוע'}",
-          style: GoogleFonts.openSans(
-            fontSize: 37,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF205273),
-          ),
-        ),
-      )
-    ]),
-  );
 }

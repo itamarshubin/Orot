@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/src/intl/date_format.dart';
 import 'package:orot/components/fixed_column.dart';
-import 'package:orot/components/multi_future_handlers.dart';
+import 'package:orot/components/future_handler.dart';
 import 'package:orot/components/visit_card.dart';
 import 'package:orot/models/family.dart';
 import 'package:orot/models/visit.dart';
@@ -27,19 +27,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final Future<List<Visit>?> _upcomingVisits =
+  final Future<List<Visit>> _upcomingVisits =
       VolunteerService().getUpcomingVisits();
-  late List<Visit> visits;
 
   @override
   Widget build(BuildContext context) {
-    return MultiFutureHandler(
-        futures: [
-          Provider.of<UserProvider>(context, listen: false).getUserData(),
-          _upcomingVisits
-        ],
-        onSuccess: (context, futureResults) {
-          visits = futureResults[1] as List<Visit>;
+    return FutureHandler<List<Visit>>(
+        future: _upcomingVisits,
+        onSuccess: (context, visits) {
           return Consumer<UserProvider>(
               builder: (context, userProvider, child) {
             return Scaffold(

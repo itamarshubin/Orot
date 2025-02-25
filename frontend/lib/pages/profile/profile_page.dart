@@ -124,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
             onPressed: () => Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => UpdatePassword())),
             child: const Text('שינוי סיסמה')));
-  } 
+  }
 
   Widget _username() {
     return Container(
