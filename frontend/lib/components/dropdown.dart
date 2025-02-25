@@ -2,23 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/fixed_column.dart';
 
-class Dropdown<T> extends StatefulWidget {
-  final ValueChanged<T?> onSelectedChange;
-  final List<T> items;
-  final T selectedItem;
-  final Function? onInit;
-  final String Function(T) getLabel;
-  final String Function(T) getId;
+abstract class DropdownItem {
+  String get id;
+
+  String get name;
+}
+
+class Dropdown<T extends DropdownItem> extends StatefulWidget {
   final String title;
+  final Function? onInit;
+  final List<T> items;
+  final ValueChanged<String?> onSelectedIdChange;
+  final String selectedItemId;
 
   const Dropdown({
     super.key,
     required this.title,
     required this.items,
-    required this.selectedItem,
-    required this.onSelectedChange,
-    required this.getLabel,
-    required this.getId,
+    required this.selectedItemId,
+    required this.onSelectedIdChange,
     this.onInit,
   });
 
@@ -26,17 +28,13 @@ class Dropdown<T> extends StatefulWidget {
   State<Dropdown<T>> createState() => _DropdownState<T>();
 }
 
-class _DropdownState<T> extends State<Dropdown<T>> {
+class _DropdownState<T extends DropdownItem> extends State<Dropdown<T>> {
   late T selectedItem;
 
   @override
   void initState() {
     super.initState();
     widget.onInit?.call();
-    selectedItem = widget.items.firstWhere(
-      (item) => widget.getId(item) == widget.getId(widget.selectedItem),
-      orElse: () => widget.selectedItem,
-    );
   }
 
   @override
@@ -52,17 +50,17 @@ class _DropdownState<T> extends State<Dropdown<T>> {
           ),
         ),
         DropdownButton<T>(
-          value: selectedItem,
+          value: widget.items
+              .firstWhere((item) => item.id == widget.selectedItemId),
           onChanged: (T? newValue) {
             if (newValue != null) {
-              setState(() => selectedItem = newValue);
-              widget.onSelectedChange(newValue);
+              widget.onSelectedIdChange(newValue.id);
             }
           },
           items: widget.items.map<DropdownMenuItem<T>>((T item) {
             return DropdownMenuItem<T>(
               value: item,
-              child: Text(widget.getLabel(item)),
+              child: Text(item.name),
             );
           }).toList(),
         )
