@@ -1,10 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:orot/components/dropdown.dart';
 
 part 'district.g.dart';
 
 @JsonSerializable()
-class District {
+class District extends DropdownItem {
+  @override
   final String id;
+  @override
   final String name;
 
   District({
