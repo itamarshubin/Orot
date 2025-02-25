@@ -6,18 +6,15 @@ import 'package:sizer/sizer.dart';
 
 class VolunteerCube extends StatelessWidget {
   final User volunteer;
-  final String? id;
 
-  const VolunteerCube({super.key, required this.volunteer, this.id});
+  const VolunteerCube({super.key, required this.volunteer});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (_) => VolunteerData(volunteer, isAdmin: id != null)));
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (_) => VolunteerData(volunteer)));
       },
       child: Container(
         decoration: const BoxDecoration(
@@ -62,10 +59,12 @@ class VolunteerCube extends StatelessWidget {
   }
 
   Widget _styledText(String text) {
-    return Text(text,
-        style: GoogleFonts.varelaRound(
-          fontSize: 18,
-          fontWeight: FontWeight.w400,
-        ));
+    return Text(
+      text,
+      style: GoogleFonts.varelaRound(
+        fontSize: 18,
+        fontWeight: FontWeight.w400,
+      ),
+    );
   }
 }

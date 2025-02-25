@@ -8,10 +8,9 @@ import 'package:orot/models/visit.dart';
 import 'package:orot/services/coordinator_service.dart';
 
 class VolunteerData extends StatefulWidget {
-  final bool isAdmin;
   final User volunteer;
 
-  const VolunteerData(this.volunteer, {super.key, this.isAdmin = false});
+  const VolunteerData(this.volunteer, {super.key});
 
   @override
   State<VolunteerData> createState() => _VolunteerDataState();
@@ -307,10 +306,10 @@ class _VolunteerDataState extends State<VolunteerData> {
               width: MediaQuery.of(context).size.width * 0.3,
               height: pageHeight * 0.3),
         ),
+        // TODO: handle null permission (you can go to wrong main page)
         BackToMainPage(
-            userPermission: widget.isAdmin
-                ? UserPermission.admin
-                : UserPermission.coordinator),
+            userPermission:
+                widget.volunteer.permission ?? UserPermission.coordinator),
       ],
     );
   }

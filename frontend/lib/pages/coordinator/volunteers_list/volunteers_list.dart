@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orot/components/back_to_main_page_button.dart';
 import 'package:orot/components/fixed_column.dart';
+import 'package:orot/components/future_handler.dart';
 import 'package:orot/models/user.dart';
 import 'package:orot/pages/coordinator/volunteers_list/volunteer_row.dart';
 import 'package:orot/providers/user_provider.dart';
 import 'package:orot/services/coordinator_service.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class VolunteersList extends StatefulWidget {
   final String? districtId;
@@ -19,74 +21,64 @@ class VolunteersList extends StatefulWidget {
 
 class _VolunteersListState extends State<VolunteersList> {
   final TextEditingController controller = TextEditingController();
+  late Future<List<User>> _volunteersFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _volunteersFuture =
+        CoordinatorService().getVolunteers(id: widget.districtId ?? '');
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(builder: (context, userProvider, child) {
       var districtId = userProvider.user?.district?.id;
-      return FutureBuilder(
-        future: CoordinatorService()
-            .getVolunteers(id: widget.districtId ?? districtId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.error != null) {
-            return Center(
-              child: Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'),
-            );
-          } else {
-            return Scaffold(
-                body: FixedColumn(children: [
-              if (snapshot.data?.isNotEmpty ?? false)
-                _title(context, snapshot.data?[0],
-                    districtId: widget.districtId)
-              else
+      _volunteersFuture = CoordinatorService()
+          .getVolunteers(id: widget.districtId ?? districtId);
+      return FutureHandler<List<User>>(
+        future: _volunteersFuture,
+        onSuccess: (context, volunteers) {
+          return Scaffold(
+              body: FixedColumn(
+            spacing: 10.sh,
+            children: [
+              if (userProvider.userPermission == UserPermission.admin)
                 BackToMainPage(userPermission: UserPermission.admin),
-              SizedBox(height: 20),
-
-              //TODO: add search bar
-              // Container(
-              //     margin: const EdgeInsets.only(left: 100),
-              //     width: 250,
-              //     child: TextField(
-              //         controller: controller,
-              //         textDirection: TextDirection.rtl,
-              //         decoration: InputDecoration(
-              //           hintTextDirection: TextDirection.rtl,
-              //           hintText: "חיפוש שם",
-              //           border: OutlineInputBorder(
-              //             borderRadius: BorderRadius.circular(30.0),
-              //           ),
-              //         ))),
+              (volunteers.isEmpty)
+                  ? Text('אין מתנדבות במחוז זה')
+                  : _buildListTitle(
+                      userProvider: userProvider,
+                      districtName: volunteers.first.district?.name,
+                      districtId: widget.districtId,
+                    ),
               Expanded(
-                child: (snapshot.data?.isEmpty ?? true)
-                    ? Text('אין מתנדבות במחוז זה')
-                    : ListView.builder(
-                        padding: const EdgeInsets.only(top: 10),
-                        itemCount: snapshot.data?.length ?? 0,
-                        itemBuilder: (_, index) {
-                          return VolunteerCube(
-                              volunteer: snapshot.data![index],
-                              id: widget.districtId);
-                        }),
+                child: ListView.builder(
+                    padding: const EdgeInsets.only(top: 10),
+                    itemCount: volunteers.length,
+                    itemBuilder: (_, index) {
+                      User volunteer = volunteers[index];
+                      return VolunteerCube(volunteer: volunteer);
+                    }),
               )
-            ]));
-          }
+            ],
+          ));
         },
       );
     });
   }
 }
 
-Widget _title(BuildContext context, User? volunteer, {String? districtId}) {
-  final double pageHeight = MediaQuery.of(context).size.height;
+Widget _buildListTitle({
+  required UserProvider userProvider,
+  String? districtName,
+  String? districtId,
+}) {
   return Stack(
     children: [
       Container(
         width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.13,
+        height: 20.sh,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -103,10 +95,10 @@ Widget _title(BuildContext context, User? volunteer, {String? districtId}) {
         ),
       ),
       Container(
-        height: pageHeight * 0.1,
+        height: 25.sh,
         alignment: Alignment.center,
         child: Text(
-          "מתנדבות מחוז ${volunteer?.district?.name ?? 'לא ידוע'}",
+          "מתנדבות מחוז ${districtName ?? 'לא ידוע'}",
           style: GoogleFonts.openSans(
             fontSize: 37,
             fontWeight: FontWeight.w700,
@@ -114,8 +106,6 @@ Widget _title(BuildContext context, User? volunteer, {String? districtId}) {
           ),
         ),
       ),
-      if (districtId != null)
-        BackToMainPage(userPermission: UserPermission.admin)
     ],
   );
 }

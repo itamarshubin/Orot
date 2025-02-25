@@ -24,18 +24,18 @@ import { CallableRequest, onCall } from "firebase-functions/v2/https";
 
 initializeApp();
 
-interface CoordinatorData {
+export interface CoordinatorData {
   name: string;
   email: string;
   password: string;
   districtId: string;
 }
 
-interface District {
+export interface District {
   name: string;
 }
 
-interface FamilyData {
+export interface FamilyData {
   name: string;
   contact: string;
   address: string;
@@ -58,7 +58,7 @@ const isCoordinator = async (data: CallableRequest) => {
   return coordinatorDoc.exists;
 };
 
-interface User {
+export interface User {
   permission: "admin" | "coordinator" | "volunteer";
   uid: string;
   name?: string;
