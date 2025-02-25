@@ -9,7 +9,7 @@ class VisitsProvider with ChangeNotifier {
 
   Future<List<Visit>?> getUpcomingVisits() async {
     List<Visit>? upcomingVisits = await VolunteerService().getUpcomingVisits();
-    if (upcomingVisits != null) {
+    if (upcomingVisits.isNotEmpty) {
       _upcomingVisits = upcomingVisits;
     }
     notifyListeners();

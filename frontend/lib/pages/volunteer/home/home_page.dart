@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/src/intl/date_format.dart';
 import 'package:orot/components/fixed_column.dart';
+import 'package:orot/components/future_handler.dart';
+import 'package:orot/components/main_button.dart';
 import 'package:orot/components/visit_card.dart';
 import 'package:orot/models/family.dart';
 import 'package:orot/models/visit.dart';
@@ -16,8 +18,6 @@ import 'package:orot/services/volunteer_service.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../components/main_button.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -26,70 +26,56 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final Future<List<Visit>?> _upcomingVisits =
+  final Future<List<Visit>> _upcomingVisits =
       VolunteerService().getUpcomingVisits();
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: Future.wait([
-          Provider.of<UserProvider>(context, listen: false).getUserData(),
-          _upcomingVisits
-        ]),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.error != null) {
-            return Center(
-              child: Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'),
-            );
-          } else {
-            return Consumer<UserProvider>(
-                builder: (context, userProvider, child) {
-              return Scaffold(
-                resizeToAvoidBottomInset: false,
-                backgroundColor: Color.fromRGBO(237, 237, 237, 1),
-                body: SingleChildScrollView(
-                  child: FixedColumn(
-                    children: [
-                      HomePageTitle(displayName: userProvider.userName),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10.sw),
-                        alignment: Alignment.center,
-                        child: Transform.translate(
-                          offset: Offset(0, -10.sh),
-                          child:
-                              _nearestVisit(snapshot.data![1] as List<Visit>),
-                        ),
+    return FutureHandler<List<Visit>>(
+        future: _upcomingVisits,
+        onSuccess: (context, visits) {
+          return Consumer<UserProvider>(
+              builder: (context, userProvider, child) {
+            return Scaffold(
+              resizeToAvoidBottomInset: false,
+              backgroundColor: Color.fromRGBO(237, 237, 237, 1),
+              body: SingleChildScrollView(
+                child: FixedColumn(
+                  children: [
+                    HomePageTitle(displayName: userProvider.userName),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10.sw),
+                      alignment: Alignment.center,
+                      child: Transform.translate(
+                        offset: Offset(0, -10.sh),
+                        child: _buildNearestVisitCard(visits),
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10.sw),
-                        child: FixedColumn(
-                          children: [
-                            _addVisitButton(),
-                            VisitsList(
-                                "פגישות עתידיות נוספות",
-                                getResetOfVisits(
-                                    snapshot.data![1] as List<Visit>)),
-                            _getTips(),
-                          ],
-                        ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10.sw),
+                      child: FixedColumn(
+                        children: [
+                          _buildCreateVisitButton(),
+                          VisitsList(
+                            listTitle: "פגישות עתידיות נוספות",
+                            visits: visits,
+                          ),
+                          _buildGetTipsSection(),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              );
-            });
-          }
+              ),
+            );
+          });
         });
   }
 
-  Widget _nearestVisit(List<Visit> visits) {
+  Widget _buildNearestVisitCard(List<Visit> visits) {
     if (visits.isEmpty) {
       //TODO: make Widget for that (maybe some image that ofir can give us)
-      return Text('No upcoming visits 🥺');
+      return Text('אין ביקורים קרובים 🥺');
     }
 
     return FixedColumn(
@@ -98,15 +84,12 @@ class _HomePageState extends State<HomePage> {
           offset: const Offset(10, 0),
           child: HomeLabelText(text: 'הביקור הקרוב'),
         ),
-        VisitCard(
-          showEditButton: false,
-          visit: visits[0],
-        )
+        VisitCard(showEditButton: false, visit: visits.first)
       ],
     );
   }
 
-  Widget _addVisitButton() {
+  Widget _buildCreateVisitButton() {
     return Center(
       child: MainButton(
         text: 'קביעת מפגש',
@@ -114,16 +97,15 @@ class _HomePageState extends State<HomePage> {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (BuildContext context) => const NewVisitPage()))
+                builder: (BuildContext context) => const NewVisitPage(),
+              ))
         },
       ),
     );
   }
 
-  Widget _getTips() {
-    return Column(
-      textDirection: TextDirection.rtl,
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildGetTipsSection() {
+    return FixedColumn(
       spacing: 10,
       children: [
         HomeLabelText(text: 'איך נתמודד במפגש?'),
@@ -159,15 +141,6 @@ List<VisitCard> getHistory() {
             id: 'id',
             family: Family(id: 'id', name: 'name', address: 'ddd', contact: ''),
             visitDate: DateTime.now()),
-      )
-  ];
-}
-
-List<VisitCard> getResetOfVisits(List<Visit> visits) {
-  return [
-    for (int i = 1; i < visits.length; i++)
-      VisitCard(
-        visit: visits[i],
       )
   ];
 }

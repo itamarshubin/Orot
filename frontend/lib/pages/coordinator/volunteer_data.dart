@@ -1,87 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:orot/components/back_to_main_page_button.dart';
+import 'package:orot/components/future_handler.dart';
 import 'package:orot/components/visit_card.dart';
 import 'package:orot/models/user.dart';
 import 'package:orot/models/visit.dart';
-import 'package:orot/pages/admin/components/back_button.dart';
 import 'package:orot/services/coordinator_service.dart';
 
 class VolunteerData extends StatefulWidget {
-  final bool isAdmin;
   final User volunteer;
 
-  const VolunteerData(this.volunteer, {super.key, this.isAdmin = false});
+  const VolunteerData(this.volunteer, {super.key});
 
   @override
   State<VolunteerData> createState() => _VolunteerDataState();
 }
 
 class _VolunteerDataState extends State<VolunteerData> {
+  late Future<List<Visit>> _visitsFuture;
+
+  @override
+  void initState() {
+    _visitsFuture = CoordinatorService().getVisitData(widget.volunteer.uid);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: CoordinatorService().getVisitData(widget.volunteer.uid),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.error != null) {
-          return Center(
-            child: Text('Error: ${snapshot.error}\n${snapshot.stackTrace}'),
-          );
-        } else {
-          return Scaffold(
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  _topIcon(),
-                  _volunteerName(),
-                  snapshot.data?.isNotEmpty ?? false
-                      ? _lastVisit(snapshot.data![0])
-                      : Text('אין ביקורים קודמים'),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  snapshot.data?.isNotEmpty ?? false
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              _nextVisitDate(snapshot.data?.last.visitDate !=
-                                      null
-                                  ? DateFormat('dd.MM').format(
-                                      snapshot.data?.last.visitDate as DateTime)
-                                  : "something"),
-                              _visitsCount(snapshot.data?.length ?? 0)
-                            ],
-                          ),
-                        )
-                      : Text('אין ביקורים עתידיים'),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _moreDetails(),
-                ],
-              ),
+    return FutureHandler<List<Visit>>(
+      future: _visitsFuture,
+      onSuccess: (context, visits) {
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                _topIcon(),
+                _buildVolunteerName(),
+                visits.isNotEmpty
+                    ? _buildLastVisit(visits.first)
+                    : Text('אין ביקורים קודמים'),
+                visits.isNotEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _nextVisitDate(DateFormat('dd.MM')
+                                .format(visits.last.visitDate)),
+                            _visitsCount(visits.length),
+                          ],
+                        ),
+                      )
+                    : Text('אין ביקורים עתידיים'),
+                SizedBox(
+                  height: 20,
+                ),
+                _moreDetails(),
+              ],
             ),
-          );
-        }
+          ),
+        );
       },
     );
   }
 
-  Widget _volunteerName() {
+  Widget _buildVolunteerName() {
     return Text(
       widget.volunteer.name,
       style: GoogleFonts.openSans(
-          fontSize: 24, fontWeight: FontWeight.w700, color: Color(0xff205273)),
+        fontSize: 24,
+        fontWeight: FontWeight.w700,
+        color: Color(0xff205273),
+      ),
     );
   }
 
-  Widget _lastVisit(Visit visit) {
+  Widget _buildLastVisit(Visit visit) {
     return Column(
       children: [
         Container(
@@ -95,10 +90,7 @@ class _VolunteerDataState extends State<VolunteerData> {
                 color: Color(0xffF27E7E)),
           ),
         ),
-        VisitCard(
-          visit: visit,
-          showCountdown: true,
-        )
+        VisitCard(visit: visit, showCountdown: true)
       ],
     );
   }
@@ -307,10 +299,10 @@ class _VolunteerDataState extends State<VolunteerData> {
               width: MediaQuery.of(context).size.width * 0.3,
               height: pageHeight * 0.3),
         ),
+        // TODO: handle null permission (you can go to wrong main page)
         BackToMainPage(
-            userPermission: widget.isAdmin
-                ? UserPermission.admin
-                : UserPermission.coordinator),
+            userPermission:
+                widget.volunteer.permission ?? UserPermission.coordinator),
       ],
     );
   }

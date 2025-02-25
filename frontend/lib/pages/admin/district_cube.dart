@@ -13,25 +13,24 @@ class DistrictCube extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => VolunteersList(
-                      districtId: district.id,
-                    )));
+          context,
+          MaterialPageRoute(
+              builder: (_) => VolunteersList(districtId: district.id)),
+        );
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         alignment: Alignment.center,
         color: Colors.white,
         height: 50,
-        child: _CubeText(district.name),
+        child: Text(
+          district.name,
+          style: GoogleFonts.varelaRound(
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
       ),
     );
-  }
-
-  Widget _CubeText(String text) {
-    return Text(text,
-        style:
-            GoogleFonts.varelaRound(fontSize: 18, fontWeight: FontWeight.w400));
   }
 }

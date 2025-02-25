@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:orot/components/fixed_column.dart';
 import 'package:orot/components/visit_card.dart';
+import 'package:orot/models/visit.dart';
 import 'package:orot/pages/volunteer/home/home_label.dart';
+import 'package:sizer/sizer.dart';
 
 class VisitsList extends StatefulWidget {
-  final List<VisitCard> visits;
+  final List<Visit> visits;
   final String listTitle;
 
-  const VisitsList(this.listTitle, this.visits, {super.key});
+  const VisitsList({
+    required this.listTitle,
+    required this.visits,
+    super.key,
+  });
 
   @override
   State<VisitsList> createState() => _VisitsListState();
@@ -19,10 +26,8 @@ class _VisitsListState extends State<VisitsList> {
       return Text('no visits');
     }
 
-    return Column(
-      textDirection: TextDirection.rtl,
-      mainAxisAlignment: MainAxisAlignment.start,
-      spacing: 5,
+    return FixedColumn(
+      spacing: 5.sh,
       children: [
         Container(
           alignment: Alignment.topRight,
@@ -36,7 +41,7 @@ class _VisitsListState extends State<VisitsList> {
             physics: const ClampingScrollPhysics(),
             padding: const EdgeInsets.all(0),
             itemCount: widget.visits.length,
-            itemBuilder: (_, index) => widget.visits[index],
+            itemBuilder: (_, index) => VisitCard(visit: widget.visits[index]),
           ),
         )
       ],

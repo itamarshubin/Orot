@@ -5,6 +5,7 @@ import 'package:orot/pages/volunteer/visits_history/visits_history_page.dart';
 
 class VolunteerNavigation extends StatefulWidget {
   final int initialIndex;
+
   const VolunteerNavigation({super.key, this.initialIndex = 2});
 
   @override

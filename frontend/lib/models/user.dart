@@ -20,12 +20,13 @@ class User {
   final District? district;
   final Family? family;
 
-  User(
-      {required this.uid,
-      required this.name,
-      required this.permission,
-      required this.district,
-      required this.family});
+  User({
+    required this.uid,
+    required this.name,
+    required this.permission,
+    required this.district,
+    required this.family,
+  });
 
   factory User.fromJson(json) {
     final FirebaseAuth auth = FirebaseAuth.instance;
