@@ -4,6 +4,7 @@ import 'package:orot/components/centered_title.dart';
 import 'package:orot/components/dropdown.dart';
 import 'package:orot/components/field_input.dart';
 import 'package:orot/components/fixed_column.dart';
+import 'package:orot/components/future_handler.dart';
 import 'package:orot/components/main_button.dart';
 import 'package:orot/models/district.dart';
 import 'package:orot/providers/user_provider.dart';
@@ -23,77 +24,92 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
+  late Future<List<District>> _districtsFuture;
   bool createCoordinatorDisablementStatus = false;
 
-  List<District> _districts = [District(id: '0', name: 'loading...')];
-  String _selectedDistrictId = '0';
+  String _selectedDistrictId = '';
 
   void _updateSelectedDistrict(String? districtId) {
-    setState(() {
-      _selectedDistrictId = districtId ?? "0";
-    });
+    setState(() => _selectedDistrictId = districtId ?? "0");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _districtsFuture = AdminService().getDistricts();
   }
 
   @override
   Widget build(BuildContext context) {
+    return FutureHandler<List<District>>(
+        future: _districtsFuture,
+        onSuccess: (context, districts) {
+          if (_selectedDistrictId.isEmpty) {
+            _selectedDistrictId = districts.first.id;
+          }
+          return Scaffold(
+              body: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 20.sw,
+                vertical: 10.sh,
+              ),
+              child: FixedColumn(
+                spacing: 5.sh,
+                children: [
+                  BackToMainPage(
+                      userPermission: widget.userProvider.userPermission),
+                  CenteredTitle(text: 'הוספת רכזת'),
+                  _buildFormFields(),
+                  _buildDistrictDropdown(districts),
+                  _createCoordinator(),
+                ],
+              ),
+            ),
+          ));
+        });
+  }
+
+  Widget _buildFormFields() {
     final titleStyle = const TextStyle(
       color: Colors.black,
       fontWeight: FontWeight.w400,
       fontSize: 18,
     );
-    return Scaffold(
-        body: SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20.sw,
-          vertical: 10.sh,
+    return FixedColumn(
+      children: [
+        FieldInput(
+          textEditingController: _emailController,
+          inputTitle: "מייל",
+          autofocus: true,
+          inputTitleStyle: titleStyle,
         ),
-        child: FixedColumn(
-          spacing: 5.sh,
-          children: [
-            BackToMainPage(userPermission: widget.userProvider.userPermission),
-            CenteredTitle(text: 'הוספת רכזת'),
-            FieldInput(
-              textEditingController: _emailController,
-              inputTitle: "מייל",
-              autofocus: true,
-              inputTitleStyle: titleStyle,
-            ),
-            FieldInput(
-              textEditingController: _nameController,
-              inputTitle: "שם",
-              textDirection: TextDirection.rtl,
-              inputTitleStyle: titleStyle,
-            ),
-            FieldInput(
-              textEditingController: _passwordController,
-              inputTitle: "סיסמה",
-              obscureText: true,
-              inputTitleStyle: titleStyle,
-            ),
-            Dropdown<District>(
-              title: 'מחוז',
-              items: _districts,
-              selectedItemId: _selectedDistrictId,
-              onSelectedIdChange: _updateSelectedDistrict,
-              onInit: _initDistricts,
-            ),
-            _createCoordinator(),
-          ],
+        FieldInput(
+          textEditingController: _nameController,
+          inputTitle: "שם",
+          textDirection: TextDirection.rtl,
+          inputTitleStyle: titleStyle,
         ),
-      ),
-    ));
+        FieldInput(
+          textEditingController: _passwordController,
+          inputTitle: "סיסמה",
+          obscureText: true,
+          inputTitleStyle: titleStyle,
+        )
+      ],
+    );
   }
 
-  Future<void> _initDistricts() async {
-    try {
-      final List<District> districts = await AdminService().getDistricts();
-      setState(() {
-        _districts = districts;
-        _selectedDistrictId = districts.first.id;
-      });
-    } catch (e) {
-      _districts = [District(id: '0', name: 'error loading districts')];
+  Widget _buildDistrictDropdown(List<District> districts) {
+    if (districts.isEmpty) {
+      return Text('לא נמצאו משפחות למחוז שנבחר');
+    } else {
+      return Dropdown<District>(
+        title: 'מחוז',
+        items: districts,
+        selectedItemId: _selectedDistrictId,
+        onSelectedIdChange: _updateSelectedDistrict,
+      );
     }
   }
 
