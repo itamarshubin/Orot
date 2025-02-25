@@ -29,10 +29,6 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
 
   String _selectedDistrictId = '';
 
-  void _updateSelectedDistrict(String? districtId) {
-    setState(() => _selectedDistrictId = districtId ?? "0");
-  }
-
   @override
   void initState() {
     super.initState();
@@ -108,7 +104,8 @@ class _AddCoordinatorPageState extends State<AddCoordinatorPage> {
         title: 'מחוז',
         items: districts,
         selectedItemId: _selectedDistrictId,
-        onSelectedIdChange: _updateSelectedDistrict,
+        onSelectedIdChange: (id) =>
+            setState(() => _selectedDistrictId = id ?? "0"),
       );
     }
   }
