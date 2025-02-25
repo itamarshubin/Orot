@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:orot/pages/admin/components/district_cube.dart';
+import 'package:orot/pages/admin/district_cube.dart';
 import 'package:orot/services/admin_service.dart';
 
 class DistrictList extends StatefulWidget {
